@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "minotoring"
+version = "0.0.0"
+description = "Easy to use ML and plug and play monitoring tool."
+authors = ["Boris Ghidaglia <borisghidaglia@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

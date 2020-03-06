@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  app:
+    build: .
+    command: python run.py
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+
+  npm:
+    build: ./front
+    command: tail -f Dockerfile
+    volumes:
+      - ./front:/code
