@@ -6,6 +6,7 @@ authors = ["Boris Ghidaglia <borisghidaglia@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
+flask = "^1.1.1"
 
 [tool.poetry.dev-dependencies]
 
