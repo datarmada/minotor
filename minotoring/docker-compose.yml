@@ -3,8 +3,8 @@ version: "3"
 services:
 
   app:
-    build: .
-    command: python run.py
+    build: ""
+    command: python __main__.py
     environment:
       - PYTHONUNBUFFERED=1
     ports:
@@ -13,7 +13,7 @@ services:
       - .:/code
 
   npm:
-    build: ./front
+    build: front
     command: npm start
     ports:
       - "3000:3000"
