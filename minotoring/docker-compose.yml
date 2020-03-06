@@ -4,7 +4,7 @@ services:
 
   app:
     build: ""
-    command: python __main__.py
+    command: python run.py
     environment:
       - PYTHONUNBUFFERED=1
     ports:

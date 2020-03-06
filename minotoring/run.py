@@ -13,5 +13,8 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
-if __name__ == "__main__":
+def runserver():
     app.run("0.0.0.0", debug=True)
+
+if __name__ == "__main__":
+    runserver()

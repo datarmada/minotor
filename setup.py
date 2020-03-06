@@ -1,5 +1,4 @@
 import setuptools
-
 setuptools.setup(
     name="minotoring",
     version="0.0.0",
@@ -14,10 +13,11 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        "flask = ^1.1.1",
+        "flask>=1.1.1",
     ],
     include_package_data=True,
-    exclude_package_data={
-        "": ["Dockerfile", "docker-compose.yml"],
-    }
+    entry_points={
+        'console_scripts': ['minotoring=minotoring.entrypoint:main'],
+    },
 )
+
