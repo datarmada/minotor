@@ -3,7 +3,7 @@ version: "3"
 services:
 
   app:
-    build: ""
+    build: .
     command: python run.py
     environment:
       - PYTHONUNBUFFERED=1
