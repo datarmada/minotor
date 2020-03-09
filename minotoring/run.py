@@ -1,4 +1,3 @@
-import http
 import os
 
 from flask import Flask, send_from_directory, request, Response
