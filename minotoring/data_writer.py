@@ -40,7 +40,8 @@ class DataWriterABC(ABC):
 
 class DataWriterArray(DataWriterABC):
     def fill_w_train(self, data: np.ndarray) -> Dict:
-        data = data.reshape((data.shape[1], data.shape[0]))
+        assert type(data) == np.ndarray
+        data = data.transpose()
         for i, feature_data in enumerate(data):
             self.json_file["features"][f"feature_{i}"] = self.json_file["features"].get(f"feature_{i}", {
                 "type": "Numeric",
@@ -53,6 +54,7 @@ class DataWriterArray(DataWriterABC):
 
 class DataWriterPandas(DataWriterABC):
     def fill_w_train(self, data: pd.DataFrame) -> Dict:
+        assert type(data) == pd.DataFrame
         for col in data:
             self.json_file["features"][col] = self.json_file["features"].get(col, {
                 "type": data[col].dtype,
