@@ -6,7 +6,7 @@ from typing import Dict, List
 import numpy as np
 import pandas as pd
 
-from minotoring.minotoring.constants import DATA_DIR
+from minotoring.minotoring.data_managers.constants import DATA_DIR
 
 
 class DataWriterABC(ABC):

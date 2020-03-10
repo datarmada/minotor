@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import requests
 
-from minotoring.minotoring.data_writer import type2data_writer
+from minotoring.minotoring.data_managers.data_writer import type2data_writer
 
 
 def monitor_train(project_name: str):
