@@ -13,7 +13,7 @@ def monitor_train(project_name: str):
         functools.wraps(func)
 
         def wrapper_data(data: Union[np.ndarray, pd.DataFrame], *args, **kwargs):
-            assert type(data) == np.ndarray or type(data) == list
+            assert type(data) == np.ndarray or type(data) == pd.DataFrame
             data_writer = type2data_writer[type(data)](project_name)
             json_file = data_writer.fill_w_train(data)
             data_writer.write_json_file()
