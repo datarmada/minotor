@@ -34,11 +34,12 @@ class DataWriterABC(ABC):
             json.dump(self.json_file, f)
 
     def fill_feature(self, feature_name: str, data: List, data_type: str = "Numeric"):
-        self.json_file["features"][feature_name] = self.json_file["features"].get(feature_name, {
-            "type": data_type,
-            "value_train": [],
-            "value_test": []
-        })
+        if feature_name not in self.json_file["features"]:
+            self.json_file["features"][feature_name] = {
+                "type": data_type,
+                "value_train": [],
+                "value_test": []
+            }
         self.json_file["features"][feature_name]["value_train"] = data
 
     @abstractmethod
