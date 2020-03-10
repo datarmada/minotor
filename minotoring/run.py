@@ -18,7 +18,7 @@ def serve(path: str):
 @app.route('/data', methods=["POST"])
 def receive_data():
     data = request.json
-    print(data['data'])
+    print(data)
     return Response(data)
 
 
