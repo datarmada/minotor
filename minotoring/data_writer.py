@@ -39,20 +39,14 @@ class DataWriterABC(ABC):
 
     def _fill_feature_train_values(self, feature_name: str, data: List, data_type: str = "Numeric"):
         if feature_name not in self.json_data["features"]:
-            self.json_data["features"][feature_name] = {
-                "type": data_type,
-                "values_train": [],
-            }
-        self.json_data["features"][feature_name]["values_train"] = data
+            self.json_data["features"][feature_name] = _create_generic_feature(data_type)
+        self.json_data["features"][feature_name]["train"]["values"] = data
 
     def _fill_feature_infer_values(self, feature_name, data: List, data_type: str = "Numeric"):
         if feature_name not in self.json_data["features"]:
-            self.json_data["features"][feature_name] = {
-                "type": data_type,
-                "values_infer": [],
-            }
-        self.json_data["features"][feature_name]["values_infer"] = self.json_data["features"][feature_name].get(
-            "values_infer", []) + data
+            self.json_data["features"][feature_name] = _create_generic_feature(data_type)
+        self.json_data["features"][feature_name]["infer"]["values"] = \
+            self.json_data["features"][feature_name]["infer"].get("values", []) + data
 
 
 class DataWriterNumpyArray(DataWriterABC):
@@ -72,6 +66,16 @@ class DataWriterPandasDataframe(DataWriterABC):
         for col in data:
             filling_function(col, data[col].values.tolist(), data[col].dtype)
         return self.json_data
+
+
+def _create_generic_feature(data_type: str) -> Dict:
+    return {
+        "type": data_type,
+        "train": {
+        },
+        "infer": {
+        },
+    }
 
 
 type2data_writer = {

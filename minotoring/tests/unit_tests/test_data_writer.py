@@ -15,11 +15,19 @@ class TestDataWriter(unittest.TestCase):
             "features": {
                 "feature_0": {
                     "type": "Numeric",
-                    "values_train": [1, 3],
+                    "train": {
+                        "values": [1, 3]
+                    },
+                    "infer": {
+                    }
                 },
                 "feature_1": {
                     "type": "Numeric",
-                    "values_train": [2, 4],
+                    "train": {
+                        "values": [2, 4]
+                    },
+                    "infer": {
+                    }
                 }
             }
         })
@@ -32,11 +40,19 @@ class TestDataWriter(unittest.TestCase):
             "features": {
                 "col_1": {
                     "type": "int",
-                    "values_train": [1, 3],
+                    "train": {
+                        "values": [1, 3]
+                    },
+                    "infer": {
+                    }
                 },
                 "col_2": {
                     "type": "int",
-                    "values_train": [2, 4],
+                    "train": {
+                        "values": [2, 4]
+                    },
+                    "infer": {
+                    }
                 }
             }
         })
@@ -53,19 +69,19 @@ class TestDataWriter(unittest.TestCase):
         data_writer = DataWriterPandasDataframe(".test")
         df = pd.DataFrame({"col_1": [1, 3], "col_2": [2, 4]})
         json_data = data_writer.fill_json_w_data(df)
-        self.assertListEqual(json_data["features"]["col_1"]["values_infer"], [1, 3])
-        self.assertListEqual(json_data["features"]["col_2"]["values_infer"], [2, 4])
+        self.assertListEqual(json_data["features"]["col_1"]["infer"]["values"], [1, 3])
+        self.assertListEqual(json_data["features"]["col_2"]["infer"]["values"], [2, 4])
 
         json_data = data_writer.fill_json_w_data(df)
-        self.assertListEqual(json_data["features"]["col_1"]["values_infer"], [1, 3, 1, 3])
-        self.assertListEqual(json_data["features"]["col_2"]["values_infer"], [2, 4, 2, 4])
+        self.assertListEqual(json_data["features"]["col_1"]["infer"]["values"], [1, 3, 1, 3])
+        self.assertListEqual(json_data["features"]["col_2"]["infer"]["values"], [2, 4, 2, 4])
 
     def test_train_and_infer_data(self):
         data_writer = DataWriterNumpyArray(".test")
         array = np.array([[1, 2], [3, 4]])
         data_writer.fill_json_w_data(array, training=True)
         json_data = data_writer.fill_json_w_data(array)
-        self.assertListEqual(json_data["features"]["feature_0"]["values_infer"], [1, 3])
-        self.assertListEqual(json_data["features"]["feature_0"]["values_train"], [1, 3])
-        self.assertListEqual(json_data["features"]["feature_1"]["values_infer"], [2, 4])
-        self.assertListEqual(json_data["features"]["feature_1"]["values_train"], [2, 4])
+        self.assertListEqual(json_data["features"]["feature_0"]["infer"]["values"], [1, 3])
+        self.assertListEqual(json_data["features"]["feature_0"]["train"]["values"], [1, 3])
+        self.assertListEqual(json_data["features"]["feature_1"]["infer"]["values"], [2, 4])
+        self.assertListEqual(json_data["features"]["feature_1"]["train"]["values"], [2, 4])
