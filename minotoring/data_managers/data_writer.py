@@ -16,51 +16,66 @@ class DataWriterABC(ABC):
         self.json_path: Path = project_dir / "data.json"
         self.json_data: Dict = {}
         if self.json_path.exists():
-            self.load_json()
+            self._load_json()
         else:
-            self.create_json()
+            self._create_json()
 
-    def load_json(self):
+    @abstractmethod
+    def fill_json_w_data(self, data, training: bool = False) -> Dict:
+        pass
+
+    def write_json_file(self):
+        with self.json_path.open('w') as f:
+            json.dump(self.json_data, f)
+
+    def _load_json(self):
         with self.json_path.open('r') as f:
             self.json_data = json.load(f)
 
-    def create_json(self):
+    def _create_json(self):
         self.json_data = {
             "features": {}
         }
 
-    def write_json_data(self):
-        with self.json_path.open('w') as f:
-            json.dump(self.json_data, f)
-
-    def fill_feature(self, feature_name: str, data: List, data_type: str = "Numeric"):
+    def _fill_feature_train_values(self, feature_name: str, data: List, data_type: str = "Numeric"):
         if feature_name not in self.json_data["features"]:
-            self.json_data["features"][feature_name] = {
-                "type": data_type,
-                "value_train": [],
-            }
-        self.json_data["features"][feature_name]["value_train"] = data
+            self.json_data["features"][feature_name] = _create_generic_feature(data_type)
+        self.json_data["features"][feature_name]["train"]["values"] = data
 
-    @abstractmethod
-    def fill_w_train(self, data) -> Dict:
-        pass
+    def _fill_feature_infer_values(self, feature_name, data: List, data_type: str = "Numeric"):
+        if feature_name not in self.json_data["features"]:
+            self.json_data["features"][feature_name] = _create_generic_feature(data_type)
+        self.json_data["features"][feature_name]["infer"]["values"] = \
+            self.json_data["features"][feature_name]["infer"].get("values", []) + data
 
 
 class DataWriterNumpyArray(DataWriterABC):
-    def fill_w_train(self, data: np.ndarray) -> Dict:
+    def fill_json_w_data(self, data: np.ndarray, training: bool = False) -> Dict:
         assert type(data) == np.ndarray
+        filling_function = self._fill_feature_train_values if training else self._fill_feature_infer_values
         data = data.transpose()
         for i, feature_data in enumerate(data):
-            self.fill_feature(f"feature_{i}", feature_data.tolist(), "Numeric")
+            filling_function(f"feature_{i}", feature_data.tolist(), "Numeric")
         return self.json_data
 
 
 class DataWriterPandasDataframe(DataWriterABC):
-    def fill_w_train(self, data: pd.DataFrame) -> Dict:
+    def fill_json_w_data(self, data: pd.DataFrame, training: bool = False) -> Dict:
         assert type(data) == pd.DataFrame
+        filling_function = self._fill_feature_train_values if training else self._fill_feature_infer_values
         for col in data:
-            self.fill_feature(col, data[col].values.tolist(), data[col].dtype)
+            filling_function(col, data[col].values.tolist(), data[col].dtype)
         return self.json_data
+
+
+def _create_generic_feature(data_type: str) -> Dict:
+    return {
+        "type": data_type,
+        "train": {
+        },
+        "infer": {
+        },
+    }
 
 
 type2data_writer = {
