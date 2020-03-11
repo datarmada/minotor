@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from minotoring.minotoring.data_managers.data_writer import DataWriterNumpyArray, DataWriterPandasDataframe
+from minotoring.minotoring.data_managers.preprocessors import DataWriterNumpyArray, DataWriterPandasDataframe
 
 
 class TestDataWriter(unittest.TestCase):
