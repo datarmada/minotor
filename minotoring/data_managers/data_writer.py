@@ -55,7 +55,7 @@ class DataWriterNumpyArray(DataWriterABC):
         filling_function = self._fill_feature_train_values if training else self._fill_feature_infer_values
         data = data.transpose()
         for i, feature_data in enumerate(data):
-            filling_function(f"feature_{i}", feature_data.tolist(), "Numeric")
+            filling_function(f"feature_{i}", feature_data.tolist(), feature_data.dtype)
         return self.json_data
 
 

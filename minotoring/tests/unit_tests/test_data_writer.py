@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from minotoring.minotoring.data_writer import DataWriterNumpyArray, DataWriterPandasDataframe
+from minotoring.minotoring.data_managers.data_writer import DataWriterNumpyArray, DataWriterPandasDataframe
 
 
 class TestDataWriter(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestDataWriter(unittest.TestCase):
         self.assertDictEqual(json_data, {
             "features": {
                 "feature_0": {
-                    "type": "Numeric",
+                    "type": "int",
                     "train": {
                         "values": [1, 3]
                     },
@@ -22,7 +22,7 @@ class TestDataWriter(unittest.TestCase):
                     }
                 },
                 "feature_1": {
-                    "type": "Numeric",
+                    "type": "int",
                     "train": {
                         "values": [2, 4]
                     },
