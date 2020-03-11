@@ -13,11 +13,10 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        "flask>=1.1.1",
+        "tornado==6.0.4",
     ],
     include_package_data=True,
     entry_points={
         'console_scripts': ['minotoring=minotoring.entrypoint:main'],
     },
 )
-

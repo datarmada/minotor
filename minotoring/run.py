@@ -1,29 +1,22 @@
-import os
-
-from flask import Flask, send_from_directory, request, Response
-
-app = Flask(__name__, static_folder="./front/build")
+import tornado.ioloop
+import tornado.web
 
 
-# Serve React App
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path: str):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write("Hello, world")
 
 
-@app.route('/data', methods=["POST"])
-def receive_data():
-    data = request.json
-    print(data)
-    return Response(data)
+def make_app():
+    return tornado.web.Application([
+        (r"/", MainHandler),
+    ])
 
 
 def runserver():
-    app.run("0.0.0.0", debug=True)
+    app = make_app()
+    app.listen(8888)
+    tornado.ioloop.IOLoop.current().start()
 
 
 if __name__ == "__main__":
