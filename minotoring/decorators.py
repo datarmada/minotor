@@ -12,7 +12,7 @@ def monitor_train(project_name: str):
     return _decorator_monitor_factory(project_name, training=True)
 
 
-def monitor_infer(project_name: str):
+def monitor_predict(project_name: str):
     return _decorator_monitor_factory(project_name, training=False)
 
 
