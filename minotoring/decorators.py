@@ -28,7 +28,7 @@ def _decorator_monitor_factory(project_name: str, training: bool = False):
             project_data = file_manager.get_project_data()
             preprocessor = type2preprocessor[type(data)]
             for feature_name, feature_data, data_type in preprocessor.preprocess(data):
-                project_data.update_feature(feature_name, feature_data, data_type)
+                project_data.update_feature(feature_name, feature_data, data_type, training)
             file_manager.write_project_data(project_data)
 
             requests.post("http://0.0.0.0:5000/data", json=project_data.data)
