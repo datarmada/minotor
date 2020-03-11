@@ -37,6 +37,16 @@ class TestProjectData(unittest.TestCase):
                 }
             }
         })
+        project_data._add_feature_values("feature_test", [1, 2], training=True)
+        self.assertDictEqual(project_data.data, {
+            "features": {
+                "feature_test": {
+                    "type": "int",
+                    "train": {"values": [1, 2]},
+                    "predict": {}
+                }
+            }
+        })
 
     def test_add_feature_values_predict(self):
         project_data = ProjectData()
@@ -48,6 +58,16 @@ class TestProjectData(unittest.TestCase):
                     "type": "int",
                     "train": {},
                     "predict": {"values": [1, 2]}
+                }
+            }
+        })
+        project_data._add_feature_values("feature_test", [1, 2], training=False)
+        self.assertDictEqual(project_data.data, {
+            "features": {
+                "feature_test": {
+                    "type": "int",
+                    "train": {},
+                    "predict": {"values": [1, 2, 1, 2]}
                 }
             }
         })
