@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import List, Dict, Callable, Any
 
-from minotoring.minotoring.data_managers.statistics import statistics_library
+from minotoring.minotoring.data_managers.statistics import statistic_library
 
 
 @dataclass
@@ -14,11 +14,11 @@ class ProjectData:
         if feature_name not in self.data["features"]:
             self._add_feature(feature_name, data_type)
         self._add_feature_values(feature_name, data, training)
-        self._compute_feature_statistics(feature_name, training)
+        self._compute_feature_statistics(feature_name, statistic_library, training)
 
     def _add_feature(self, feature_name: str, data_type: str):
         self.data["features"][feature_name] = {
-            "data_type": data_type,
+            "type": data_type,
             "train": {},
             "predict": {}
         }
@@ -30,10 +30,11 @@ class ProjectData:
             self.data["features"][feature_name][_get_key(training)]["values"] = \
                 self.data["features"][feature_name][_get_key(training)].get("values", []) + data
 
-    def _compute_feature_statistics(self, feature_name: str, training: bool):
-        data_type = self.data["features"][feature_name]["data_type"]
-
-        for statistic_name, statistic_func in statistics_library.get(data_type, {}).items():
+    def _compute_feature_statistics(self, feature_name: str,
+                                    statistics: Dict[str, Dict[str, Callable[[List], Any]]],
+                                    training: bool):
+        data_type = self.data["features"][feature_name]["type"]
+        for statistic_name, statistic_func in statistics.get(data_type, {}).items():
             self.data["features"][feature_name][_get_key(training)][statistic_name] = \
                 statistic_func(self.data["features"][feature_name][_get_key(training)]["values"])
 

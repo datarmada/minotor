@@ -12,7 +12,7 @@ def _nb_nan(values: List) -> List:
     return sum(np.isnan(values))
 
 
-statistics_library = {
+statistic_library = {
     "int": {
         "mean": np.nanmean,
         "std": np.nanstd,
