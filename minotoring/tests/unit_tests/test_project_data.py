@@ -1,6 +1,6 @@
 import unittest
 
-from minotoring.minotoring.data_managers.data_structure import ProjectData
+from minotoring.data_managers.data_structure import ProjectData
 
 
 class TestProjectData(unittest.TestCase):

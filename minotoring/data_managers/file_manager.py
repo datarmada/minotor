@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-from minotoring.minotoring.data_managers.constants import DATA_DIR
-from minotoring.minotoring.data_managers.data_structure import ProjectData
+from minotoring.data_managers.constants import DATA_DIR
+from minotoring.data_managers.data_structure import ProjectData
 
 
 class FileManager:
