@@ -22,6 +22,14 @@ function App() {
     ],
   };
 
+  const ws = new WebSocket('ws://0.0.0.0:8888/ws');
+  ws.onopen = function() {
+    ws.send('Hello, world');
+  };
+  ws.onmessage = function(evt) {
+    alert(evt.data);
+  };
+
   return (
     <div className="App">
       <h1>Minotoring Dashboard</h1>
