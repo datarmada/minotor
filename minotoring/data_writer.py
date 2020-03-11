@@ -37,34 +37,30 @@ class DataWriterABC(ABC):
             "features": {}
         }
 
-    def _fill_feature_train_values(self, feature_name: str, data: List, data_type: str = "Numeric"):
+    def _fill_feature_values(self, feature_name: str, data: List, data_type: str = "Numeric", training: bool = False):
         if feature_name not in self.json_data["features"]:
             self.json_data["features"][feature_name] = _create_generic_feature(data_type)
-        self.json_data["features"][feature_name]["train"]["values"] = data
-
-    def _fill_feature_infer_values(self, feature_name, data: List, data_type: str = "Numeric"):
-        if feature_name not in self.json_data["features"]:
-            self.json_data["features"][feature_name] = _create_generic_feature(data_type)
-        self.json_data["features"][feature_name]["infer"]["values"] = \
-            self.json_data["features"][feature_name]["infer"].get("values", []) + data
+        if training:
+            self.json_data["features"][feature_name]["train"]["values"] = data
+        else:
+            self.json_data["features"][feature_name]["predict"]["values"] = \
+                self.json_data["features"][feature_name]["predict"].get("values", []) + data
 
 
 class DataWriterNumpyArray(DataWriterABC):
     def fill_json_w_data(self, data: np.ndarray, training: bool = False) -> Dict:
         assert type(data) == np.ndarray
-        filling_function = self._fill_feature_train_values if training else self._fill_feature_infer_values
         data = data.transpose()
         for i, feature_data in enumerate(data):
-            filling_function(f"feature_{i}", feature_data.tolist(), "Numeric")
+            self._fill_feature_values(f"feature_{i}", feature_data.tolist(), "Numeric", training)
         return self.json_data
 
 
 class DataWriterPandasDataframe(DataWriterABC):
     def fill_json_w_data(self, data: pd.DataFrame, training: bool = False) -> Dict:
         assert type(data) == pd.DataFrame
-        filling_function = self._fill_feature_train_values if training else self._fill_feature_infer_values
         for col in data:
-            filling_function(col, data[col].values.tolist(), data[col].dtype)
+            self._fill_feature_values(col, data[col].values.tolist(), data[col].dtype, training)
         return self.json_data
 
 
@@ -73,7 +69,7 @@ def _create_generic_feature(data_type: str) -> Dict:
         "type": data_type,
         "train": {
         },
-        "infer": {
+        "predict": {
         },
     }
 
