@@ -1,35 +1,21 @@
-import React, { useState, useEffect } from 'react';
-
-import AreaSeries from './components/react-vis/AreaSeries';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import NavBar from './components/navbar/NavBar';
+import './sass/app.scss';
+import FeaturesAnalytics from './pages/featuresAnalytics';
+import PredictionsAnalytics from './pages/predictionsAnalytics';
 
 function App() {
-  const [data, setData] = useState([]);
-
-  const AREA_SERIES_PROPS = {
-    xTitle: "I'm axis X",
-    yTitle: "And I'm axis Y",
-    width: 600,
-    height: 400,
-    data,
-  };
-
-  useEffect(() => {
-    const ws = new WebSocket('ws://0.0.0.0:8888/ws');
-    ws.onopen = function() {
-      console.log('WebSocket opened');
-    };
-    ws.onmessage = function(e) {
-      setData(JSON.parse(e.data).area);
-    };
-    ws.onclose = function(e) {
-      console.log('WebSocket closed');
-    };
-  }, []);
-
   return (
     <div className="App">
-      <h1>Minotoring Dashboard</h1>
-      <AreaSeries {...AREA_SERIES_PROPS} />
+      <Router>
+        <NavBar />
+        <Suspense fallback={<div>Loading...</div>} />
+        <Switch>
+          <Route exact path="/features" component={FeaturesAnalytics} />
+          <Route exact path="/predictions" component={PredictionsAnalytics} />
+        </Switch>
+      </Router>
     </div>
   );
 }

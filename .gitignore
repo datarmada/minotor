@@ -5,3 +5,4 @@ node_modules
 *.egg-info
 /minotoring/front/build/
 __pycache__
+*.pyc
