@@ -1,5 +1,6 @@
-import AreaSeries from '../components/react-vis/AreaSeries';
 import React from 'react';
+import AreaPlot from '../components/react-vis/AreaPlot';
+import BarPlot from '../components/react-vis/BarPlot';
 
 export default function FeaturesAnalytics(props) {
   const AREA_SERIES_PROPS = {
@@ -24,7 +25,8 @@ export default function FeaturesAnalytics(props) {
   return (
     <div>
       <h1>Features Analytics</h1>
-      <AreaSeries {...AREA_SERIES_PROPS} />
+      <AreaPlot {...AREA_SERIES_PROPS} />
+      <BarPlot {...AREA_SERIES_PROPS} />
     </div>
   );
 }
