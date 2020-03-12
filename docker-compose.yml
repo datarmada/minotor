@@ -1,21 +1,22 @@
 version: "3"
 
 services:
-
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: minotoring/Dockerfile
     command: python run.py
     environment:
       - PYTHONUNBUFFERED=1
     ports:
       - "5000:5000"
     volumes:
-      - .:/code
+      - ./minotoring:/code
 
   npm:
-    build: front
+    build: minotoring/front
     command: npm start
     ports:
       - "3000:3000"
     volumes:
-      - ./front:/code
+      - ./minotoring/front:/code
