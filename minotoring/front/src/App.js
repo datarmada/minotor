@@ -1,6 +1,7 @@
 import React from 'react';
 
-import AreaSeries from './components/react-vis/AreaSeries';
+import AreaPlot from './components/react-vis/AreaPlot';
+import BarPlot from './components/react-vis/BarPlot';
 
 function App() {
   const AREA_SERIES_PROPS = {
@@ -18,14 +19,15 @@ function App() {
       { x: 6, y: 6 },
       { x: 7, y: 3 },
       { x: 8, y: 2 },
-      { x: 9, y: 0 },
-    ],
+      { x: 9, y: 0 }
+    ]
   };
 
   return (
     <div className="App">
       <h1>Minotoring Dashboard</h1>
-      <AreaSeries {...AREA_SERIES_PROPS} />
+      <AreaPlot {...AREA_SERIES_PROPS} />
+      <BarPlot {...AREA_SERIES_PROPS} />
     </div>
   );
 }
