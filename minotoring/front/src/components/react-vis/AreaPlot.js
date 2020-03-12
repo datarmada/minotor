@@ -6,9 +6,8 @@ import ReactVisComponent from './ReactVisComponent';
 
 export default function AreaPlot(props) {
   return (
-    <ReactVisComponent
-      component={<AreaSeries curve={'curveMonotoneX'} />}
-      {...props}
-    />
+    <ReactVisComponent {...props}>
+      <AreaSeries curve={'curveMonotoneX'} />
+    </ReactVisComponent>
   );
 }

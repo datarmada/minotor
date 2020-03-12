@@ -8,9 +8,8 @@ import {
   YAxis
 } from 'react-vis';
 
-export default function ReactVisComponent({ component, ...props }) {
+export default function ReactVisComponent({ children, ...props }) {
   const { xTitle, yTitle, width, height, data } = props;
-  const Component = component;
   const [crosshairValues, setCrosshairValues] = useState([]);
 
   const AXIS_STYLE = {
@@ -28,8 +27,8 @@ export default function ReactVisComponent({ component, ...props }) {
     >
       <VerticalGridLines />
       <HorizontalGridLines />
-      <Component.type
-        {...Component.props}
+      <children.type
+        {...children.props}
         data={data}
         onNearestX={(value, { index }) => setCrosshairValues([value])}
       />
