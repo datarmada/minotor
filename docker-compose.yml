@@ -9,7 +9,7 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     ports:
-      - "5000:5000"
+      - "8888:8888"
     volumes:
       - ./minotoring:/code
 
