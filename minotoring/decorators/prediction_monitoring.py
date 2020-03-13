@@ -1,6 +1,8 @@
 import functools
 from typing import Callable
 
+import requests
+
 from data_managers.file_manager import FileManager
 
 
@@ -14,6 +16,8 @@ def monitor_predictions(project_name: str):
             prediction_data_container = file_manager.get_prediction_data()
             prediction_data_container.update_predictions(result)
             file_manager.write_prediction_data(prediction_data_container)
+            requests.post("http://0.0.0.0:5000/data", json=prediction_data_container.data)
+
             return result
 
         return wrapper_data()
