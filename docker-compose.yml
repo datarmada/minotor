@@ -5,13 +5,14 @@ services:
     build:
       context: .
       dockerfile: minotoring/Dockerfile
-    command: python run.py
+    command: python /code/minotoring/run.py
     environment:
       - PYTHONUNBUFFERED=1
     ports:
       - "8888:8888"
     volumes:
-      - ./minotoring:/code
+      - ./minotoring/front/build:/code/minotoring/front/build
+      - ./minotoring:/code/minotoring
 
   npm:
     build: minotoring/front
