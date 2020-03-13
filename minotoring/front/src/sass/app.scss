@@ -1,3 +1,10 @@
+@import 'reboot';
+@import 'fonts';
+
 .App {
   display: flex;
+}
+
+h1 {
+  font-size: 28px;
 }
