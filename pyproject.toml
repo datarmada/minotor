@@ -5,7 +5,7 @@ description = "Easy to use ML and plug and play monitoring tool."
 authors = ["Boris Ghidaglia <borisghidaglia@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
+python = "^3.7"
 requests = "^2.23.0"
 numpy = "^1.18.1"
 pandas = "^1.0.1"
