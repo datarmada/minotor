@@ -124,8 +124,8 @@ version = "0.34.2"
 test = ["pytest (>=3.0.0)", "pytest-cov"]
 
 [metadata]
-content-hash = "786bd33a6aae419b2b86d9999ec48028cc88695f277b00125ffe653323b36efa"
-python-versions = "^3.6.1"
+content-hash = "604f662358332e19b25b0974bd6ea15f96eb6c8dea8d0e8c6b932e93a5df791b"
+python-versions = "^3.7"
 
 [metadata.files]
 certifi = [
