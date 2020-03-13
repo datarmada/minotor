@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Callable, Any
 
-from minotoring.data_managers.statistics import statistic_library
+from data_managers.statistics import statistic_library
 
 
 @dataclass
-class ProjectData:
+class FeatureData:
     data: Dict = field(default_factory=lambda: {
         "features": {}
     })
