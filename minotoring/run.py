@@ -56,12 +56,18 @@ class DataProxy(web.RequestHandler):
         self.finish()
 
 
+class DefaultHandler(web.RequestHandler):
+    def get(self):
+        self.render(str(STATIC_PATH / "index.html"))
+
+
 def make_app():
     return web.Application([
         (r"/ws", DashboardHandler),
         (r"/data", DataProxy),
-        (r"/(.*)", web.StaticFileHandler,
+        (r"/static/(.*)", web.StaticFileHandler,
          {'path': STATIC_PATH, 'default_filename': 'index.html'}),
+        (r"/*.*", DefaultHandler),
     ], debug=True)
 
 
