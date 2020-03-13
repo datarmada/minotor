@@ -3,7 +3,7 @@ import unittest
 import pandas as pd
 from pandas import np
 
-from data_managers.preprocessors import NumpyArrayPreprocessor, PandasDataFramePreprocessor
+from minotoring.data_managers.preprocessors import NumpyArrayPreprocessor, PandasDataFramePreprocessor
 
 
 class TestPreprocessors(unittest.TestCase):

@@ -1,13 +1,15 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Callable, Any
 
-from data_managers.statistics import statistic_library
+from minotoring.data_managers.statistics import statistic_library
 
 
 @dataclass
 class PredictionData:
     data: Dict = field(default_factory=lambda: {
-        "predictions": {}
+        "predictions": {
+            "values":[]
+        }
     })
 
     def update_predictions(self, data: List):

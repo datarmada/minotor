@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import requests
 
-from data_managers.file_manager import FileManager
-from data_managers.preprocessors import type2preprocessor
+from minotoring.data_managers.file_manager import FileManager
+from minotoring.data_managers.preprocessors import type2preprocessor
 
 
 def monitor_train_features(project_name: str):

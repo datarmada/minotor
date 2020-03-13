@@ -3,7 +3,7 @@ from typing import Callable
 
 import requests
 
-from data_managers.file_manager import FileManager
+from minotoring.data_managers.file_manager import FileManager
 
 
 def monitor_predictions(project_name: str):

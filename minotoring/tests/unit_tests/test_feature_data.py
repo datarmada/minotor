@@ -1,6 +1,6 @@
 import unittest
 
-from data_managers.feature_data import FeatureData
+from minotoring.data_managers.feature_data import FeatureData
 
 
 class TestProjectData(unittest.TestCase):

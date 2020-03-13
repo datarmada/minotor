@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 
-from constants import DATA_DIR
-from data_managers.feature_data import FeatureData
-from data_managers.prediction_data import PredictionData
+from minotoring.constants import DATA_DIR
+from minotoring.data_managers.feature_data import FeatureData
+from minotoring.data_managers.prediction_data import PredictionData
 
 
 class FileManager:
