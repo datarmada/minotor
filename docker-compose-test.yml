@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: ./Dockerfile_test
+    command: minotoring
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8888:8888"
+

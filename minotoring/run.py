@@ -1,8 +1,7 @@
 from tornado import ioloop, web, websocket
 from tornado.escape import json_decode
 
-from constants import PACKAGE_PATH
-from data_managers.file_manager import FileManager
+from minotoring.constants import PACKAGE_PATH
 
 # Defining constants
 STATIC_PATH = PACKAGE_PATH / 'front/build'
