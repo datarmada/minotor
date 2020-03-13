@@ -1,11 +1,11 @@
 from tornado import ioloop, web, websocket
 from tornado.escape import json_decode
 
-from constants import PACKAGE_PATH
-from data_managers.file_manager import FileManager
+from minotoring.constants import PACKAGE_PATH
 
 # Defining constants
-STATIC_PATH = PACKAGE_PATH / 'front/build'
+REACT_BUILD_PATH = PACKAGE_PATH / 'front/build'
+STATIC_PATH = REACT_BUILD_PATH / 'static'
 
 
 class DashboardHandler(websocket.WebSocketHandler):
@@ -58,7 +58,7 @@ class DataProxy(web.RequestHandler):
 
 class DefaultHandler(web.RequestHandler):
     def get(self):
-        self.render(str(STATIC_PATH / "index.html"))
+        self.render(str(REACT_BUILD_PATH / "index.html"))
 
 
 def make_app():

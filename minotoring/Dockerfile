@@ -3,9 +3,9 @@ FROM python:3.7-slim
 RUN mkdir /code
 WORKDIR /code
 
-COPY ./minotoring/*.py /code/
-COPY ./pyproject.toml .
-COPY ./poetry.lock .
+COPY ./minotoring/*.py /code/minotoring/
+COPY ./pyproject.toml /code
+COPY ./poetry.lock /code
 
 RUN pip install poetry
 
