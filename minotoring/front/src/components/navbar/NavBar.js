@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Styles
-import '../../sass/navbar/navbar.scss';
-
 // SVGs
 import { ReactComponent as Logo } from '../../img/logos/minotaur.svg';
 import { ReactComponent as Features } from '../../img/logos/features.svg';
@@ -11,22 +8,24 @@ import { ReactComponent as Predictions } from '../../img/logos/prediction.svg';
 
 export default function NavBar(props) {
   return (
-    <ul className="nav">
+    <ul id="nav">
       <li>
         <h1>
           <Link to="/">
-            <Logo className="logo" />
+            <Logo className="icon" />
           </Link>
         </h1>
       </li>
       <li>
-        <Link to="/predictions">
-          <Predictions className="logo" />
+        <Link to="/features">
+          <Features className="icon" />
+          <p>Features</p>
         </Link>
       </li>
       <li>
-        <Link to="/features">
-          <Features className="logo" />
+        <Link to="/predictions">
+          <Predictions className="icon" />
+          <p>Predictions</p>
         </Link>
       </li>
     </ul>
