@@ -7,13 +7,13 @@ import requests
 
 from minotoring.data_managers.file_manager import FileManager
 from minotoring.data_managers.preprocessors import type2preprocessor
+from minotoring.constants import BACK_END_ROUTE
 
-
-def monitor_train_features(project_name: str):
+def monitor_training_features(project_name: str):
     return _decorator_monitor_features_factory(project_name, training=True)
 
 
-def monitor_predict_features(project_name: str):
+def monitor_prediction_features(project_name: str):
     return _decorator_monitor_features_factory(project_name, training=False)
 
 
@@ -34,7 +34,7 @@ def _decorator_monitor_features_factory(project_name: str, training: bool = Fals
                     feature_data_container.update_feature_predict_phase(feature_name, feature_data, data_type)
             file_manager.write_feature_data(feature_data_container)
 
-            requests.post("http://0.0.0.0:5000/data", json=feature_data_container.data)
+            requests.post(BACK_END_ROUTE, json=feature_data_container.data)
             return func(data, *args, **kwargs)
 
         return wrapper_data

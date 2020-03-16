@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Callable, Any
 
+from minotoring.data_managers.data_types import DataType
 from minotoring.data_managers.statistics import statistic_library
 
 
@@ -8,7 +9,7 @@ from minotoring.data_managers.statistics import statistic_library
 class PredictionData:
     data: Dict = field(default_factory=lambda: {
         "predictions": {
-            "values":[]
+            "values": []
         }
     })
 
@@ -20,6 +21,6 @@ class PredictionData:
         self.data["predictions"]["values"].extend(data)
 
     def _compute_predictions_statistics(self,
-                                        statistics: Dict[str, Dict[str, Callable[[List], Any]]]):
-        for statistic_name, statistic_func in statistics.get("float", {}).items():
+                                        statistics: Dict[DataType, Dict[str, Callable[[List], Any]]]):
+        for statistic_name, statistic_func in statistics.get(DataType.FLOAT, {}).items():
             self.data["predictions"][statistic_name] = statistic_func(self.data["predictions"]["values"])
