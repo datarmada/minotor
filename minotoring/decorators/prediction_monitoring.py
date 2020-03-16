@@ -20,6 +20,6 @@ def monitor_predictions(project_name: str):
 
             return result
 
-        return wrapper_data()
+        return wrapper_data
 
     return decorator_monitor
