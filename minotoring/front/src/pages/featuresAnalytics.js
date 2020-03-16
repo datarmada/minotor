@@ -8,7 +8,19 @@ import Table from '../components/base-elements/Table';
 export default function FeaturesAnalytics(props) {
   const [data, setData] = useState([]);
 
+  // Event functions
+  const onTrClicked = (e) => {
+    const tr = e.currentTarget;
+    if (tr.dataset.header == 'false') {
+      const selectedFeature = tr.firstChild.innerText;
+      // TODO: display graphs related to selected feature
+      console.log(`User has selected the feature : ${selectedFeature}`);
+    }
+  };
+
+  // Constants
   const TABLE_PROPS = {
+    onTrClicked,
     orderedKeys: ['featureName', 'mean', 'std', 'nb_nan'],
     verboseKeyNames: {
       featureName: 'Name of the features',
