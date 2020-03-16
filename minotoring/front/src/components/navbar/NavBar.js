@@ -1,19 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../sass/navbar/navbar.scss';
+
+// SVGs
+import { ReactComponent as Logo } from '../../img/logos/minotaur.svg';
+import { ReactComponent as Features } from '../../img/logos/features.svg';
+import { ReactComponent as Predictions } from '../../img/logos/prediction.svg';
 
 export default function NavBar(props) {
   return (
-    <div>
-      <h1>
-        <Link to="/">Minotor.ai</Link>
-      </h1>
-      <h2>
-        <Link to="/predictions">Predictions analytics</Link>
-      </h2>
-      <h2>
-        <Link to="/features">Features analytics</Link>
-      </h2>
-    </div>
+    <ul id="nav">
+      <li>
+        <h1>
+          <Link to="/">
+            <Logo className="icon" />
+          </Link>
+        </h1>
+      </li>
+      <li>
+        <Link to="/features">
+          <Features className="icon" />
+          <p>Features</p>
+        </Link>
+      </li>
+      <li>
+        <Link to="/predictions">
+          <Predictions className="icon" />
+          <p>Predictions</p>
+        </Link>
+      </li>
+    </ul>
   );
 }

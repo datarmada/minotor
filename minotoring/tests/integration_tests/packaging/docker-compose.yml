@@ -9,5 +9,5 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     ports:
-      - "3000:8888"
+      - "8000:8888"
 
