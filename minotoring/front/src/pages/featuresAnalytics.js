@@ -20,6 +20,7 @@ export default function FeaturesAnalytics(props) {
     };
     ws.onmessage = function(e) {
       setData(JSON.parse(e.data).area);
+      console.log(e.data)
     };
     ws.onclose = function(e) {
       console.log('WebSocket closed');

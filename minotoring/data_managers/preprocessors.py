@@ -4,6 +4,8 @@ from typing import List, Tuple
 import numpy as np
 import pandas as pd
 
+from minotoring.data_managers.data_types import DataType
+
 
 class PreprocessorABC(ABC):
     @abstractmethod
@@ -16,14 +18,14 @@ class PreprocessorABC(ABC):
 
 
 class NumpyArrayPreprocessor(PreprocessorABC):
-    def preprocess(self, data: np.ndarray) -> List[Tuple[str, List, str]]:
+    def preprocess(self, data: np.ndarray) -> List[Tuple[str, List, DataType]]:
         data = data.transpose()
-        return [(f"feature_{i}", feature_data.tolist(), feature_data.dtype) for i, feature_data in enumerate(data)]
+        return [(f"feature_{i}", feature_data.tolist(), DataType.type2value(feature_data.dtype)) for i, feature_data in enumerate(data)]
 
 
 class PandasDataFramePreprocessor(PreprocessorABC):
-    def preprocess(self, data) -> List[Tuple[str, List, str]]:
-        return [(col, data[col].values.tolist(), data[col].dtype) for col in data]
+    def preprocess(self, data) -> List[Tuple[str, List, DataType]]:
+        return [(col, data[col].values.tolist(), DataType.type2value(data[col].dtype)) for col in data]
 
 
 type2preprocessor = {
