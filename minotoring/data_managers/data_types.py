@@ -10,6 +10,6 @@ class DataType(Enum):
 
     @staticmethod
     def type2value(dtype) -> 'DataType':
-        for element in DataType:
-            if dtype == element.value:
-                return element
+        return val if val in (elt.value for elt in DataType) else DataType.OTHER
+
+    
