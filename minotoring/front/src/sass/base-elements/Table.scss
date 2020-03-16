@@ -1,17 +1,20 @@
-.table,
-.table > tbody {
-  display: block;
-  table-layout: fixed;
+table.table {
   width: 100%;
   border-spacing: 0;
   padding: 0;
   border-collapse: collapse;
+  text-align: left;
+
+  thead tr:hover {
+    box-shadow: inherit;
+    z-index: inherit;
+    background-color: inherit;
+  }
 
   tr {
     padding-bottom: 10px;
     padding-top: 10px;
     box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
-    display: flex;
     position: relative;
 
     &:hover {
@@ -19,10 +22,12 @@
         0 1px 3px 1px rgba(60, 64, 67, 0.15);
       z-index: 1;
       background-color: rgba(242, 245, 245, 0.8);
+      cursor: pointer;
     }
 
-    td {
-      padding: 5px 10px;
+    td,
+    th {
+      padding: 10px 20px;
 
       &:first-child {
         font-weight: bold;

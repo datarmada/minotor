@@ -5,29 +5,36 @@ import PropTypes from 'prop-types';
 import { compose } from '../../utils/lodash/flowRight';
 
 export default function Table(props) {
-  const { keys, data } = props;
+  const { data, orderedKeys, verboseKeyNames } = props;
 
   // Utils
   // Note: the name are based on HTML tags => td <td> or trs for multiple <tr>
-  const getRowData = (keys) => (row) => keys.map((key) => row[key]);
-  const tdWrapper = (data) => data.map((elt) => <td>{elt}</td>);
-  const thWrapper = (keys) => keys.map((elt) => <th>{elt}</th>);
-  const trWrapper = (tds) => <tr>{tds}</tr>;
-  const createTrsFromRows = compose(trWrapper, tdWrapper, getRowData(keys));
-  const createThsFromKeys = compose(trWrapper, thWrapper);
+  const getRowData = (row) => orderedKeys.map((key) => row[key]);
+  const getVbKeyName = (key) => (verboseKeyNames ? verboseKeyNames[key] : key);
+
+  const tdWrapper = (elt) => <td>{elt}</td>;
+  const thWrapper = (elt) => <th>{elt}</th>;
+  const trWrapper = (elt) => <tr>{elt}</tr>;
+  const multiWrapper = (func) => (data) => data.map(func);
+
+  const createTrsFromRow = compose(trWrapper, multiWrapper(tdWrapper), getRowData);
+  const createThsFromKeys = compose(thWrapper, getVbKeyName);
 
   // Building rows
-  // const ths = keys.map(createThsFromKeys);
-  const trs = data.map(createTrsFromRows);
+  const ths = trWrapper(orderedKeys.map(createThsFromKeys));
+  const trs = data.map(createTrsFromRow);
 
+  // NOTE: warnings are thrown here because not key prop set
   return (
     <table className="table">
+      <thead>{ths}</thead>
       <tbody>{trs}</tbody>
     </table>
   );
 }
 
 Table.propTypes = {
-  keys: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
+  orderedKeys: PropTypes.array.isRequired,
+  verboseKeyNames: PropTypes.object,
 };

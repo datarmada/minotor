@@ -9,16 +9,28 @@ export default function FeaturesAnalytics(props) {
   const [data, setData] = useState([]);
 
   const TABLE_PROPS = {
-    keys: ['featureName', 'mean', 'std', 'nb_nan'],
+    orderedKeys: ['featureName', 'mean', 'std', 'nb_nan'],
+    verboseKeyNames: {
+      featureName: 'Name of the features',
+      mean: 'Mean',
+      std: 'Standard Deviation',
+      nb_nan: 'Number of NaN',
+    },
     data: [
       {
-        featureName: 'feature 1',
+        featureName: 'size',
         mean: 0.56,
         std: 0.56,
         nb_nan: 0.56,
       },
       {
-        featureName: 'feature 2',
+        featureName: 'weight',
+        mean: 0.56,
+        std: 0.56,
+        nb_nan: 0.56,
+      },
+      {
+        featureName: 'age',
         mean: 0.56,
         std: 0.56,
         nb_nan: 0.56,
@@ -49,7 +61,7 @@ export default function FeaturesAnalytics(props) {
 
   return (
     <div id="features-analytics">
-      <h1>Features Analytics</h1>
+      <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
       <Table {...TABLE_PROPS} />
       <AreaPlot {...AREA_SERIES_PROPS} />
       <BarPlot {...AREA_SERIES_PROPS} />
