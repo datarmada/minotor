@@ -16,10 +16,10 @@ const verboseKeyNames = {
 };
 
 const transformData = rawData =>
-  mapObjectToArray(rawData, transformSingleFeature);
+  mapObjectItems(rawData, transformSingleFeature);
 
 const transformSingleFeature = (featureName, featureData) =>
-  Object.assign({ featureName: featureName }, featureData.predict);
+  Object.assign({ featureName: featureName, ...featureData.predict});
 
-const mapObjectToArray = (obj, func) =>
+const mapObjectItems = (obj, func) =>
   Object.entries(obj).map(([key, value]) => func(key, value));
