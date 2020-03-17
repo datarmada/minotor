@@ -1,34 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// Utils
-import { compose } from '../../utils/lodash/flowRight';
-
 export default function Table(props) {
   const { data, onTrClicked, orderedKeys, verboseKeyNames } = props;
+  const FIRST_KEY = orderedKeys[0];
 
   // Utils
-  // Note: the name are based on HTML tags => td <td> or trs for multiple <tr>
-  const getRowData = (row) => orderedKeys.map((key) => row[key]);
-  const getVbKeyName = (key) => (verboseKeyNames ? verboseKeyNames[key] : key);
-
-  const tdWrapper = (elt) => <td>{elt}</td>;
-  const thWrapper = (elt) => <th>{elt}</th>;
-  const trWrapper = (elt, isHeader) => (
-    <tr data-header={isHeader ? 'true' : 'false'} onClick={onTrClicked}>
-      {elt}
-    </tr>
-  );
-  const multiWrapper = (func) => (data) => data.map(func);
-
-  const createTrsFromRow = compose(trWrapper, multiWrapper(tdWrapper), getRowData);
-  const createThsFromKeys = compose(thWrapper, getVbKeyName);
+  const buildTds = (row, keys) => keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
 
   // Building rows
-  const ths = trWrapper(orderedKeys.map(createThsFromKeys), true);
-  const trs = data.map(createTrsFromRow);
+  const ths = (
+    <tr>
+      {orderedKeys.map((key) => (
+        <th key={key}>{verboseKeyNames ? verboseKeyNames[key] : key}</th>
+      ))}
+    </tr>
+  );
+  const trs = data.map((row) => (
+    <tr key={row[FIRST_KEY]} onClick={onTrClicked}>
+      {buildTds(row, orderedKeys)}
+    </tr>
+  ));
 
-  // NOTE: warnings are thrown here because not key prop set
   return (
     <table className="table">
       <thead>{ths}</thead>
