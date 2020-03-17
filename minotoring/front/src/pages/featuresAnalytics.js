@@ -4,7 +4,7 @@ import Table from '../components/base-elements/Table';
 import AreaPlot from '../components/react-vis/AreaPlot';
 import BarPlot from '../components/react-vis/BarPlot';
 
-import { buildTableProps } from '../components/data-managers/FeatureDataAdapter';
+import { buildTableProps } from '../components/data-managers/FeatureTableAdapter';
 
 const onTrClicked = e => {
   const tr = e.currentTarget;
