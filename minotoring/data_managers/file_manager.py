@@ -7,11 +7,9 @@ from minotoring.data_managers.prediction_data import PredictionData
 
 
 class FileManager:
-    def __init__(self, project_name: str):
-        project_dir = DATA_DIR / project_name
-        project_dir.mkdir(exist_ok=True, parents=True)
-        self.feature_json_path: Path = project_dir / "feature_data.json"
-        self.prediction_json_path: Path = project_dir / "prediction_data.json"
+    def __init__(self):
+        self.feature_json_path: Path = DATA_DIR / "feature_data.json"
+        self.prediction_json_path: Path = DATA_DIR / "prediction_data.json"
 
     def get_feature_data(self) -> FeatureData:
         return FeatureData(
