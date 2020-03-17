@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -11,16 +11,26 @@ import PredictionsAnalytics from './pages/predictionsAnalytics';
 
 // Components
 import NavBar from './components/navbar/NavBar';
+import WebSocketComponent from './components/data-managers/WebSocketComponent';
 
 function App() {
+  const [featureData, setFeatureData] = useState({});
+
   return (
     <div className="App">
       <Router>
         <NavBar />
+        <WebSocketComponent setFeatureData={setFeatureData} />
         <Suspense fallback={<div>Loading...</div>} />
         <div id="main-switch">
           <Switch>
-            <Route exact path="/features" component={FeaturesAnalytics} />
+            <Route
+              exact
+              path="/features"
+              render={props => (
+                <FeaturesAnalytics {...props} data={featureData} />
+              )}
+            />
             <Route exact path="/predictions" component={PredictionsAnalytics} />
           </Switch>
         </div>
