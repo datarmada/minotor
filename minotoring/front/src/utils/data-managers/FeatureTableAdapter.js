@@ -1,5 +1,4 @@
-export function buildTableProps(rawData) {
-
+export default function buildTableProps(rawData) {
   return {
     orderedKeys: orderedKeys,
     verboseKeyNames: verboseKeyNames,
@@ -15,11 +14,12 @@ const verboseKeyNames = {
   nb_nan: 'Number of NaN'
 };
 
-const transformData = rawData =>
+export const transformData = rawData =>
   mapObjectItems(rawData, transformSingleFeature);
 
-const transformSingleFeature = (featureName, featureData) =>
-  Object.assign({ featureName: featureName, ...featureData.predict});
+export const transformSingleFeature = (featureName, featureData) => {
+  return { featureName: featureName, ...featureData.predict };
+};
 
-const mapObjectItems = (obj, func) =>
+export const mapObjectItems = (obj, func) =>
   Object.entries(obj).map(([key, value]) => func(key, value));

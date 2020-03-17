@@ -1,18 +1,16 @@
 import React from 'react';
 import Table from '../components/base-elements/Table';
 import useFeatureData from '../utils/data-managers/FeatureDataManager';
-import { buildTableProps } from '../utils/data-managers/FeatureTableAdapter';
+import buildTableProps from '../utils/data-managers/FeatureTableAdapter';
 // Components
 import AreaPlot from '../components/react-vis/AreaPlot';
 import BarPlot from '../components/react-vis/BarPlot';
 
-
-
 const onTrClicked = e => {
-    const tr = e.currentTarget;
-    const selectedFeature = tr.firstChild.innerText;
-    // TODO: display graphs related to selected feature
-    console.log(`User has selected the feature : ${selectedFeature}`);
+  const tr = e.currentTarget;
+  const selectedFeature = tr.firstChild.innerText;
+  // TODO: display graphs related to selected feature
+  console.log(`User has selected the feature : ${selectedFeature}`);
 };
 
 export default function FeaturesAnalytics(props) {
