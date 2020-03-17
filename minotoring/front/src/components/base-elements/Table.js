@@ -5,22 +5,9 @@ export default function Table(props) {
   const { data, onTrClicked, orderedKeys, verboseKeyNames } = props;
   const FIRST_KEY = orderedKeys[0];
 
-  // Utils
-  const buildTds = (row, keys) => keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
-
   // Building rows
-  const ths = (
-    <tr>
-      {orderedKeys.map((key) => (
-        <th key={key}>{verboseKeyNames ? verboseKeyNames[key] : key}</th>
-      ))}
-    </tr>
-  );
-  const trs = data.map((row) => (
-    <tr key={row[FIRST_KEY]} onClick={onTrClicked}>
-      {buildTds(row, orderedKeys)}
-    </tr>
-  ));
+  const ths = buildThs(orderedKeys, verboseKeyNames);
+  const trs = buildTrs(data, orderedKeys, onTrClicked);
 
   return (
     <table className="table">
@@ -32,6 +19,23 @@ export default function Table(props) {
 
 Table.propTypes = {
   data: PropTypes.array.isRequired,
+  onTrClicked: PropTypes.func,
   orderedKeys: PropTypes.array.isRequired,
   verboseKeyNames: PropTypes.object,
 };
+
+// Utils
+export const buildThs = (keys, names = null) => (
+  <tr>
+    {keys.map((key) => (
+      <th key={key}>{names ? names[key] : key}</th>
+    ))}
+  </tr>
+);
+export const buildTrs = (rows, keys, onClick = null) =>
+  rows.map((row) => (
+    <tr key={row[keys[0]]} onClick={onClick}>
+      {buildTds(row, keys)}
+    </tr>
+  ));
+const buildTds = (row, keys) => keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
