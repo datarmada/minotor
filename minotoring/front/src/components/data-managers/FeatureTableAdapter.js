@@ -1,12 +1,11 @@
-const mapObjectToArray = (obj, func) =>
-  Object.entries(obj).map(([key, value]) => func(key, value));
+export function buildTableProps(rawData) {
 
-const transformSingleFeature = (featureName, featureData) =>
-  Object.assign({ featureName: featureName }, featureData.predict);
-
-const transformData = rawData =>
-  mapObjectToArray(rawData, transformSingleFeature);
-
+  return {
+    orderedKeys: orderedKeys,
+    verboseKeyNames: verboseKeyNames,
+    data: transformData(rawData)
+  };
+}
 const orderedKeys = ['featureName', 'mean', 'std', 'nb_nan'];
 
 const verboseKeyNames = {
@@ -16,10 +15,11 @@ const verboseKeyNames = {
   nb_nan: 'Number of NaN'
 };
 
-export function buildTableProps(rawData) {
-  return {
-    orderedKeys: orderedKeys,
-    verboseKeyNames: verboseKeyNames,
-    data: transformData(rawData)
-  };
-}
+const transformData = rawData =>
+  mapObjectToArray(rawData, transformSingleFeature);
+
+const transformSingleFeature = (featureName, featureData) =>
+  Object.assign({ featureName: featureName }, featureData.predict);
+
+const mapObjectToArray = (obj, func) =>
+  Object.entries(obj).map(([key, value]) => func(key, value));

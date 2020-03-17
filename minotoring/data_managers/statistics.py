@@ -27,4 +27,5 @@ raw_statistic_library = {
     "nb_nan": _nb_nan
 }
 
+# This is to ensure None values are transformed to np.nan so that is is handled properly by numpy functions
 statistic_library = _compose_library_with_np_array(raw_statistic_library)
