@@ -25,7 +25,6 @@ Table.propTypes = {
 };
 
 // Utils
-const buildTds = (row, keys) => keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
 export const buildThs = (keys, names = null) => (
   <tr>
     {keys.map((key) => (
@@ -39,3 +38,4 @@ export const buildTrs = (rows, keys, onClick = null) =>
       {buildTds(row, keys)}
     </tr>
   ));
+const buildTds = (row, keys) => keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
