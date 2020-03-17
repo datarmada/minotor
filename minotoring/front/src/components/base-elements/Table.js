@@ -12,7 +12,7 @@ export default function Table(props) {
   const ths = (
     <tr>
       {orderedKeys.map((key) => (
-        <td key={key}>{verboseKeyNames[key]}</td>
+        <th key={key}>{verboseKeyNames ? verboseKeyNames[key] : key}</th>
       ))}
     </tr>
   );
