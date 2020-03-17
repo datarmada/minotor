@@ -8,7 +8,11 @@
 @import 'main/variables';
 
 // Base Elements
+@import 'base-elements/Table';
 @import 'base-elements/titles';
+
+// Pages
+@import 'pages/featuresAnalytics';
 
 // Components
 @import 'navbar/NavBar';

@@ -18,12 +18,12 @@ function App() {
       <Router>
         <NavBar />
         <Suspense fallback={<div>Loading...</div>} />
-        <Switch>
-          <div id="main-switch">
+        <div id="main-switch">
+          <Switch>
             <Route exact path="/features" component={FeaturesAnalytics} />
             <Route exact path="/predictions" component={PredictionsAnalytics} />
-          </div>
-        </Switch>
+          </Switch>
+        </div>
       </Router>
     </div>
   );
