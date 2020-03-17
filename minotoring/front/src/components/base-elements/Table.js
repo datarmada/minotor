@@ -5,6 +5,9 @@ export default function Table(props) {
   const { data, onTrClicked, orderedKeys, verboseKeyNames } = props;
   const FIRST_KEY = orderedKeys[0];
 
+  // Utils
+  const buildTds = (row, keys) => keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
+
   // Building rows
   const ths = (
     <tr>
@@ -15,9 +18,7 @@ export default function Table(props) {
   );
   const trs = data.map((row) => (
     <tr key={row[FIRST_KEY]} onClick={onTrClicked}>
-      {orderedKeys.map((key, idx) => (
-        <td key={idx}>{row[key]}</td>
-      ))}
+      {buildTds(row, orderedKeys)}
     </tr>
   ));
 
