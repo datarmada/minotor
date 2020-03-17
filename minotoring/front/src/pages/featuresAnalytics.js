@@ -67,7 +67,10 @@ export default function FeaturesAnalytics(props) {
     ws.onclose = function(e) {
       console.log('WebSocket closed');
     };
-  }, []);
+    return function cleanup() {
+      ws.close()
+    }
+  });
 
   return (
     <div id="features-analytics">
