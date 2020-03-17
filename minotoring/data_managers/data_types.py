@@ -5,11 +5,15 @@ class DataType(Enum):
     INT = "int"
     FLOAT = "float"
     CATEGORY = "category"
-    STRING = "string"
+    BOOL = "bool"
     OTHER = "other"
 
     @staticmethod
     def type2value(dtype) -> 'DataType':
-        return val if val in (elt.value for elt in DataType) else DataType.OTHER
-
-    
+        for element in DataType:
+            try:
+                if dtype == element.value:
+                    return element
+            except TypeError:
+                continue
+        return DataType.OTHER
