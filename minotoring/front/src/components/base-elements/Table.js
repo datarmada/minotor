@@ -26,7 +26,7 @@ Table.propTypes = {
 
 // Utils
 export const buildTds = (row, keys) => keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
-export const buildThs = (keys, names) => (
+export const buildThs = (keys, names = null) => (
   <tr>
     {keys.map((key) => (
       <th key={key}>{names ? names[key] : key}</th>
