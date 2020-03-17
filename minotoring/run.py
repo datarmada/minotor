@@ -1,7 +1,10 @@
+import json
+
 from tornado import ioloop, web, websocket
 from tornado.escape import json_decode
 
 from minotoring.constants import PACKAGE_PATH
+from minotoring.data_managers.file_manager import FileManager
 
 # Defining constants
 REACT_BUILD_PATH = PACKAGE_PATH / 'front/build'
@@ -12,7 +15,13 @@ class DashboardHandler(websocket.WebSocketHandler):
     websockets = set()
 
     def open(self):
+        # Registering WebSocket
         DashboardHandler.websockets.add(self)
+
+        # Sending cached data to front
+        fm = FileManager()
+        cached_data = {**fm.get_feature_data().data, **fm.get_prediction_data().data}
+        DashboardHandler.send_data(json.dumps(cached_data))
 
     def on_message(self, data):
         pass
