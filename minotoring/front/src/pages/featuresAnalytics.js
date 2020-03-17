@@ -11,11 +11,9 @@ export default function FeaturesAnalytics(props) {
   // Event functions
   const onTrClicked = (e) => {
     const tr = e.currentTarget;
-    if (tr.dataset.header == 'false') {
-      const selectedFeature = tr.firstChild.innerText;
-      // TODO: display graphs related to selected feature
-      console.log(`User has selected the feature : ${selectedFeature}`);
-    }
+    const selectedFeature = tr.firstChild.innerText;
+    // TODO: display graphs related to selected feature
+    console.log(`User has selected the feature : ${selectedFeature}`);
   };
 
   // Constants
