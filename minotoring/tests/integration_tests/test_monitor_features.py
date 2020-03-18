@@ -21,7 +21,7 @@ class TestMonitorTrainingFeatures(unittest.TestCase):
         @monitor_prediction_features
         def identity_function(data):
             return data
-        arr = np.array([[1.0, 1.3], [1.4, np.nan]])
+        arr = np.array([[1.0, 1.1], [1.2, np.nan]])
         try:
             identity_function(arr)
         except Exception:
