@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../components/base-elements/Table';
-import useFeatureData from '../utils/data-managers/FeatureDataManager';
+import useFeatureData from '../utils/data-managers/UseFeatureData';
 import buildTableProps from '../utils/data-managers/FeatureTableAdapter';
 // Components
 import AreaPlot from '../components/react-vis/AreaPlot';
