@@ -20,22 +20,21 @@ Table.propTypes = {
   data: PropTypes.array.isRequired,
   onTrClicked: PropTypes.func,
   orderedKeys: PropTypes.array.isRequired,
-  verboseKeyNames: PropTypes.object
+  verboseKeyNames: PropTypes.object,
 };
 
 // Utils
 export const buildThs = (keys, names = null) => (
   <tr>
-    {keys.map(key => (
+    {keys.map((key) => (
       <th key={key}>{names ? names[key] : key}</th>
     ))}
   </tr>
 );
 export const buildTrs = (rows, keys, onClick = null) =>
-  rows.map(row => (
+  rows.map((row) => (
     <tr key={row[keys[0]]} onClick={onClick}>
       {buildTds(row, keys)}
     </tr>
   ));
-const buildTds = (row, keys) =>
-  keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
+const buildTds = (row, keys) => keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
