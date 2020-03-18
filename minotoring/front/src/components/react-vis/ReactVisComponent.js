@@ -22,7 +22,6 @@ export default function ReactVisComponent({ children, ...props }) {
     title: {
       fontWeight: 900,
       fontSize: '16px',
-      fill: 'black',
     },
   };
 

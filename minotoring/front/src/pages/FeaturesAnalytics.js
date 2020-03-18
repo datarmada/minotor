@@ -8,7 +8,7 @@ import ScatterPlot from '../components/react-vis/ScatterPlot';
 
 export default function FeaturesAnalytics(props) {
   const [activeFeature, setActiveFeature] = useState(null);
-  const [plotData, setAreaPlotData] = useState([]);
+  const [plotData, setPlotData] = useState([]);
   const featureData = useFeatureData();
 
   // Constants
@@ -30,9 +30,20 @@ export default function FeaturesAnalytics(props) {
       const histTrain = hist2reactVisData(data.train.hist);
       const histPredict = hist2reactVisData(data.predict.hist);
       setActiveFeature(selectedFeature);
-      setAreaPlotData([
-        { data: histTrain, name: 'Train Data', color: 'grey' },
-        { data: histPredict, name: 'Predict Data' },
+      setPlotData([
+        {
+          data: histTrain,
+          name: 'Train Data',
+          color: 'grey',
+          type: 'train',
+        },
+        {
+          data: histPredict,
+          values: data.predict.values,
+          mean: data.predict.mean,
+          name: 'Predict Data',
+          type: 'predict',
+        },
       ]);
     }
   };
@@ -42,7 +53,7 @@ export default function FeaturesAnalytics(props) {
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
       <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
       <AreaPlot {...REACT_VIS_PROPS} />
-      <ScatterPlot {...REACT_VIS_PROPS} />
+      <ScatterPlot type="outliers" {...REACT_VIS_PROPS} />
     </div>
   );
 }
