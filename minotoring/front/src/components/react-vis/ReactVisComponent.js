@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { Crosshair, HorizontalGridLines, VerticalGridLines, XAxis, XYPlot, YAxis } from 'react-vis';
+import {
+  Crosshair,
+  DiscreteColorLegend,
+  HorizontalGridLines,
+  VerticalGridLines,
+  XAxis,
+  XYPlot,
+  YAxis,
+} from 'react-vis';
 
 export default function ReactVisComponent({ children, ...props }) {
-  const { xTitle, yTitle, width, height, data, trainData, predictData } = props;
+  const { xTitle, yTitle, width, height, data } = props;
   const [crosshairValues, setCrosshairValues] = useState([]);
 
   // If no data at all, return null component
-  if (!(data || (trainData && predictData))) {
+  if (data.length < 1) {
     return null;
   }
   // Constants
@@ -17,35 +25,30 @@ export default function ReactVisComponent({ children, ...props }) {
       fill: 'black',
     },
   };
-  const childMaker = childGenerator(children, setCrosshairValues);
 
-  // Conditionnal child creation: 2 cases, if data is set
-  // or if trainData && predictData are
-  const renderedChildren = [];
-  if (data) {
-    const child = childMaker(data);
-    renderedChildren.push(child);
-  } else {
-    const trainChild = childMaker(trainData, 'grey');
-    const predictChild = childMaker(predictData);
-    renderedChildren.push(trainChild, predictChild);
-  }
+  const layerMaker = layerGenerator(children, setCrosshairValues);
+  const renderedLayers = data.map(({ data, name, color }) => layerMaker(data, name, color));
 
   return (
     <XYPlot height={height} width={width} onMouseLeave={() => setCrosshairValues([])}>
       <VerticalGridLines />
       <HorizontalGridLines />
-      {renderedChildren}
+      {renderedLayers}
       <XAxis title={xTitle} style={AXIS_STYLE} />
       <YAxis title={yTitle} style={AXIS_STYLE} />
+      <DiscreteColorLegend
+        items={data.map(({ name, color }) => ({ title: name, color }))}
+        style={{ position: 'absolute', top: 0, right: 0 }}
+      />
       <Crosshair values={crosshairValues} />
     </XYPlot>
   );
 }
 
 // Utils
-const childGenerator = (children, setCrosshairValues) => (data, color = '#79C7E3') => (
+const layerGenerator = (children, setCrosshairValues) => (data, name, color = '#79C7E3') => (
   <children.type
+    key={name}
     {...children.props}
     color={color}
     opacity={0.5}
