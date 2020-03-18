@@ -5,7 +5,7 @@ import numpy as np
 from minotoring.decorators.feature_monitoring import monitor_training_features, monitor_prediction_features
 
 
-class TestMonitorTrainingFeatures(unittest.TestCase):
+class TestMonitorFeatures(unittest.TestCase):
     def test_monitor_training_features(self):
         @monitor_training_features
         def identity_function(data):
