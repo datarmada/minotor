@@ -17,38 +17,17 @@ export default function ReactVisComponent({ children, ...props }) {
       fill: 'black',
     },
   };
+  const childMaker = childGenerator(children, setCrosshairValues);
 
   // Conditionnal child creation: 2 cases, if data is set
   // or if trainData && predictData are
   const renderedChildren = [];
   if (data) {
-    const child = (
-      <children.type
-        {...children.props}
-        opacity={0.5}
-        data={data.map(({ x, y }) => ({ x, y: y + 1 }))}
-        onNearestX={(value, { index }) => setCrosshairValues([value])}
-      />
-    );
+    const child = childMaker(data);
     renderedChildren.push(child);
   } else {
-    const trainChild = (
-      <children.type
-        {...children.props}
-        color="grey"
-        opacity={0.5}
-        data={trainData}
-        onNearestX={(value, { index }) => setCrosshairValues([value])}
-      />
-    );
-    const predictChild = (
-      <children.type
-        {...children.props}
-        opacity={0.5}
-        data={predictData}
-        onNearestX={(value, { index }) => setCrosshairValues([value])}
-      />
-    );
+    const trainChild = childMaker(trainData, 'grey');
+    const predictChild = childMaker(predictData);
     renderedChildren.push(trainChild, predictChild);
   }
 
@@ -56,10 +35,21 @@ export default function ReactVisComponent({ children, ...props }) {
     <XYPlot height={height} width={width} onMouseLeave={() => setCrosshairValues([])}>
       <VerticalGridLines />
       <HorizontalGridLines />
-      {renderedChildren.map((child) => child)}
+      {renderedChildren}
       <XAxis title={xTitle} style={AXIS_STYLE} />
       <YAxis title={yTitle} style={AXIS_STYLE} />
       <Crosshair values={crosshairValues} />
     </XYPlot>
   );
 }
+
+// Utils
+const childGenerator = (children, setCrosshairValues) => (data, color = '#79C7E3') => (
+  <children.type
+    {...children.props}
+    color={color}
+    opacity={0.5}
+    data={data}
+    onNearestX={(value, { index }) => setCrosshairValues([value])}
+  />
+);
