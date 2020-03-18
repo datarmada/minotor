@@ -1,6 +1,5 @@
 import React from 'react';
 import Table from '../components/base-elements/Table';
-import useFeatureData from '../utils/data-managers/UseFeatureData';
 import buildTableProps from '../utils/data-managers/FeatureTableAdapter';
 // Components
 import AreaPlot from '../components/react-vis/AreaPlot';
@@ -14,8 +13,6 @@ const onTrClicked = e => {
 };
 
 export default function FeaturesAnalytics(props) {
-  const featureData = useFeatureData();
-
   // Constants
   const AREA_SERIES_PROPS = {
     xTitle: "I'm axis X",
@@ -28,7 +25,10 @@ export default function FeaturesAnalytics(props) {
   return (
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
-      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
+      <Table
+        {...buildTableProps(props.featureData)}
+        onTrClicked={onTrClicked}
+      />
       <AreaPlot {...AREA_SERIES_PROPS} />
       <BarPlot {...AREA_SERIES_PROPS} />
     </div>

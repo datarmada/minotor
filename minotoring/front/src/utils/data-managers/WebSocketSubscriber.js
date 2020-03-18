@@ -10,6 +10,15 @@ class WebSocketSubscriber {
     };
   }
 
+  subscribeToPredictionData(callback) {
+    this.ws.addEventListener('message', function(e) {
+      const data = JSON.parse(e.data);
+      if (data.predictions) {
+        callback(data.predictions);
+      }
+    });
+  }
+
   subscribeToFeatureData(callback) {
     this.ws.addEventListener('message', function(e) {
       const data = JSON.parse(e.data);
