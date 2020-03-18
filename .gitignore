@@ -6,3 +6,4 @@ node_modules
 /minotoring/front/build/
 __pycache__
 *.pyc
+.vscode/settings.json

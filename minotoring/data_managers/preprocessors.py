@@ -20,15 +20,20 @@ class PreprocessorABC(ABC):
 class NumpyArrayPreprocessor(PreprocessorABC):
     def preprocess(self, data: np.ndarray) -> List[Tuple[str, List, DataType]]:
         data = data.transpose()
-        return [(f"feature_{i}", feature_data.tolist(), DataType.type2value(feature_data.dtype)) for i, feature_data in enumerate(data)]
+        return [(f"feature_{i}", _replace_nan_with_none(feature_data), DataType.type2value(feature_data.dtype)) for
+                i, feature_data in enumerate(data)]
 
 
 class PandasDataFramePreprocessor(PreprocessorABC):
     def preprocess(self, data) -> List[Tuple[str, List, DataType]]:
-        return [(col, data[col].values.tolist(), DataType.type2value(data[col].dtype)) for col in data]
+        return [(col, _replace_nan_with_none(data[col].values), DataType.type2value(data[col].dtype)) for col in data]
 
 
 type2preprocessor = {
     np.ndarray: NumpyArrayPreprocessor(),
     pd.DataFrame: PandasDataFramePreprocessor()
 }
+
+
+def _replace_nan_with_none(array: np.ndarray) -> List:
+    return np.where(np.isnan(array), None, array).tolist()

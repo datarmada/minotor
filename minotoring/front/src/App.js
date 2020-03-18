@@ -1,16 +1,12 @@
 import React, { Suspense } from 'react';
-
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-// Styles
-import './sass/main.scss';
-
-// Pages
-import FeaturesAnalytics from './pages/featuresAnalytics';
-import PredictionsAnalytics from './pages/predictionsAnalytics';
-
 // Components
 import NavBar from './components/navbar/NavBar';
+// Pages
+import FeaturesAnalytics from './pages/FeaturesAnalytics';
+import PredictionsAnalytics from './pages/PredictionsAnalytics';
+// Styles
+import './sass/main.scss';
 
 function App() {
   return (

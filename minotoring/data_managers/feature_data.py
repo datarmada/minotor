@@ -14,13 +14,13 @@ class FeatureData:
     def update_feature_train_phase(self, feature_name, data: List, data_type: DataType):
         if feature_name not in self.data["features"]:
             self._add_feature(feature_name, data_type)
-        self._compute_feature_statistics(feature_name, statistic_library, data_type, data)
+        self._compute_feature_statistics(feature_name, statistic_library, data)
 
     def update_feature_predict_phase(self, feature_name, data: List, data_type: DataType):
         if feature_name not in self.data["features"]:
             self._add_feature(feature_name, data_type)
         self._add_feature_inference_values(feature_name, data)
-        self._compute_feature_statistics(feature_name, statistic_library, data_type)
+        self._compute_feature_statistics(feature_name, statistic_library)
 
     def _add_feature(self, feature_name: str, data_type: DataType):
         self.data["features"][feature_name] = {
@@ -35,10 +35,13 @@ class FeatureData:
 
     def _compute_feature_statistics(self,
                                     feature_name: str,
-                                    statistics: Dict[DataType, Dict[str, Callable[[List], Any]]],
-                                    data_type: DataType,
+                                    statistics: Dict[str, Callable[[List], Any]],
                                     training_data: List = None):
         feature_data = training_data if training_data is not None \
             else self.data["features"][feature_name]["predict"]["values"]
-        for statistic_name, statistic_func in statistics.get(data_type, {}).items():
-            self.data["features"][feature_name]["predict" if training_data is None else "train"][statistic_name] = statistic_func(feature_data)
+        for statistic_name, statistic_func in statistics.items():
+            self.data["features"][feature_name][_get_key(training_data is not None)][statistic_name] = statistic_func(feature_data)
+
+
+def _get_key(is_training: bool) -> str:
+    return "train" if is_training else "predict"

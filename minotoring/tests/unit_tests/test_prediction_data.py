@@ -2,7 +2,6 @@ import unittest
 
 import numpy as np
 
-from minotoring.data_managers.data_types import DataType
 from minotoring.data_managers.prediction_data import PredictionData
 
 
@@ -29,10 +28,8 @@ class TestPredictionData(unittest.TestCase):
         project_data = PredictionData()
         project_data._add_prediction_values([1, 2])
         statistic_library = {
-            DataType.FLOAT: {
-                "identity": lambda x: x,
-                "mean": lambda x: np.mean(x, axis=0).tolist()
-            }
+            "identity": lambda x: x,
+            "mean": lambda x: np.mean(x, axis=0).tolist()
         }
         project_data._compute_predictions_statistics(statistic_library)
         self.assertListEqual(project_data.data["predictions"]["identity"], [1, 2])
@@ -42,10 +39,8 @@ class TestPredictionData(unittest.TestCase):
         project_data = PredictionData()
         project_data._add_prediction_values([[3, 4], [1, 2]])
         statistic_library = {
-            DataType.FLOAT: {
-                "identity": lambda x: x,
-                "mean": lambda x: np.mean(x, axis=0).tolist()
-            }
+            "identity": lambda x: x,
+            "mean": lambda x: np.mean(x, axis=0).tolist()
         }
         project_data._compute_predictions_statistics(statistic_library)
         self.assertListEqual(project_data.data["predictions"]["identity"], [[3, 4], [1, 2]])
