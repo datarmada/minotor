@@ -5,7 +5,7 @@ import ReactVisComponent from './ReactVisComponent';
 export default function ScatterPlot(props) {
   const { type, data } = props;
 
-  if (type === 'outliers' && data.length != 0) {
+  if (type === 'outliers' && data.length !== 0) {
     const outlierData = getOutlierData(data);
     props = {
       ...props,
