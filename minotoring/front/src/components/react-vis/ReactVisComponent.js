@@ -22,7 +22,11 @@ export default function ReactVisComponent({ children, ...props }) {
 
   // Generating layers
   const layerMaker = layerGenerator(children, setCrosshairValues);
-  const renderedLayers = data.map(({ data, name, color }) => layerMaker(data, name, color));
+  const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
+    idx == 0
+      ? layerMaker(true, data, layerData, name, color)
+      : layerMaker(false, data, layerData, name, color),
+  );
 
   return (
     <XYPlot height={height} width={width} onMouseLeave={() => setCrosshairValues([])}>
@@ -50,7 +54,7 @@ ReactVisComponent.propTypes = {
   //  },
   //  ...
   // ]
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   xTitle: PropTypes.string.isRequired,
   yTitle: PropTypes.string.isRequired,
   width: PropTypes.number,
@@ -76,13 +80,25 @@ ReactVisComponent.defaultProps = {
 };
 
 // Utils
-const layerGenerator = (children, setCrosshairValues) => (data, name, color = '#79C7E3') => (
+const layerGenerator = (children, setCrosshairValues) => (
+  first,
+  data,
+  layerData,
+  name,
+  color = '#79C7E3',
+) => (
   <children.type
     key={name}
     {...children.props}
     color={color}
     opacity={0.5}
-    data={data}
-    onNearestX={(value, { index }) => setCrosshairValues([value])}
+    data={layerData}
+    onNearestX={
+      first
+        ? (value, { index }) => {
+            setCrosshairValues(data.map((elt) => elt.data[index]));
+          }
+        : null
+    }
   />
 );
