@@ -1,4 +1,3 @@
-
 class WebSocketSubscriber {
   constructor() {
     this.ws = new WebSocket('ws://0.0.0.0:8888/ws');

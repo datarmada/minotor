@@ -5,13 +5,13 @@ export default function buildTableProps(rawData) {
     data: transformData(rawData)
   };
 }
-const orderedKeys = ['featureName', 'mean', 'std', 'nb_nan'];
+const orderedKeys = ['featureName', 'mean', 'std', 'nan_percentage'];
 
 const verboseKeyNames = {
   featureName: 'Name of the features',
   mean: 'Mean',
   std: 'Standard Deviation',
-  nb_nan: 'Number of NaN'
+  nan_percentage: '% of NaN'
 };
 
 export const transformData = rawData =>

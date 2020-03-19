@@ -32,9 +32,9 @@ raw_statistic_library = {
     "mean": np.nanmean,
     "std": np.nanstd,
     "hist": _histogram,
-    "nb_nan": _nan_percentage,
-    "95_percentile": lambda x: np.percentile(x, 95),
-    "05_percentile": lambda x: np.percentile(x, 5)
+    "nan_percentage": _nan_percentage,
+    "95_percentile": lambda x: np.nanpercentile(x, 95),
+    "05_percentile": lambda x: np.nanpercentile(x, 5)
 }
 
 # This is to ensure None values are transformed to np.nan so that is is handled properly by numpy functions
