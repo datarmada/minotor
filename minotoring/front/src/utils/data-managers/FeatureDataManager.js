@@ -13,11 +13,11 @@ export default function useFeatureData() {
 }
 
 // Props builders
-// NOTE: uniqueFeatureData data correspond to the data of a UNIQUE feature inside
+// NOTE: singleFeatureData data correspond to the data of a SINGLE feature inside
 // featureData returned in the hook above
-export const buildAreaPlotProps = (uniqueFeatureData) => {
-  const visTrain = hist2reactVisData(uniqueFeatureData.train.hist);
-  const visPredict = hist2reactVisData(uniqueFeatureData.predict.hist);
+export const buildAreaPlotProps = (singleFeatureData) => {
+  const visTrain = hist2reactVisData(singleFeatureData.train.hist);
+  const visPredict = hist2reactVisData(singleFeatureData.predict.hist);
   return [
     {
       data: visTrain,
@@ -31,9 +31,9 @@ export const buildAreaPlotProps = (uniqueFeatureData) => {
   ];
 };
 
-export const buildScatterPlotProps = (uniqueFeatureData) => {
-  const scatterPlotData = values2reactVisData(uniqueFeatureData.predict.values);
-  const [outliers, regularPoints] = splitOutliers(scatterPlotData, uniqueFeatureData.predict.mean);
+export const buildScatterPlotProps = (singleFeatureData) => {
+  const scatterPlotData = values2reactVisData(singleFeatureData.predict.values);
+  const [outliers, regularPoints] = splitOutliers(scatterPlotData, singleFeatureData.predict.mean);
   return [
     { data: regularPoints, name: 'Regular Points' },
     { data: outliers, name: 'Outliers', color: 'red' },
@@ -45,7 +45,7 @@ const splitOutliers = (data, mean) =>
   data.reduce(
     ([outliers, regularPoints], { x, y }) =>
       // TODO: of course this condition has no sense. This function has been
-      // been made only to show how it could be done based on a variable in uniqueFeatureData
+      // been made only to show how it could be done based on a variable in singleFeatureData
       // here, the mean
       y < 0.8 * mean || y > 1.2 * mean
         ? [[...outliers, { x, y }], regularPoints]
