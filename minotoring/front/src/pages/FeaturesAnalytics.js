@@ -34,25 +34,25 @@ export default function FeaturesAnalytics(props) {
 
 // Utils
 const buildPlots = (featureData, activeFeature) => {
-  let plots = null;
-  if (featureData && activeFeature) {
-    const data = featureData[activeFeature];
-    const areaPlotData = buildAreaPlotProps(data);
-    const scatterPlotData = buildScatterPlotProps(data);
-    plots = [
-      <AreaPlot
-        key="Title of area plot"
-        xTitle={activeFeature}
-        yTitle="Occurence"
-        data={areaPlotData}
-      />,
-      <ScatterPlot
-        key="Title of scatter plot"
-        xTitle="Order of appearance"
-        yTitle={activeFeature}
-        data={scatterPlotData}
-      />,
-    ];
+  if (!(featureData && activeFeature)) {
+    return null;
   }
+  const data = featureData[activeFeature];
+  const areaPlotData = buildAreaPlotProps(data);
+  const scatterPlotData = buildScatterPlotProps(data);
+  const plots = [
+    <AreaPlot
+      key="Title of area plot"
+      xTitle={activeFeature}
+      yTitle="Occurence"
+      data={areaPlotData}
+    />,
+    <ScatterPlot
+      key="Title of scatter plot"
+      xTitle="Order of appearance"
+      yTitle={activeFeature}
+      data={scatterPlotData}
+    />,
+  ];
   return plots;
 };
