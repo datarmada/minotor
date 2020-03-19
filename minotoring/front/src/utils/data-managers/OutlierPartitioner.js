@@ -1,4 +1,6 @@
-function partitionOutliers(singleFeatureData) {
+import { zip } from 'lodash';
+
+export default function partitionOutliers(singleFeatureData) {
   const [
     [regularValues, outlierValues],
     [regularIdx, outlierIdx]
@@ -8,7 +10,7 @@ function partitionOutliers(singleFeatureData) {
     singleFeatureData['05_percentile'],
     [[...Array(singleFeatureData.values.length).keys()]]
   );
-  return [regularIdx, regularValues], [outlierIdx, outlierValues];
+  return [zip(outlierIdx, outlierValues), zip(regularIdx, regularValues)];
 }
 
 function partitionWithThresholds(
