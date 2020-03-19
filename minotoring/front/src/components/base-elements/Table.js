@@ -1,9 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function Table(props) {
   const { data, onTrClicked, orderedKeys, verboseKeyNames } = props;
-  const FIRST_KEY = orderedKeys[0];
 
   // Building rows
   const ths = buildThs(orderedKeys, verboseKeyNames);

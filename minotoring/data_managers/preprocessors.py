@@ -36,4 +36,4 @@ type2preprocessor = {
 
 
 def _replace_nan_with_none(array: np.ndarray) -> List:
-    return np.where(np.isnan(array), None, array).tolist()
+    return [x if x is not np.nan else None for x in array]
