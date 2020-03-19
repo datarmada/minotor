@@ -23,20 +23,27 @@ export function buildTableProps(featureData) {
 //
 // singleFeatureData correspond to the data of a SINGLE feature inside
 // featureData
+// export const buildAreaPlotProps = (singleFeatureData) => {
 export const buildAreaPlotProps = (singleFeatureData) => {
-  const visTrain = hist2reactVisData(singleFeatureData.train.hist);
-  const visPredict = hist2reactVisData(singleFeatureData.predict.hist);
-  return [
-    {
+  const {
+    train: { hist: tHist },
+    predict: { hist: pHist },
+  } = singleFeatureData;
+  const layers = [];
+  const visTrain = tHist ? hist2reactVisData(tHist) : null;
+  const visPredict = pHist ? hist2reactVisData(pHist) : null;
+  visTrain &&
+    layers.push({
       data: visTrain,
       name: 'Train Data',
       color: 'grey',
-    },
-    {
+    });
+  visPredict &&
+    layers.push({
       data: visPredict,
       name: 'Predict Data',
-    },
-  ];
+    });
+  return layers;
 };
 
 export const buildScatterPlotProps = (singleFeatureData) => {
