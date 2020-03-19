@@ -17,9 +17,7 @@ export default function FeaturesAnalytics(props) {
   const featureData = useFeatureData();
 
   // Constants
-  const REACT_VIS_PROPS = {
-    xTitle: "I'm axis X",
-    yTitle: "And I'm axis Y",
+  const PLOTS_DIMENSIONS = {
     width: 600,
     height: 400,
   };
@@ -38,8 +36,20 @@ export default function FeaturesAnalytics(props) {
     const areaPlotData = buildAreaPlotProps(data);
     const scatterPlotData = buildScatterPlotProps(data);
     plots = [
-      <AreaPlot key="Title of area plot" data={areaPlotData} {...REACT_VIS_PROPS} />,
-      <ScatterPlot key="Title of scatter plot" data={scatterPlotData} {...REACT_VIS_PROPS} />,
+      <AreaPlot
+        key="Title of area plot"
+        xTitle={activeFeature}
+        yTitle="Occurence"
+        data={areaPlotData}
+        {...PLOTS_DIMENSIONS}
+      />,
+      <ScatterPlot
+        key="Title of scatter plot"
+        xTitle="Order of appearance"
+        yTitle={activeFeature}
+        data={scatterPlotData}
+        {...PLOTS_DIMENSIONS}
+      />,
     ];
   }
 
