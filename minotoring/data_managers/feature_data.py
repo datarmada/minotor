@@ -14,7 +14,7 @@ class FeatureData:
     def update_feature_train_phase(self, feature_name, data: List, data_type: DataType):
         if feature_name not in self.data["features"]:
             self._add_feature(feature_name, data_type)
-        self._compute_feature_statistics(feature_name, statistic_library, data)
+            self._compute_feature_statistics(feature_name, statistic_library, data)
 
     def update_feature_predict_phase(self, feature_name, data: List, data_type: DataType):
         if feature_name not in self.data["features"]:

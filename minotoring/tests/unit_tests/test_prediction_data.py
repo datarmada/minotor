@@ -10,38 +10,13 @@ class TestPredictionData(unittest.TestCase):
         project_data = PredictionData()
         self.assertDictEqual(project_data.data, {
             "predictions": {
-                "values": []
+                "values": [],
+                "timing": []
             }
         })
 
     def test_add_feature_values_predict(self):
         project_data = PredictionData()
-        project_data._add_prediction_values([1, 2])
-        self.assertDictEqual(project_data.data,
-                             {
-                                 "predictions": {
-                                     "values": [1, 2]
-                                 }
-                             })
-
-    def test_compute_statistic_1_dimension(self):
-        project_data = PredictionData()
-        project_data._add_prediction_values([1, 2])
-        statistic_library = {
-            "identity": lambda x: x,
-            "mean": lambda x: np.mean(x, axis=0).tolist()
-        }
-        project_data._compute_predictions_statistics(statistic_library)
-        self.assertListEqual(project_data.data["predictions"]["identity"], [1, 2])
-        self.assertEqual(project_data.data["predictions"]["mean"], 1.5)
-
-    def test_compute_statistic_2_dimensions(self):
-        project_data = PredictionData()
-        project_data._add_prediction_values([[3, 4], [1, 2]])
-        statistic_library = {
-            "identity": lambda x: x,
-            "mean": lambda x: np.mean(x, axis=0).tolist()
-        }
-        project_data._compute_predictions_statistics(statistic_library)
-        self.assertListEqual(project_data.data["predictions"]["identity"], [[3, 4], [1, 2]])
-        self.assertListEqual(project_data.data["predictions"]["mean"], [2, 3])
+        project_data._add_prediction_values([1, 2], [0, 0])
+        self.assertListEqual(project_data.data["predictions"]["values"], [1, 2])
+        self.assertListEqual(project_data.data["predictions"]["timing"], [0 ,0])
