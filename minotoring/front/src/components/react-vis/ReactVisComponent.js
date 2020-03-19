@@ -23,9 +23,7 @@ export default function ReactVisComponent({ children, ...props }) {
   // Generating layers
   const layerMaker = layerGenerator(children, setCrosshairValues);
   const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
-    idx == 0
-      ? layerMaker(true, data, layerData, name, color)
-      : layerMaker(false, data, layerData, name, color),
+    layerMaker(idx == 0, data, layerData, name, color),
   );
 
   return (
