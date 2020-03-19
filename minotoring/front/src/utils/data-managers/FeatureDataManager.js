@@ -69,8 +69,8 @@ const splitOutliers = (data, mean) =>
         : [outliers, [...regularPoints, { x, y }]],
     [[], []],
   );
-const hist2reactVisData = ([Y, X]) => Y.map((y, idx) => ({ x: X[idx], y }));
-const values2reactVisData = (values) => values.map((value, idx) => ({ x: idx, y: value }));
+export const hist2reactVisData = ([Y, X]) => Y.map((y, idx) => ({ x: X[idx], y }));
+export const values2reactVisData = (values) => values.map((value, idx) => ({ x: idx, y: value }));
 export const buildTableData = (featureData) => mapObjectItems(featureData, singleFeature2TableRow);
 export const singleFeature2TableRow = (featureName, featureData) => ({
   featureName,
