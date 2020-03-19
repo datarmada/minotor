@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 // Data Managers
-import buildTableProps from '../utils/data-managers/FeatureTableAdapter';
-import useFeatureData, {
+import {
   buildAreaPlotProps,
   buildScatterPlotProps,
+  buildTableProps,
 } from '../utils/data-managers/FeatureDataManager';
 
 // Components
@@ -14,7 +14,8 @@ import Table from '../components/base-elements/Table';
 
 export default function FeaturesAnalytics(props) {
   const [activeFeature, setActiveFeature] = useState(null);
-  const featureData = useFeatureData();
+
+  const { featureData } = props;
 
   // Event functions
   const onTrClicked = (e) => {

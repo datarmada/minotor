@@ -1,20 +1,28 @@
-import { useEffect, useState } from 'react';
 import { webSocket } from './WebSocketSubscriber';
 
-// Hook
-export default function useFeatureData() {
-  const [featureData, setFeatureData] = useState({});
-
-  useEffect(() => {
-    webSocket.subscribeToFeatureData(setFeatureData);
-  }, []);
-
-  return featureData;
+//
+// featureData
+//
+// featureData correspond to the entire object linked to the features key in the
+// raw data pulled from the server
+export function buildTableProps(featureData) {
+  return {
+    orderedKeys: ['featureName', 'mean', 'std', 'nb_nan'],
+    verboseKeyNames: {
+      featureName: 'Name of the features',
+      mean: 'Mean',
+      std: 'Standard Deviation',
+      nb_nan: 'Number of NaN',
+    },
+    data: buildTableData(featureData),
+  };
 }
 
-// Props builders
-// NOTE: singleFeatureData data correspond to the data of a SINGLE feature inside
-// featureData returned in the hook above
+//
+// singleFeatureData
+//
+// singleFeatureData correspond to the data of a SINGLE feature inside
+// featureData
 export const buildAreaPlotProps = (singleFeatureData) => {
   const visTrain = hist2reactVisData(singleFeatureData.train.hist);
   const visPredict = hist2reactVisData(singleFeatureData.predict.hist);
@@ -40,7 +48,9 @@ export const buildScatterPlotProps = (singleFeatureData) => {
   ];
 };
 
+//
 // Utils
+//
 const splitOutliers = (data, mean) =>
   data.reduce(
     ([outliers, regularPoints], { x, y }) =>
@@ -54,3 +64,10 @@ const splitOutliers = (data, mean) =>
   );
 const hist2reactVisData = ([Y, X]) => Y.map((y, idx) => ({ x: X[idx], y }));
 const values2reactVisData = (values) => values.map((value, idx) => ({ x: idx, y: value }));
+export const buildTableData = (featureData) => mapObjectItems(featureData, singleFeature2TableRow);
+export const singleFeature2TableRow = (featureName, featureData) => ({
+  featureName,
+  ...featureData.predict,
+});
+export const mapObjectItems = (obj, func) =>
+  Object.entries(obj).map(([key, value]) => func(key, value));
