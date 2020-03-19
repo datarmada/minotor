@@ -14,7 +14,7 @@ export default function ReactVisComponent({ children, ...props }) {
   const [crosshairValues, setCrosshairValues] = useState([]);
 
   // If no data at all, return null component
-  if (data.length < 1) {
+  if (!data) {
     return null;
   }
   // Constants

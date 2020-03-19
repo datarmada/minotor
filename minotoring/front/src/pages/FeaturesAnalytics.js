@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import Table from '../components/base-elements/Table';
-import useFeatureData from '../utils/data-managers/FeatureDataManager';
+
+// Data Managers
 import buildTableProps from '../utils/data-managers/FeatureTableAdapter';
+import useFeatureData, {
+  buildAreaPlotProps,
+  buildScatterPlotProps,
+} from '../utils/data-managers/FeatureDataManager';
+
 // Components
 import AreaPlot from '../components/react-vis/AreaPlot';
 import ScatterPlot from '../components/react-vis/ScatterPlot';
+import Table from '../components/base-elements/Table';
 
 export default function FeaturesAnalytics(props) {
   const [activeFeature, setActiveFeature] = useState(null);
-  const [plotData, setPlotData] = useState([]);
   const featureData = useFeatureData();
 
   // Constants
@@ -17,46 +22,32 @@ export default function FeaturesAnalytics(props) {
     yTitle: "And I'm axis Y",
     width: 600,
     height: 400,
-    data: plotData,
   };
 
   // Event functions
   const onTrClicked = (e) => {
     const tr = e.currentTarget;
     const selectedFeature = tr.firstChild.innerText;
-
-    if (selectedFeature != activeFeature) {
-      const data = featureData[selectedFeature];
-      const histTrain = hist2reactVisData(data.train.hist);
-      const histPredict = hist2reactVisData(data.predict.hist);
-      setActiveFeature(selectedFeature);
-      setPlotData([
-        {
-          data: histTrain,
-          name: 'Train Data',
-          color: 'grey',
-          type: 'train',
-        },
-        {
-          data: histPredict,
-          values: data.predict.values,
-          mean: data.predict.mean,
-          name: 'Predict Data',
-          type: 'predict',
-        },
-      ]);
-    }
+    setActiveFeature(selectedFeature);
   };
+
+  // Preparing data for the plot components
+  let plots = null;
+  if (featureData && activeFeature) {
+    const data = featureData[activeFeature];
+    const areaPlotData = buildAreaPlotProps(data);
+    const scatterPlotData = buildScatterPlotProps(data);
+    plots = [
+      <AreaPlot key="Title of area plot" data={areaPlotData} {...REACT_VIS_PROPS} />,
+      <ScatterPlot key="Title of scatter plot" data={scatterPlotData} {...REACT_VIS_PROPS} />,
+    ];
+  }
 
   return (
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
       <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
-      <AreaPlot {...REACT_VIS_PROPS} />
-      <ScatterPlot type="outliers" {...REACT_VIS_PROPS} />
+      {plots}
     </div>
   );
 }
-
-// Utils
-const hist2reactVisData = ([Y, X]) => Y.map((y, idx) => ({ x: X[idx], y }));
