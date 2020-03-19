@@ -23,7 +23,17 @@ export default function FeaturesAnalytics(props) {
     setActiveFeature(selectedFeature);
   };
 
-  // Preparing data for the plot components
+  return (
+    <div id="features-analytics">
+      <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
+      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
+      {buildPlots(featureData, activeFeature)}
+    </div>
+  );
+}
+
+// Utils
+const buildPlots = (featureData, activeFeature) => {
   let plots = null;
   if (featureData && activeFeature) {
     const data = featureData[activeFeature];
@@ -44,12 +54,5 @@ export default function FeaturesAnalytics(props) {
       />,
     ];
   }
-
-  return (
-    <div id="features-analytics">
-      <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
-      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
-      {plots}
-    </div>
-  );
-}
+  return plots;
+};
