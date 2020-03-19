@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+
 import {
   Crosshair,
   DiscreteColorLegend,
@@ -10,21 +12,15 @@ import {
 } from 'react-vis';
 
 export default function ReactVisComponent({ children, ...props }) {
-  const { xTitle, yTitle, width, height, data } = props;
+  const { data, xTitle, yTitle, width, height, axisStyle, legendStyle } = props;
   const [crosshairValues, setCrosshairValues] = useState([]);
 
   // If no data at all, return null component
   if (!data) {
     return null;
   }
-  // Constants
-  const AXIS_STYLE = {
-    title: {
-      fontWeight: 900,
-      fontSize: '16px',
-    },
-  };
 
+  // Generating layers
   const layerMaker = layerGenerator(children, setCrosshairValues);
   const renderedLayers = data.map(({ data, name, color }) => layerMaker(data, name, color));
 
@@ -33,16 +29,51 @@ export default function ReactVisComponent({ children, ...props }) {
       <VerticalGridLines />
       <HorizontalGridLines />
       {renderedLayers}
-      <XAxis title={xTitle} style={AXIS_STYLE} />
-      <YAxis title={yTitle} style={AXIS_STYLE} />
+      <XAxis title={xTitle} style={axisStyle} />
+      <YAxis title={yTitle} style={axisStyle} />
       <DiscreteColorLegend
         items={data.map(({ name, color }) => ({ title: name, color }))}
-        style={{ position: 'absolute', top: 0, right: 0 }}
+        style={legendStyle}
       />
       <Crosshair values={crosshairValues} />
     </XYPlot>
   );
 }
+
+ReactVisComponent.propTypes = {
+  // data has to contain :
+  // [
+  //  {
+  //    data: [{x, y}, {x, y}, ...],
+  //    name: Name of the layer,
+  //    color: string of a color, optional
+  //  },
+  //  ...
+  // ]
+  data: PropTypes.object.isRequired,
+  xTitle: PropTypes.string.isRequired,
+  yTitle: PropTypes.string.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  axisStyle: PropTypes.object,
+  legendStyle: PropTypes.object,
+};
+
+ReactVisComponent.defaultProps = {
+  width: 600,
+  height: 400,
+  axisStyle: {
+    title: {
+      fontWeight: 900,
+      fontSize: '16px',
+    },
+  },
+  legendStyle: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+};
 
 // Utils
 const layerGenerator = (children, setCrosshairValues) => (data, name, color = '#79C7E3') => (

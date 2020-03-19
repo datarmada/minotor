@@ -16,12 +16,6 @@ export default function FeaturesAnalytics(props) {
   const [activeFeature, setActiveFeature] = useState(null);
   const featureData = useFeatureData();
 
-  // Constants
-  const PLOTS_DIMENSIONS = {
-    width: 600,
-    height: 400,
-  };
-
   // Event functions
   const onTrClicked = (e) => {
     const tr = e.currentTarget;
@@ -41,14 +35,12 @@ export default function FeaturesAnalytics(props) {
         xTitle={activeFeature}
         yTitle="Occurence"
         data={areaPlotData}
-        {...PLOTS_DIMENSIONS}
       />,
       <ScatterPlot
         key="Title of scatter plot"
         xTitle="Order of appearance"
         yTitle={activeFeature}
         data={scatterPlotData}
-        {...PLOTS_DIMENSIONS}
       />,
     ];
   }
