@@ -1,36 +1,59 @@
-import React from 'react';
-import Table from '../components/base-elements/Table';
-import buildTableProps from '../utils/data-managers/FeatureTableAdapter';
+import React, { useState } from 'react';
+
+// Data Managers
+import {
+  buildAreaPlotProps,
+  buildScatterPlotProps,
+  buildTableProps,
+} from '../utils/data-managers/FeatureDataManager';
+
 // Components
 import AreaPlot from '../components/react-vis/AreaPlot';
-import BarPlot from '../components/react-vis/BarPlot';
-
-const onTrClicked = e => {
-  const tr = e.currentTarget;
-  const selectedFeature = tr.firstChild.innerText;
-  // TODO: display graphs related to selected feature
-  console.log(`User has selected the feature : ${selectedFeature}`);
-};
+import ScatterPlot from '../components/react-vis/ScatterPlot';
+import Table from '../components/base-elements/Table';
 
 export default function FeaturesAnalytics(props) {
-  // Constants
-  const AREA_SERIES_PROPS = {
-    xTitle: "I'm axis X",
-    yTitle: "And I'm axis Y",
-    width: 600,
-    height: 400,
-    data: []
+  const [activeFeature, setActiveFeature] = useState(null);
+
+  const { featureData } = props;
+
+  // Event functions
+  const onTrClicked = (e) => {
+    const tr = e.currentTarget;
+    const selectedFeature = tr.firstChild.innerText;
+    setActiveFeature(selectedFeature);
   };
 
   return (
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
-      <Table
-        {...buildTableProps(props.featureData)}
-        onTrClicked={onTrClicked}
-      />
-      <AreaPlot {...AREA_SERIES_PROPS} />
-      <BarPlot {...AREA_SERIES_PROPS} />
+      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
+      {buildPlots(featureData, activeFeature)}
     </div>
   );
 }
+
+// Utils
+const buildPlots = (featureData, activeFeature) => {
+  if (!(featureData && activeFeature)) {
+    return null;
+  }
+  const data = featureData[activeFeature];
+  const areaPlotData = buildAreaPlotProps(data);
+  const scatterPlotData = buildScatterPlotProps(data);
+  const plots = [
+    <AreaPlot
+      key="Title of area plot"
+      xTitle={activeFeature}
+      yTitle="Occurence"
+      data={areaPlotData}
+    />,
+    <ScatterPlot
+      key="Title of scatter plot"
+      xTitle="Order of appearance"
+      yTitle={activeFeature}
+      data={scatterPlotData}
+    />,
+  ];
+  return plots;
+};
