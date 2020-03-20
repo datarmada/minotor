@@ -1,5 +1,3 @@
-import { webSocket } from './WebSocketSubscriber';
-
 //
 // featureData
 //
@@ -7,12 +5,12 @@ import { webSocket } from './WebSocketSubscriber';
 // raw data pulled from the server
 export function buildTableProps(featureData) {
   return {
-    orderedKeys: ['featureName', 'mean', 'std', 'nb_nan'],
+    orderedKeys: ['featureName', 'mean', 'std', 'nan_percentage'],
     verboseKeyNames: {
       featureName: 'Name of the features',
       mean: 'Mean',
       std: 'Standard Deviation',
-      nb_nan: 'Number of NaN',
+      nan_percentage: '% of NaN',
     },
     data: buildTableData(featureData),
   };
@@ -24,7 +22,7 @@ export function buildTableProps(featureData) {
 // singleFeatureData correspond to the data of a SINGLE feature inside
 // featureData
 // export const buildAreaPlotProps = (singleFeatureData) => {
-export const buildAreaPlotProps = (singleFeatureData) => {
+export const buildAreaPlotProps = singleFeatureData => {
   const {
     train: { hist: tHist },
     predict: { hist: pHist },
@@ -46,9 +44,13 @@ export const buildAreaPlotProps = (singleFeatureData) => {
   return layers;
 };
 
-export const buildScatterPlotProps = (singleFeatureData) => {
+export const buildScatterPlotProps = singleFeatureData => {
   const scatterPlotData = values2reactVisData(singleFeatureData.predict.values);
-  const [outliers, regularPoints] = splitOutliers(scatterPlotData, singleFeatureData.predict.mean);
+  const [outliers, regularPoints] = splitOutliers(
+    scatterPlotData,
+    singleFeatureData.predict['95_percentile'],
+    singleFeatureData.predict['05_percentile']
+  );
   return [
     { data: regularPoints, name: 'Regular Points' },
     { data: outliers, name: 'Outliers', color: 'red' },
@@ -58,20 +60,21 @@ export const buildScatterPlotProps = (singleFeatureData) => {
 //
 // Utils
 //
-const splitOutliers = (data, mean) =>
+const splitOutliers = (data, upperTreshold, lowerTreshold) =>
   data.reduce(
     ([outliers, regularPoints], { x, y }) =>
-      // TODO: of course this condition has no sense. This function has been
-      // been made only to show how it could be done based on a variable in singleFeatureData
-      // here, the mean
-      y < 0.8 * mean || y > 1.2 * mean
+      y < lowerTreshold || y > upperTreshold
         ? [[...outliers, { x, y }], regularPoints]
         : [outliers, [...regularPoints, { x, y }]],
-    [[], []],
+    [[], []]
   );
-export const hist2reactVisData = ([Y, X]) => Y.map((y, idx) => ({ x: X[idx], y }));
-export const values2reactVisData = (values) => values.map((value, idx) => ({ x: idx, y: value }));
-export const buildTableData = (featureData) => mapObjectItems(featureData, singleFeature2TableRow);
+
+export const hist2reactVisData = ([Y, X]) =>
+  Y.map((y, idx) => ({ x: X[idx], y }));
+export const values2reactVisData = values =>
+  values.map((value, idx) => ({ x: idx, y: value }));
+export const buildTableData = featureData =>
+  mapObjectItems(featureData, singleFeature2TableRow);
 export const singleFeature2TableRow = (featureName, featureData) => ({
   featureName,
   ...featureData.predict,

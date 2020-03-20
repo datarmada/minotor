@@ -31,3 +31,15 @@ class TestPreprocessors(unittest.TestCase):
         df = pd.DataFrame({"1": [1.0, 2.0], "2": [3.0, np.nan]})
         preprocessed_data = preprocessor.preprocess(df)
         self.assertEqual([("1", [1, 2], DataType.FLOAT), ("2", [3, None], DataType.FLOAT)], preprocessed_data)
+
+    def test_pandas_str_preprocessor(self):
+        preprocessor = PandasDataFramePreprocessor()
+        df = pd.DataFrame({"1": ["1", "2"], "2": ["3", np.nan]})
+        preprocessed_data = preprocessor.preprocess(df)
+        self.assertEqual([("1", ["1", "2"], DataType.OTHER), ("2", ["3", None], DataType.OTHER)], preprocessed_data)
+
+    def test_pandas_categorical_preprocessor(self):
+        preprocessor = PandasDataFramePreprocessor()
+        df = pd.DataFrame({"1": pd.Series(["a", np.nan], dtype="category")})
+        preprocessed_data = preprocessor.preprocess(df)
+        self.assertEqual([("1", ["a", None], DataType.CATEGORY)], preprocessed_data)

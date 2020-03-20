@@ -23,11 +23,15 @@ export default function ReactVisComponent({ children, ...props }) {
   // Generating layers
   const layerMaker = layerGenerator(children, setCrosshairValues);
   const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
-    layerMaker(idx == 0, data, layerData, name, color),
+    layerMaker(idx === 0, data, layerData, name, color)
   );
 
   return (
-    <XYPlot height={height} width={width} onMouseLeave={() => setCrosshairValues([])}>
+    <XYPlot
+      height={height}
+      width={width}
+      onMouseLeave={() => setCrosshairValues([])}
+    >
       <VerticalGridLines />
       <HorizontalGridLines />
       {renderedLayers}
@@ -83,7 +87,7 @@ const layerGenerator = (children, setCrosshairValues) => (
   data,
   layerData,
   name,
-  color = '#79C7E3',
+  color = '#79C7E3'
 ) => (
   <children.type
     key={name}
@@ -94,7 +98,7 @@ const layerGenerator = (children, setCrosshairValues) => (
     onNearestX={
       first
         ? (value, { index }) => {
-            setCrosshairValues(data.map((elt) => elt.data[index]));
+            setCrosshairValues(data.map(elt => elt.data[index]));
           }
         : null
     }

@@ -25,7 +25,7 @@ class NumpyArrayPreprocessor(PreprocessorABC):
 
 
 class PandasDataFramePreprocessor(PreprocessorABC):
-    def preprocess(self, data) -> List[Tuple[str, List, DataType]]:
+    def preprocess(self, data: pd.DataFrame) -> List[Tuple[str, List, DataType]]:
         return [(col, _replace_nan_with_none(data[col].values), DataType.type2value(data[col].dtype)) for col in data]
 
 
@@ -36,4 +36,4 @@ type2preprocessor = {
 
 
 def _replace_nan_with_none(array: np.ndarray) -> List:
-    return [x if x is not np.nan else None for x in array]
+    return [x if not pd.isna(x) else None for x in array]
