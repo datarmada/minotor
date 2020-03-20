@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Data Managers
 import {
@@ -11,27 +12,6 @@ import {
 import AreaPlot from '../components/react-vis/AreaPlot';
 import ScatterPlot from '../components/react-vis/ScatterPlot';
 import Table from '../components/base-elements/Table';
-
-export default function FeaturesAnalytics(props) {
-  const [activeFeature, setActiveFeature] = useState(null);
-
-  const { featureData } = props;
-
-  // Event functions
-  const onTrClicked = (e) => {
-    const tr = e.currentTarget;
-    const selectedFeature = tr.firstChild.innerText;
-    setActiveFeature(selectedFeature);
-  };
-
-  return (
-    <div id="features-analytics">
-      <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
-      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
-      {buildPlots(featureData, activeFeature)}
-    </div>
-  );
-}
 
 // Utils
 const buildPlots = (featureData, activeFeature) => {
@@ -56,4 +36,29 @@ const buildPlots = (featureData, activeFeature) => {
     />,
   ];
   return plots;
+};
+
+export default function FeaturesAnalytics(props) {
+  const [activeFeature, setActiveFeature] = useState(null);
+
+  const { featureData } = props;
+
+  // Event functions
+  const onTrClicked = e => {
+    const tr = e.currentTarget;
+    const selectedFeature = tr.firstChild.innerText;
+    setActiveFeature(selectedFeature);
+  };
+
+  return (
+    <div id="features-analytics">
+      <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
+      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
+      {buildPlots(featureData, activeFeature)}
+    </div>
+  );
+}
+
+FeaturesAnalytics.propTypes = {
+  featureData: PropTypes.object.isRequired,
 };

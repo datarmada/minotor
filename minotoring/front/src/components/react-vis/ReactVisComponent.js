@@ -11,6 +11,30 @@ import {
   YAxis,
 } from 'react-vis';
 
+// Utils
+const layerGenerator = (children, setCrosshairValues) => (
+  first,
+  data,
+  layerData,
+  name,
+  color = '#79C7E3'
+) => (
+  <children.type
+    key={name}
+    {...children.props}
+    color={color}
+    opacity={0.5}
+    data={layerData}
+    onNearestX={
+      first
+        ? (value, { index }) => {
+            setCrosshairValues(data.map(elt => elt.data[index]));
+          }
+        : null
+    }
+  />
+);
+
 export default function ReactVisComponent({ children, ...props }) {
   const { data, xTitle, yTitle, width, height, axisStyle, legendStyle } = props;
   const [crosshairValues, setCrosshairValues] = useState([]);
@@ -56,7 +80,8 @@ ReactVisComponent.propTypes = {
   //  },
   //  ...
   // ]
-  data: PropTypes.array.isRequired,
+  children: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(Object).isRequired,
   xTitle: PropTypes.string.isRequired,
   yTitle: PropTypes.string.isRequired,
   width: PropTypes.number,
@@ -80,27 +105,3 @@ ReactVisComponent.defaultProps = {
     right: 0,
   },
 };
-
-// Utils
-const layerGenerator = (children, setCrosshairValues) => (
-  first,
-  data,
-  layerData,
-  name,
-  color = '#79C7E3'
-) => (
-  <children.type
-    key={name}
-    {...children.props}
-    color={color}
-    opacity={0.5}
-    data={layerData}
-    onNearestX={
-      first
-        ? (value, { index }) => {
-            setCrosshairValues(data.map(elt => elt.data[index]));
-          }
-        : null
-    }
-  />
-);

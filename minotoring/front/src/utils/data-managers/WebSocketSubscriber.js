@@ -1,16 +1,17 @@
 class WebSocketSubscriber {
   constructor() {
+    // eslint-disable-next-line no-undef
     this.ws = new WebSocket('ws://0.0.0.0:8888/ws');
-    this.ws.onopen = function() {
+    this.ws.onopen = () => {
       console.log('WebSocket opened');
     };
-    this.ws.onclose = function(e) {
+    this.ws.onclose = () => {
       console.log('WebSocket closed');
     };
   }
 
   subscribeToPredictionData(callback) {
-    this.ws.addEventListener('message', (e) => {
+    this.ws.addEventListener('message', e => {
       const data = JSON.parse(e.data);
       if (data.predictions) {
         callback(data.predictions);
@@ -19,7 +20,7 @@ class WebSocketSubscriber {
   }
 
   subscribeToFeatureData(callback) {
-    this.ws.addEventListener('message', (e) => {
+    this.ws.addEventListener('message', e => {
       const data = JSON.parse(e.data);
       if (data.features) {
         callback(data.features);
@@ -28,4 +29,4 @@ class WebSocketSubscriber {
   }
 }
 
-export const webSocket = new WebSocketSubscriber();
+export default new WebSocketSubscriber();
