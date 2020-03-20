@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { renderToStaticMarkup as rsm } from 'react-dom/server';
 
-import { buildThs, buildTrs } from '../Table.js';
+import { buildThs, buildTrs } from '../Table';
 
 // Constants
 

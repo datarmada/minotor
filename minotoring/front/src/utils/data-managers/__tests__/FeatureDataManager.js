@@ -1,6 +1,6 @@
+/* eslint-disable no-undef */
 import {
   buildTableData,
-  buildTableProps,
   hist2reactVisData,
   mapObjectItems,
   singleFeature2TableRow,
@@ -8,10 +8,9 @@ import {
 } from '../FeatureDataManager';
 
 it('mapObjectItems applies a function to each (key, value) of the object', () => {
-  expect(mapObjectItems({ test1: 'test1', test2: 'test2' }, (key, val) => key)).toEqual([
-    'test1',
-    'test2',
-  ]);
+  expect(
+    mapObjectItems({ test1: 'test1', test2: 'test2' }, (key, val) => key)
+  ).toEqual(['test1', 'test2']);
 });
 
 it('singleFeature2TableRow should take a feature data and return containing this \
