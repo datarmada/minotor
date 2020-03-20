@@ -1,19 +1,15 @@
 {
   "extends": ["airbnb", "prettier", "prettier/react"],
   "rules": {
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".js", ".jsx"]
-      }
-    ],
     "react/jsx-props-no-spreading": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-unused-expressions": [
       1,
       {
         "allowShortCircuit": true,
         "allowTernary": true
       }
-    ]
+    ],
+    "func-style": ["error", "expression"]
   }
 }

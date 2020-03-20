@@ -46,8 +46,8 @@ it('buildTds returns a <tr> of <th> elements filled with a verbose names when gi
         <th>Mean</th>
         <th>Standard Deviation</th>
         <th>Number of NaN</th>
-      </tr>,
-    ),
+      </tr>
+    )
   );
 });
 
@@ -60,8 +60,8 @@ it('buildTds returns a <tr> of <th> elements filled with keys when keys are pass
         <th>mean</th>
         <th>std</th>
         <th>nb_nan</th>
-      </tr>,
-    ),
+      </tr>
+    )
   );
 });
 
@@ -91,14 +91,14 @@ it('buildTrs returns multiple <tr> elements each filled with <td> elements conta
           <td>0.56</td>
           <td>0.56</td>
         </tr>
-      </>,
-    ),
+      </>
+    )
   );
 });
 
 it('<tr> elements rendered by buildTrs each have a callable onClick prop', () => {
   const trs = buildTrs(data, orderedKeys, onTrClicked);
-  trs.map((tr) => {
+  trs.map(tr => {
     expect(tr.props.onClick()).toBe(1);
   });
 });

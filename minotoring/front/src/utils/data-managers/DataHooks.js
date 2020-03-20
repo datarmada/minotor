@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { webSocket } from './WebSocketSubscriber';
+import webSocket from './WebSocketSubscriber';
 
-export function useData() {
+export const useData = () => {
   const [featureData, setFeatureData] = useState({});
   const [predictionData, setPredictionData] = useState({});
 
@@ -11,9 +11,9 @@ export function useData() {
   }, []);
 
   return { featureData, predictionData };
-}
+};
 
-export function useFeatureData() {
+export const useFeatureData = () => {
   const [featureData, setFeatureData] = useState({});
 
   useEffect(() => {
@@ -21,9 +21,9 @@ export function useFeatureData() {
   }, []);
 
   return featureData;
-}
+};
 
-export function usePredictionData() {
+export const usePredictionData = () => {
   const [predictionData, setPredictionData] = useState({});
 
   useEffect(() => {
@@ -31,4 +31,4 @@ export function usePredictionData() {
   }, []);
 
   return predictionData;
-}
+};
