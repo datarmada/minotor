@@ -48,7 +48,8 @@ export const buildScatterPlotProps = singleFeatureData => {
   const scatterPlotData = values2reactVisData(singleFeatureData.predict.values);
   const [outliers, regularPoints] = splitOutliers(
     scatterPlotData,
-    singleFeatureData.predict.mean
+    singleFeatureData.predict['95_percentile'],
+    singleFeatureData.predict['05_percentile']
   );
   return [
     { data: regularPoints, name: 'Regular Points' },
@@ -59,17 +60,15 @@ export const buildScatterPlotProps = singleFeatureData => {
 //
 // Utils
 //
-const splitOutliers = (data, mean) =>
+const splitOutliers = (data, upperTreshold, lowerTreshold) =>
   data.reduce(
     ([outliers, regularPoints], { x, y }) =>
-      // TODO: of course this condition has no sense. This function has been
-      // been made only to show how it could be done based on a variable in singleFeatureData
-      // here, the mean
-      y < 0.8 * mean || y > 1.2 * mean
+      y < lowerTreshold || y > upperTreshold
         ? [[...outliers, { x, y }], regularPoints]
         : [outliers, [...regularPoints, { x, y }]],
     [[], []]
   );
+
 export const hist2reactVisData = ([Y, X]) =>
   Y.map((y, idx) => ({ x: X[idx], y }));
 export const values2reactVisData = values =>
