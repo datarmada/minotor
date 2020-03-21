@@ -1,22 +1,28 @@
-from typing import List, Tuple, Callable, Any, Dict
+from typing import List, Tuple, Callable, Any, Dict, Generator
 
 import numpy as np
 
 
-def _compose_library_with_np_array(library: Dict[str, Callable[[np.ndarray], Any]]):
-    return {key: _compose_func_with_np_array(val) for key, val in library.items()}
+class StatisticLibrary:
+    def __init__(self):
+        self.statistics: Dict[str, Callable[[np.ndarray], Any]] = {}
 
+    def add_statistic(self, statistic: Callable[[np.ndarray], Any], name: str = None):
+        if name is None:
+            name = statistic.__name__
+        self.statistics[name] = statistic
 
-def _compose_func_with_np_array(func: Callable[[np.ndarray], Any]):
-    return lambda x: _call_func_w_casted_list(func, x)
+    def compute_all_statistics(self, values: List) -> Generator[Any, None, None]:
+        for statistic_name in self.statistics:
+            yield statistic_name, self._compute_statistic(values, statistic_name)
 
-
-def _call_func_w_casted_list(func: Callable[[np.ndarray], Any], x: List) -> Any:
-    try:
-        arr = np.array(x).astype("float")
-    except ValueError:
-        return None
-    return func(arr)
+    def _compute_statistic(self, values: List, statistic_name: str):
+        statistic = self.statistics[statistic_name]
+        try:
+            arr = np.array(values).astype("float")
+        except ValueError:
+            return None
+        return statistic(arr)
 
 
 def _histogram(values: np.ndarray) -> Tuple[List, List]:
@@ -28,14 +34,14 @@ def _nan_percentage(values: np.ndarray) -> float:
     return sum(np.isnan(values)) / len(values)
 
 
-raw_statistic_library = {
-    "mean": np.nanmean,
-    "std": np.nanstd,
-    "hist": _histogram,
-    "nan_percentage": _nan_percentage,
-    "95_percentile": lambda x: np.nanpercentile(x, 95),
-    "05_percentile": lambda x: np.nanpercentile(x, 5)
-}
+def percentile_factory(percentile: int):
+    return lambda x: np.nanpercentile(x, percentile)
 
-# This is to ensure None values are transformed to np.nan so that is is handled properly by numpy functions
-statistic_library = _compose_library_with_np_array(raw_statistic_library)
+
+statistic_library = StatisticLibrary()
+statistic_library.add_statistic(np.nanmean, "mean")
+statistic_library.add_statistic(np.nanstd, "std")
+statistic_library.add_statistic(_histogram, "hist")
+statistic_library.add_statistic(_nan_percentage, "nan_percentage")
+statistic_library.add_statistic(percentile_factory(95), "95_percentile")
+statistic_library.add_statistic(percentile_factory(5), "05_percentile")

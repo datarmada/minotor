@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
-from typing import List, Dict, Callable, Any
+from typing import List, Dict
 
 from minotoring.data_managers.data_types import DataType
-from minotoring.data_managers.statistics import statistic_library
+from minotoring.data_managers.statistics import statistic_library, StatisticLibrary
 
 
 @dataclass
@@ -35,12 +35,12 @@ class FeatureData:
 
     def _compute_feature_statistics(self,
                                     feature_name: str,
-                                    statistics: Dict[str, Callable[[List], Any]],
+                                    statistics: StatisticLibrary,
                                     training_data: List = None):
         feature_data = training_data if training_data is not None \
             else self.data["features"][feature_name]["predict"]["values"]
-        for statistic_name, statistic_func in statistics.items():
-            self.data["features"][feature_name][_get_key(training_data is not None)][statistic_name] = statistic_func(feature_data)
+        for statistic_name, result in statistics.compute_all_statistics(feature_data):
+            self.data["features"][feature_name][_get_key(training_data is not None)][statistic_name] = result
 
 
 def _get_key(is_training: bool) -> str:

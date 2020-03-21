@@ -4,7 +4,6 @@ import numpy as np
 
 from minotoring.data_managers.data_types import DataType
 from minotoring.data_managers.feature_data import FeatureData
-from minotoring.data_managers.statistics import _compose_library_with_np_array
 
 
 class TestProjectData(unittest.TestCase):
