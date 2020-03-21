@@ -1,7 +1,5 @@
 import unittest
 
-import numpy as np
-
 from minotoring.data_managers.prediction_data import PredictionData
 
 
@@ -19,4 +17,4 @@ class TestPredictionData(unittest.TestCase):
         project_data = PredictionData()
         project_data._add_prediction_values([1, 2], [0, 0])
         self.assertListEqual(project_data.data["predictions"]["values"], [1, 2])
-        self.assertListEqual(project_data.data["predictions"]["timing"], [0 ,0])
+        self.assertListEqual(project_data.data["predictions"]["timing"], [0, 0])

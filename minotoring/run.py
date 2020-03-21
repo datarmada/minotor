@@ -20,7 +20,7 @@ class DashboardHandler(websocket.WebSocketHandler):
 
         # Sending cached data to front
         fm = FileManager()
-        cached_data = {**fm.get_feature_data().data, **fm.get_prediction_data().data}
+        cached_data = {**fm.get_features_data().data, **fm.get_prediction_data().data}
         DashboardHandler.send_data(json.dumps(cached_data))
 
     def on_message(self, data):

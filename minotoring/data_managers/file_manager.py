@@ -2,7 +2,8 @@ import json
 from pathlib import Path
 
 from minotoring.constants import DATA_DIR
-from minotoring.data_managers.feature_data import FeatureData
+from minotoring.data_managers.data_containers.features_data_container import SingleFeatureDataContainer, \
+    FeaturesDataContainer
 from minotoring.data_managers.prediction_data import PredictionData
 
 
@@ -11,14 +12,13 @@ class FileManager:
         self.feature_json_path: Path = DATA_DIR / "feature_data.json"
         self.prediction_json_path: Path = DATA_DIR / "prediction_data.json"
 
-    def get_feature_data(self) -> FeatureData:
-        return FeatureData(
-            _load_json(self.feature_json_path)
-        ) if self.feature_json_path.exists() else FeatureData()
+    def get_features_data(self) -> FeaturesDataContainer:
+        return FeaturesDataContainer.from_json(
+            _load_json(self.feature_json_path)) if self.feature_json_path.exists() else FeaturesDataContainer()
 
-    def write_feature_data(self, project_data: FeatureData):
+    def write_features_data(self, project_data: FeaturesDataContainer):
         with self.feature_json_path.open('w') as f:
-            json.dump(project_data.data, f)
+            json.dump(project_data.get_dict(), f)
 
     def get_prediction_data(self) -> PredictionData:
         return PredictionData(
