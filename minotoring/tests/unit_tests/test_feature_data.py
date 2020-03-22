@@ -17,7 +17,6 @@ class TestProjectData(unittest.TestCase):
     def test_add_feature(self):
         project_data = FeaturesDataContainer()
         project_data._add_feature("feature_test", DataType.INT)
-        print(project_data.get_dict())
         self.assertDictEqual(project_data.get_dict(), {
             "features": {
                 "feature_test": {
