@@ -39,17 +39,24 @@ def percentile_factory(percentile: int):
     return lambda x: np.nanpercentile(x, percentile)
 
 
-def _compute_distribution(data: np.ndarray, lower_bound: float, upper_bound: float) -> np.ndarray:
-    return np.histogram(data[~np.isnan(data)], bins="auto", range=(lower_bound, upper_bound))[0]
+def _compute_distribution(data: np.ndarray, bins: np.ndarray, epsilon=0.00001) -> np.ndarray:
+    # adding epsilon enables us to handle null probabilities
+    return np.histogram(data[~np.isnan(data)], bins=bins)[0] + epsilon
+
+
+def _compute_bins(data: np.ndarray) -> np.ndarray:
+    return np.histogram(data[~np.isnan(data)], bins="auto")[1]
 
 
 def compute_kl_divergence(data: np.ndarray):
+    """
+    :param data: an array containing the training data as first element and production data as second element
+    """
     training_data = data[0]
     prod_data = data[1]
-    min_range = min(np.concatenate([training_data, prod_data]))
-    max_range = max(np.concatenate([training_data, prod_data]))
-    q = _compute_distribution(training_data, min_range, max_range)
-    p = _compute_distribution(prod_data, min_range, max_range)
+    bins = _compute_bins(np.concatenate([training_data, prod_data]))
+    q = _compute_distribution(training_data, bins)
+    p = _compute_distribution(prod_data, bins)
     return entropy(p, q)
 
 

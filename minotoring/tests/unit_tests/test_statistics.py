@@ -3,7 +3,9 @@ import unittest
 import numpy as np
 
 from minotoring.data_managers.data_containers.feature_phase_container import FeatureTrainingPhaseContainer
-from minotoring.data_managers.statistics import StatisticLibrary
+from minotoring.data_managers.data_containers.single_feature_data_container import SingleFeatureDataContainer
+from minotoring.data_managers.data_types import DataType
+from minotoring.data_managers.statistics import StatisticLibrary, crossed_statistic_library
 
 
 class TestStatistics(unittest.TestCase):
@@ -33,3 +35,10 @@ class TestStatistics(unittest.TestCase):
 
         project_data.compute_statistics(statistic_library)
         self.assertEqual(project_data.statistics["mean"], None)
+
+    def test_compute_crossed_statistic(self):
+        project_data = SingleFeatureDataContainer(data_type=DataType.INT)
+        project_data.training_phase.add_values([1, 2])
+        project_data.prediction_phase.add_values([1, 2])
+        project_data.compute_crossed_statistics(crossed_statistic_library)
+        self.assertEqual(project_data.prediction_phase.statistics["kl_divergence"], 0)
