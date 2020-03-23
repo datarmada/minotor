@@ -16,9 +16,9 @@ class SingleFeatureDataContainer:
 
     @staticmethod
     def from_json(data: Dict):
-        return SingleFeatureDataContainer(data_type=DataType.type2value(data["data_type"]),
-                                          training_phase=FeaturePhaseContainerABC.from_json(data["train"]),
-                                          prediction_phase=FeaturePhaseContainerABC.from_json(data["predict"])
+        return SingleFeatureDataContainer(data_type=DataType.type2value(data["type"]),
+                                          training_phase=FeatureTrainingPhaseContainer.from_json(data["train"]),
+                                          prediction_phase=FeaturePredictionPhaseContainer.from_json(data["predict"])
                                           )
 
     def get_dict(self):

@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import List, Dict, Tuple
+
+import numpy as np
 
 from minotoring.data_managers.data_containers.single_feature_data_container import SingleFeatureDataContainer
 from minotoring.data_managers.data_types import DataType
@@ -14,7 +16,7 @@ class FeaturesDataContainer:
         return FeaturesDataContainer(
             features={
                 feature_name: SingleFeatureDataContainer.from_json(feature)
-                for feature_name, feature in data["features"].items
+                for feature_name, feature in data["features"].items()
             }
         )
 
@@ -28,3 +30,12 @@ class FeaturesDataContainer:
 
     def _add_feature(self, feature_name: str, data_type: DataType):
         self.features[feature_name] = SingleFeatureDataContainer(data_type)
+
+    def get_values(self, feature_names: List[str] = None) -> Tuple[np.ndarray, np.ndarray]:
+        if not feature_names:
+            feature_names = self.features.keys()
+        training_values = np.array([self.features[name].training_phase.values for name in feature_names]).astype(
+            'float')
+        prediction_values = np.array([self.features[name].prediction_phase.values for name in feature_names]).astype(
+            'float')
+        return training_values.transpose(), prediction_values.transpose()

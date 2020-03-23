@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-
 // Data Managers
-import {
-  buildAreaPlotProps,
-  buildScatterPlotProps,
-  buildTableProps,
-} from '../utils/data-managers/FeatureDataManager';
-
+import {buildAreaPlotProps, buildScatterPlotProps, buildTableProps,} from '../utils/data-managers/FeatureDataManager';
 // Components
 import AreaPlot from '../components/react-vis/AreaPlot';
 import ScatterPlot from '../components/react-vis/ScatterPlot';
@@ -41,7 +35,20 @@ const buildPlots = (featureData, activeFeature) => {
 export default function FeaturesAnalytics(props) {
   const [activeFeature, setActiveFeature] = useState(null);
 
-  const { featureData } = props;
+  const {featureData} = props;
+
+  useEffect(() => {
+    const requestOptions = {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(["feature_0", "feature_1"])
+    };
+
+    fetch("http://0.0.0.0:8888/projection", requestOptions)
+      .then(
+        res => console.log(res.json())
+      );
+  }, []);
 
   // Event functions
   const onTrClicked = e => {
@@ -52,8 +59,8 @@ export default function FeaturesAnalytics(props) {
 
   return (
     <div id="features-analytics">
-      <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
-      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
+      <h1 style={{marginBottom: '30px'}}>Features Analytics</h1>
+      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked}/>
       {buildPlots(featureData, activeFeature)}
     </div>
   );
