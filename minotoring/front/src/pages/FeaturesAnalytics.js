@@ -53,7 +53,11 @@ export default function FeaturesAnalytics(props) {
   return (
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
-      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
+      <Table
+        {...buildTableProps(featureData)}
+        onTrClicked={onTrClicked}
+        colFiltrable
+      />
       {buildPlots(featureData, activeFeature)}
     </div>
   );

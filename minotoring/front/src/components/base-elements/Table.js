@@ -1,6 +1,9 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
+// Components
+import Dropdown from './Dropdown';
+
 // Utils
 export const buildThs = (keys, names = null) => (
   <tr>
@@ -17,23 +20,34 @@ export const buildTrs = (rows, keys, onClick = null) =>
       {buildTds(row, keys)}
     </tr>
   ));
+const buildColFilter = keys => <Dropdown name="Select Features" keys={keys} />;
 
 export default function Table(props) {
-  const { data, onTrClicked, orderedKeys, verboseKeyNames } = props;
+  const {
+    data,
+    onTrClicked,
+    orderedKeys,
+    verboseKeyNames,
+    colFiltrable,
+  } = props;
 
   // Building rows
   const ths = buildThs(orderedKeys, verboseKeyNames);
   const trs = buildTrs(data, orderedKeys, onTrClicked);
 
   return (
-    <table className="table">
-      <thead>{ths}</thead>
-      <tbody>{trs}</tbody>
-    </table>
+    <div>
+      {colFiltrable ? buildColFilter(orderedKeys) : null}
+      <table className="table">
+        <thead>{ths}</thead>
+        <tbody>{trs}</tbody>
+      </table>
+    </div>
   );
 }
 
 Table.propTypes = {
+  colFiltrable: PropTypes.bool,
   data: PropTypes.arrayOf(Object).isRequired,
   onTrClicked: PropTypes.func.isRequired,
   orderedKeys: PropTypes.arrayOf(string).isRequired,
@@ -41,5 +55,6 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
+  colFiltrable: false,
   verboseKeyNames: {},
 };
