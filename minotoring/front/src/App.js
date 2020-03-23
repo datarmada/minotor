@@ -9,7 +9,7 @@ import PredictionsAnalytics from './pages/PredictionsAnalytics';
 import './sass/main.scss';
 import { useData } from './utils/data-managers/DataHooks';
 
-function App() {
+const App = () => {
   const { featureData, predictionData } = useData();
 
   return (
@@ -30,6 +30,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
