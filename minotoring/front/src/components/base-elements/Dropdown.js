@@ -17,14 +17,15 @@ const orderOptions = (keys, query = '') => {
 };
 
 // Event functions
-const keyPressWrapper = options => e => {
+const keyPressWrapper = (options, toggleSelected) => e => {
   if (e.key === 'Enter') {
-    console.log(`Selected option is: ${options[0]}`);
+    toggleSelected(options[0]);
   }
 };
-const pageClickWrapper = (node, setter) => e => {
+const optionClicked = toggleSelected => key => () => toggleSelected(key);
+const pageClickWrapper = (ref, setter) => e => {
   // click outside of the node wraps the dropdown
-  if (node && !node.contains(e.target)) {
+  if (ref.current && !ref.current.contains(e.target)) {
     setter(false);
   }
 };
@@ -37,9 +38,14 @@ const unwrapWrapper = setter => e => {
   e.stopPropagation();
 };
 
+// className builders
+const buildDropdownEltClasses = (key, selected) => {
+  return selected.includes(key) ? 'dropdown-elt selected' : 'dropdown-elt';
+};
+
 export default function Dropdown(props) {
   // props
-  const { name, options: propOptions } = props;
+  const { name, options: propOptions, selected, toggleSelected } = props;
   // refs
   const mainDiv = useRef(null);
   // states
@@ -50,8 +56,9 @@ export default function Dropdown(props) {
   const buildDropdownClasses = () => (active ? 'dropdown active' : 'dropdown');
 
   // Event functions
-  const handleKeyPress = keyPressWrapper(options);
-  const handlePageClick = pageClickWrapper(mainDiv.currentTarget, setActive);
+  const handleKeyPress = keyPressWrapper(options, toggleSelected);
+  const handleOptionClicked = optionClicked(toggleSelected);
+  const handlePageClick = pageClickWrapper(mainDiv, setActive);
   const handleQueryChange = queryChangeWrapper(options, setOptions);
   const unwrap = unwrapWrapper(setActive);
 
@@ -76,8 +83,15 @@ export default function Dropdown(props) {
       <ul className="dropdown-elt-container">
         {options.map(key => {
           return (
-            <li key={key} className="dropdown-elt">
-              {key}
+            <li
+              key={key}
+              className={buildDropdownEltClasses(key, selected)}
+              onClick={handleOptionClicked(key)}
+              role="presentation"
+            >
+              <span>
+                {key} {selected.includes(key) ? <b>x</b> : null}
+              </span>
             </li>
           );
         })}
@@ -87,6 +101,12 @@ export default function Dropdown(props) {
 }
 
 Dropdown.propTypes = {
-  options: PropTypes.arrayOf(string).isRequired,
   name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(string).isRequired,
+  toggleSelected: PropTypes.func.isRequired,
+  selected: PropTypes.arrayOf(string),
+};
+
+Dropdown.defaultProps = {
+  selected: [],
 };

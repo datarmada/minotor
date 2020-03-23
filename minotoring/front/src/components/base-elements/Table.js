@@ -1,5 +1,5 @@
 import PropTypes, { string } from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 // Components
 import Dropdown from './Dropdown';
@@ -20,8 +20,13 @@ export const buildTrs = (rows, keys, onClick = null) =>
       {buildTds(row, keys)}
     </tr>
   ));
-const buildColFilter = keys => (
-  <Dropdown name="Select Features" options={keys} />
+const buildColFilter = (keys, selected, toggleSelected) => (
+  <Dropdown
+    name="Select Features"
+    options={keys}
+    selected={selected}
+    toggleSelected={toggleSelected}
+  />
 );
 
 export default function Table(props) {
@@ -33,13 +38,22 @@ export default function Table(props) {
     colFiltrable,
   } = props;
 
+  const [selected, setSelected] = useState([]);
+
+  const toggleSelected = key =>
+    selected.includes(key)
+      ? setSelected(selected.filter(elt => elt !== key))
+      : setSelected([...selected, key]);
+
   // Building rows
-  const ths = buildThs(orderedKeys, verboseKeyNames);
-  const trs = buildTrs(data, orderedKeys, onTrClicked);
+  const ths = buildThs(selected, verboseKeyNames);
+  const trs = buildTrs(data, selected, onTrClicked);
 
   return (
     <div>
-      {colFiltrable ? buildColFilter(orderedKeys) : null}
+      {colFiltrable
+        ? buildColFilter(orderedKeys, selected, toggleSelected)
+        : null}
       <table className="table">
         <thead>{ths}</thead>
         <tbody>{trs}</tbody>
