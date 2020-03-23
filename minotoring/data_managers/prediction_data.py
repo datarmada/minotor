@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Dict
 
-from minotoring.data_managers.statistics import statistic_library, StatisticLibrary
+from minotoring.statistics.statistic_library import statistic_library, StatisticLibrary
 
 
 @dataclass

@@ -2,7 +2,7 @@ from abc import abstractmethod, ABC
 from dataclasses import dataclass, field
 from typing import Dict, List
 
-from minotoring.data_managers.statistics import StatisticLibrary
+from minotoring.statistics.statistic_library import StatisticLibrary
 
 
 @dataclass

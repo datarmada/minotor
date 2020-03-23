@@ -5,7 +5,7 @@ from minotoring.data_managers.data_containers.feature_phase_container import Fea
     FeaturePredictionPhaseContainer, \
     FeatureTrainingPhaseContainer
 from minotoring.data_managers.data_types import DataType
-from minotoring.data_managers.statistics import statistic_library, StatisticLibrary, crossed_statistic_library
+from minotoring.statistics.statistic_library import statistic_library, StatisticLibrary, crossed_statistic_library
 
 
 @dataclass
