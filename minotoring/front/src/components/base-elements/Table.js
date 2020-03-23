@@ -20,7 +20,9 @@ export const buildTrs = (rows, keys, onClick = null) =>
       {buildTds(row, keys)}
     </tr>
   ));
-const buildColFilter = keys => <Dropdown name="Select Features" keys={keys} />;
+const buildColFilter = keys => (
+  <Dropdown name="Select Features" options={keys} />
+);
 
 export default function Table(props) {
   const {
