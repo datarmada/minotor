@@ -8,7 +8,7 @@ from minotoring.data_managers.data_types import DataType
 from minotoring.data_managers.statistics import statistic_library, StatisticLibrary, crossed_statistic_library
 
 
-@dataclass()
+@dataclass
 class SingleFeatureDataContainer:
     data_type: DataType
     training_phase: FeaturePhaseContainerABC = field(default_factory=FeatureTrainingPhaseContainer)

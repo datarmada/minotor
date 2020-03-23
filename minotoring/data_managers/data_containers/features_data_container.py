@@ -7,7 +7,7 @@ from minotoring.data_managers.data_types import DataType
 
 @dataclass
 class FeaturesDataContainer:
-    features: Dict[str, SingleFeatureDataContainer] = field(default_factory=lambda: {})
+    features: Dict[str, SingleFeatureDataContainer] = field(default_factory=dict)
 
     @staticmethod
     def from_json(data: Dict):

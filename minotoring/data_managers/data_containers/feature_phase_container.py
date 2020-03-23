@@ -7,8 +7,8 @@ from minotoring.data_managers.statistics import StatisticLibrary
 
 @dataclass
 class FeaturePhaseContainerABC(ABC):
-    values: List = field(default_factory=lambda: [])
-    statistics: Dict = field(default_factory=lambda: {})
+    values: List = field(default_factory=list)
+    statistics: Dict = field(default_factory=dict)
 
     @staticmethod
     def from_json(data: Dict):
