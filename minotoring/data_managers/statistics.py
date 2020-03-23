@@ -55,19 +55,24 @@ def compute_kl_divergence(data: np.ndarray):
     training_data = data[0]
     prod_data = data[1]
     bins = _compute_bins(np.concatenate([training_data, prod_data]))
-    q = _compute_distribution(training_data, bins)
-    p = _compute_distribution(prod_data, bins)
+    p = _compute_distribution(training_data, bins)
+    q = _compute_distribution(prod_data, bins)
     return entropy(p, q)
 
 
 # Regular Statistic Library
+
+statistic_functions = {
+    "mean": np.nanmean,
+    "std": np.nanstd,
+    "hist": _histogram,
+    "nan_percentage": _nan_percentage,
+    "95_percentile": percentile_factory(95),
+    "05_percentile": percentile_factory(5)
+}
 statistic_library = StatisticLibrary()
-statistic_library.add_statistic(np.nanmean, "mean")
-statistic_library.add_statistic(np.nanstd, "std")
-statistic_library.add_statistic(_histogram, "hist")
-statistic_library.add_statistic(_nan_percentage, "nan_percentage")
-statistic_library.add_statistic(percentile_factory(95), "95_percentile")
-statistic_library.add_statistic(percentile_factory(5), "05_percentile")
+for name, func in statistic_functions.items():
+    statistic_library.add_statistic(func, name)
 
 # Statistic Library using predict and train
 crossed_statistic_library = StatisticLibrary()
