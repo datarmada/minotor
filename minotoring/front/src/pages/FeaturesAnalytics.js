@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 // Data Managers
 import {
   buildAreaPlotProps,
@@ -10,6 +9,7 @@ import {
 import AreaPlot from '../components/react-vis/AreaPlot';
 import ScatterPlot from '../components/react-vis/ScatterPlot';
 import Table from '../components/base-elements/Table';
+import ProjectionGraph from '../components/projection-graph/ProjectionGraph';
 
 // Utils
 const buildPlots = (featureData, activeFeature) => {
@@ -36,58 +36,8 @@ const buildPlots = (featureData, activeFeature) => {
   return plots;
 };
 
-const buildProjectedPlot = (projectedTrainingData, projectedPredictionData) => (
-  <ScatterPlot
-    data={[
-      { data: projectedTrainingData, name: 'Training', color: 'blue' },
-      {
-        data: projectedPredictionData,
-        name: 'Prediction',
-        color: 'red',
-      },
-    ]}
-    xTitle="test"
-    yTitle="test"
-    key="key"
-  />
-);
-
 export default function FeaturesAnalytics() {
-  const [projectedTrainingData, setProjectedTrainingData] = useState([]);
-  const [projectedPredictionData, setProjectedPredictionData] = useState([]);
-
-  const fetchProjection = async () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(['sepal_length', 'sepal_width']),
-    };
-    const response = await fetch(
-      'http://0.0.0.0:8888/projection',
-      requestOptions
-    );
-    const data = await response.json();
-    const trainProjection = data.training;
-    const predictProjection = data.prediction;
-    setProjectedTrainingData([
-      ...projectedTrainingData,
-      ...trainProjection.map(([x, y], idx) => ({
-        x,
-        y,
-      })),
-    ]);
-    setProjectedPredictionData([
-      ...projectedPredictionData,
-      ...predictProjection.map(([x, y], idx) => ({
-        x,
-        y,
-      })),
-    ]);
-  };
-
-  useEffect(() => {
-    fetchProjection();
-  }, []);
+  const [activeFeature, setActiveFeature] = useState();
 
   // Event functions
   const onTrClicked = e => {
@@ -104,7 +54,7 @@ export default function FeaturesAnalytics() {
         onTrClicked={onTrClicked}
         colFiltrable
       /> */}
-      {buildProjectedPlot(projectedTrainingData, projectedPredictionData)}
+      <ProjectionGraph />
     </div>
   );
 }
