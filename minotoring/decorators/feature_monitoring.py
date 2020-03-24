@@ -30,8 +30,6 @@ def _decorator_monitor_features_factory(func: Callable, training: bool = False):
         for feature_name, feature_data, data_type in preprocessor.preprocess(data):
             feature_data_container.update_feature(feature_name, feature_data, data_type, training)
         file_manager.write_features_data(feature_data_container)
-
-        requests.post(BACK_END_ROUTE, json=feature_data_container.get_dict())
         return func(data, *args, **kwargs)
 
     return wrapper_data

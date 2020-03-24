@@ -52,11 +52,9 @@ const buildProjectedPlot = (projectedTrainingData, projectedPredictionData) => (
   />
 );
 
-export default function FeaturesAnalytics(props) {
-  const [activeFeature, setActiveFeature] = useState(null);
+export default function FeaturesAnalytics() {
   const [projectedTrainingData, setProjectedTrainingData] = useState([]);
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
-  const { featureData } = props;
 
   const fetchProjection = async () => {
     const requestOptions = {
@@ -69,18 +67,18 @@ export default function FeaturesAnalytics(props) {
       requestOptions
     );
     const data = await response.json();
-    const train_projection = data.training;
-    const predict_projection = data.prediction;
+    const trainProjection = data.training;
+    const predictProjection = data.prediction;
     setProjectedTrainingData([
       ...projectedTrainingData,
-      ...train_projection.map(([x, y], idx) => ({
+      ...trainProjection.map(([x, y], idx) => ({
         x,
         y,
       })),
     ]);
     setProjectedPredictionData([
       ...projectedPredictionData,
-      ...predict_projection.map(([x, y], idx) => ({
+      ...predictProjection.map(([x, y], idx) => ({
         x,
         y,
       })),
@@ -102,12 +100,8 @@ export default function FeaturesAnalytics(props) {
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
       {buildProjectedPlot(projectedTrainingData, projectedPredictionData)}
-      <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
-      {buildPlots(featureData, activeFeature)}
+      {/* <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
+      {buildPlots(featureData, activeFeature)} */}
     </div>
   );
 }
-
-FeaturesAnalytics.propTypes = {
-  featureData: PropTypes.object.isRequired,
-};

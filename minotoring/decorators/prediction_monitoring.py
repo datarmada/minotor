@@ -18,8 +18,6 @@ def monitor_predictions(func: Callable):
         prediction_data_container = file_manager.get_prediction_data()
         prediction_data_container.update_predictions(result, duration_per_example)
         file_manager.write_prediction_data(prediction_data_container)
-        requests.post(BACK_END_ROUTE, json=prediction_data_container.data)
-
         return result
 
     return wrapper_data
