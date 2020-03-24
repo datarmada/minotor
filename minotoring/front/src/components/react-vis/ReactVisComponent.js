@@ -38,12 +38,10 @@ const layerGenerator = (children, setCrosshairValues) => (
 export default function ReactVisComponent({ children, ...props }) {
   const { data, xTitle, yTitle, width, height, axisStyle, legendStyle } = props;
   const [crosshairValues, setCrosshairValues] = useState([]);
-
   // If no data at all, return null component
   if (!data) {
     return null;
   }
-
   // Generating layers
   const layerMaker = layerGenerator(children, setCrosshairValues);
   const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
@@ -80,7 +78,7 @@ ReactVisComponent.propTypes = {
   //  },
   //  ...
   // ]
-  children: PropTypes.array.isRequired,
+  children: PropTypes.object.isRequired,
   data: PropTypes.arrayOf(Object).isRequired,
   xTitle: PropTypes.string.isRequired,
   yTitle: PropTypes.string.isRequired,
