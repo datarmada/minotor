@@ -1,6 +1,7 @@
 from tornado import ioloop, web
 
 from minotoring.api.projection_handler import ProjectionHandler
+from minotoring.api.data_handler import DataHandler
 from minotoring.constants import PACKAGE_PATH
 
 # Defining constants
@@ -15,6 +16,7 @@ class DefaultHandler(web.RequestHandler):
 
 def make_app():
     return web.Application([
+        (r"/data", DataHandler),
         (r"/projection", ProjectionHandler),
         (r"/static/(.*)", web.StaticFileHandler,
          {'path': STATIC_PATH, 'default_filename': 'index.html'}),
