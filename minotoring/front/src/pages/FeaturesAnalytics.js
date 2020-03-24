@@ -33,7 +33,7 @@ const buildPlots = (featureData, activeFeature) => {
 };
 
 const buildProjectedPlot = (projectedTrainingData, projectedPredictionData) => <ScatterPlot
-  data={[{data: projectedTrainingData, name: 'Projection', color: 'blue'}, {
+  data={[{data: projectedTrainingData, name: 'Training', color: 'blue'}, {
     data: projectedPredictionData,
     name: 'Prediction',
     color: 'red'
@@ -62,7 +62,7 @@ export default function FeaturesAnalytics(props) {
         x, y
       }))]);
     };
-    
+
   useEffect(() => {
     fetchProjection();
   }, []);
