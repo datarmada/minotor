@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Tuple
 
 import numpy as np
 from sklearn.base import TransformerMixin, BaseEstimator
@@ -22,12 +22,15 @@ class Projector:
         arr = arr[~np.isnan(arr).any(axis=1)]
         return arr
 
-    def project(self, values: List) -> List:
-        arr = self.preprocess(values)
-        if arr.shape[0] < 2:
-            return []
-        projection = self.projector.fit_transform(arr)
-        return projection.tolist()
+    def project(self, training_values: List, prediction_values: List) -> Tuple[List, List]:
+        training_arr = self.preprocess(training_values)
+        prediction_arr = self.preprocess(prediction_values)
+        full_arr = np.concatenate([training_arr, prediction_arr])
+        if full_arr.shape[0] < 2:
+            return [], []
+        projection = self.projector.fit_transform(full_arr)
+        assert training_arr.shape[0] + prediction_arr.shape[0] == projection.shape[0]
+        return projection.tolist()[: training_arr.shape[0]], projection.tolist()[training_arr.shape[0]:]
 
 
 tsne_projector = Projector(TSNE())

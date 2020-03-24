@@ -32,14 +32,19 @@ const buildPlots = (featureData, activeFeature) => {
   return plots;
 };
 
+const buildProjectedPlot = (projectedTrainingData, projectedPredictionData) => <ScatterPlot
+  data={[{data: projectedTrainingData, name: 'Projection', color: 'blue'}, {
+    data: projectedPredictionData,
+    name: 'Prediction',
+    color: 'red'
+  }]} xTitle={'test'} yTitle={'test'} key={'key'}/>
+
 export default function FeaturesAnalytics(props) {
   const [activeFeature, setActiveFeature] = useState(null);
   const [projectedTrainingData, setProjectedTrainingData] = useState([]);
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
   const {featureData} = props;
 
-
-  useEffect(() => {
     const fetchProjection = async () => {
       const requestOptions = {
         method: "POST",
@@ -57,7 +62,8 @@ export default function FeaturesAnalytics(props) {
         x, y
       }))]);
     };
-
+    
+  useEffect(() => {
     fetchProjection();
   }, []);
 
@@ -71,9 +77,9 @@ export default function FeaturesAnalytics(props) {
   return (
     <div id="features-analytics">
       <h1 style={{marginBottom: '30px'}}>Features Analytics</h1>
+      {buildProjectedPlot(projectedTrainingData, projectedPredictionData)}
       <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked}/>
       {buildPlots(featureData, activeFeature)}
-      <ScatterPlot data={[{data: projectedTrainingData, name: 'Projection', color:'blue'}, {data: projectedPredictionData, name: 'Prediction', color:'red'}]} xTitle={'test'} yTitle={'test'} key={'key'}/>
     </div>
   );
 }
