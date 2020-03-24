@@ -26,12 +26,12 @@
       border-right: $dropdown-border;
 
       &:first-child {
-        background-color: lighten(grey, 45%);
+        background-color: $light-grey;
       }
 
       &:hover {
         cursor: pointer;
-        background-color: lighten(grey, 45%);
+        background-color: $light-grey;
       }
 
       &.selected {

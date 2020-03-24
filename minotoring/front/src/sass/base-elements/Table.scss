@@ -6,7 +6,7 @@ table.table {
   text-align: left;
 
   thead tr:hover {
-    box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
+    box-shadow: $table-box-shadow;
     z-index: inherit;
     background-color: inherit;
     cursor: inherit;
@@ -15,12 +15,11 @@ table.table {
   tr {
     padding-bottom: 10px;
     padding-top: 10px;
-    box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
+    box-shadow: $table-box-shadow;
     position: relative;
 
     &:hover {
-      box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, 0.3),
-        0 1px 3px 1px rgba(60, 64, 67, 0.15);
+      box-shadow: $table-box-shadow-hover;
       z-index: 1;
       background-color: rgba(242, 245, 245, 0.8);
       cursor: pointer;
@@ -35,4 +34,12 @@ table.table {
       }
     }
   }
+}
+
+div.table-controls {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: $light-grey;
+  padding: 10px 20px;
+  box-shadow: $table-box-shadow;
 }

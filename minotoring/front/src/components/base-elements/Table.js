@@ -56,9 +56,13 @@ export default function Table(props) {
 
   return (
     <div>
-      {colFiltrable
-        ? buildColFilter(orderedKeys, selected, toggleSelected)
-        : null}
+      {colFiltrable ? (
+        <div className="table-controls">
+          {colFiltrable
+            ? buildColFilter(orderedKeys, selected, toggleSelected)
+            : null}
+        </div>
+      ) : null}
       <table className="table">
         <thead>{ths}</thead>
         <tbody>{trs}</tbody>
