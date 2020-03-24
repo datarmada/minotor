@@ -99,9 +99,12 @@ export default function FeaturesAnalytics() {
   return (
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
+      {/* <Table
+        {...buildTableProps(featureData)}
+        onTrClicked={onTrClicked}
+        colFiltrable
+      /> */}
       {buildProjectedPlot(projectedTrainingData, projectedPredictionData)}
-      {/* <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked} />
-      {buildPlots(featureData, activeFeature)} */}
     </div>
   );
 }

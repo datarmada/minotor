@@ -12,6 +12,7 @@
         "allowTernary": true
       }
     ],
-    "func-style": ["error", "expression"]
+    "func-style": ["error", "expression"],
+    "jsx-a11y/click-events-have-key-events": 0
   }
 }
