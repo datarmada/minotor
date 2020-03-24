@@ -31,11 +31,9 @@ class FeaturesDataContainer:
     def _add_feature(self, feature_name: str, data_type: DataType):
         self.features[feature_name] = SingleFeatureDataContainer(data_type)
 
-    def get_values(self, feature_names: List[str] = None) -> Tuple[np.ndarray, np.ndarray]:
+    def get_values(self, feature_names: List[str] = None) -> Tuple[List, List]:
         if not feature_names:
             feature_names = self.features.keys()
-        training_values = np.array([self.features[name].training_phase.values for name in feature_names]).astype(
-            'float')
-        prediction_values = np.array([self.features[name].prediction_phase.values for name in feature_names]).astype(
-            'float')
-        return training_values.transpose(), prediction_values.transpose()
+        training_values = [self.features[name].training_phase.values for name in feature_names]
+        prediction_values = [self.features[name].prediction_phase.values for name in feature_names]
+        return training_values, prediction_values
