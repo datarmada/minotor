@@ -23,6 +23,6 @@ if __name__ == '__main__':
     train(iris)
 
     # Randomly tweak numerical data
-    iris = iris.apply(lambda x: x*uniform(0, 2))
+    iris['sepal_length'] = iris['sepal_length'].apply(lambda x: x*uniform(0.8, 1))
 
     predict(iris)

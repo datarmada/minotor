@@ -2,6 +2,7 @@ from typing import List, Union, Tuple
 
 import numpy as np
 from sklearn.base import TransformerMixin, BaseEstimator
+from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
 
@@ -34,3 +35,4 @@ class Projector:
 
 
 tsne_projector = Projector(TSNE())
+pca_projector = Projector(PCA(n_components=2))

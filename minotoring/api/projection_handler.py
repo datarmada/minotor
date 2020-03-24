@@ -2,7 +2,7 @@ from tornado import web
 from tornado.escape import json_decode
 
 from minotoring.data_managers.file_manager import FileManager
-from minotoring.statistics.projection import tsne_projector
+from minotoring.statistics.projection import tsne_projector, pca_projector
 
 
 class ProjectionHandler(web.RequestHandler):
