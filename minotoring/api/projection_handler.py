@@ -15,7 +15,7 @@ class ProjectionHandler(web.RequestHandler):
             training_projection = tsne_projector.project(training_values)
             prediction_projection = tsne_projector.project(prediction_values)
             self.set_header('Content-Type', 'application/json')
-            self.write({"train": training_projection, "prediction": prediction_projection})
+            self.write({"training": training_projection, "prediction": prediction_projection})
             self.set_status(200)
         else:
             self.set_status(400, 'Request should have Content-Type set to application/json')

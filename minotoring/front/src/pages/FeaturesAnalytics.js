@@ -34,20 +34,31 @@ const buildPlots = (featureData, activeFeature) => {
 
 export default function FeaturesAnalytics(props) {
   const [activeFeature, setActiveFeature] = useState(null);
-
+  const [projectedTrainingData, setProjectedTrainingData] = useState([]);
+  const [projectedPredictionData, setProjectedPredictionData] = useState([]);
   const {featureData} = props;
 
+
   useEffect(() => {
-    const requestOptions = {
-      method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(["feature_0", "feature_1"])
+    const fetchProjection = async () => {
+      const requestOptions = {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(["sepal_length", "sepal_width"])
+      };
+      const response = await fetch("http://0.0.0.0:8888/projection", requestOptions);
+      const data = await response.json();
+      const train_projection = data.training;
+      const predict_projection = data.prediction;
+      setProjectedTrainingData([...projectedTrainingData, ...train_projection.map(([x, y], idx) => ({
+        x, y
+      }))]);
+      setProjectedPredictionData([...projectedPredictionData, ...predict_projection.map(([x, y], idx) => ({
+        x, y
+      }))]);
     };
 
-    fetch("http://0.0.0.0:8888/projection", requestOptions)
-      .then(
-        res => console.log(res.json())
-      );
+    fetchProjection();
   }, []);
 
   // Event functions
@@ -62,6 +73,7 @@ export default function FeaturesAnalytics(props) {
       <h1 style={{marginBottom: '30px'}}>Features Analytics</h1>
       <Table {...buildTableProps(featureData)} onTrClicked={onTrClicked}/>
       {buildPlots(featureData, activeFeature)}
+      <ScatterPlot data={[{data: projectedTrainingData, name: 'Projection', color:'blue'}, {data: projectedPredictionData, name: 'Prediction', color:'red'}]} xTitle={'test'} yTitle={'test'} key={'key'}/>
     </div>
   );
 }
