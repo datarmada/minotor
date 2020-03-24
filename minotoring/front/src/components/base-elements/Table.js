@@ -36,9 +36,14 @@ export default function Table(props) {
     orderedKeys,
     verboseKeyNames,
     colFiltrable,
+    nbColDisplayed,
   } = props;
 
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(
+    orderedKeys.slice(0, nbColDisplayed)
+  );
+
+  const columns = colFiltrable ? selected : orderedKeys;
 
   const toggleSelected = key =>
     selected.includes(key)
@@ -46,8 +51,8 @@ export default function Table(props) {
       : setSelected([...selected, key]);
 
   // Building rows
-  const ths = buildThs(selected, verboseKeyNames);
-  const trs = buildTrs(data, selected, onTrClicked);
+  const ths = buildThs(columns, verboseKeyNames);
+  const trs = buildTrs(data, columns, onTrClicked);
 
   return (
     <div>
@@ -65,6 +70,7 @@ export default function Table(props) {
 Table.propTypes = {
   colFiltrable: PropTypes.bool,
   data: PropTypes.arrayOf(Object).isRequired,
+  nbColDisplayed: PropTypes.number,
   onTrClicked: PropTypes.func.isRequired,
   orderedKeys: PropTypes.arrayOf(string).isRequired,
   verboseKeyNames: PropTypes.objectOf(string),
@@ -72,5 +78,6 @@ Table.propTypes = {
 
 Table.defaultProps = {
   colFiltrable: false,
+  nbColDisplayed: 6,
   verboseKeyNames: {},
 };
