@@ -5,7 +5,7 @@ import numpy as np
 from minotoring.data_managers.data_containers.feature_phase_container import FeatureTrainingPhaseContainer
 from minotoring.data_managers.data_containers.single_feature_data_container import SingleFeatureDataContainer
 from minotoring.data_managers.data_types import DataType
-from minotoring.data_managers.statistics import StatisticLibrary, crossed_statistic_library
+from minotoring.statistics.statistic_library import StatisticLibrary, crossed_statistic_library
 
 
 class TestStatistics(unittest.TestCase):
