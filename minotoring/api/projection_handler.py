@@ -3,9 +3,9 @@ from tornado.escape import json_decode
 
 from minotoring.data_managers.file_manager import FileManager
 from minotoring.statistics.projection import tsne_projector, pca_projector
+from minotoring.api.base_route import BaseRouteHandler
 
-
-class ProjectionHandler(web.RequestHandler):
+class ProjectionHandler(BaseRouteHandler):
     def post(self):
         if self.request.headers['Content-Type'] == 'application/json':
             feature_names = json_decode(self.request.body)
@@ -19,13 +19,4 @@ class ProjectionHandler(web.RequestHandler):
         else:
             self.set_status(400, 'Request should have Content-Type set to application/json')
 
-    def options(self):
-        # no body
-        self.set_status(204)
-        self.finish()
 
-    def set_default_headers(self):
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header("Access-Control-Allow-Headers", "*")
-        self.set_header('Access-Control-Allow-Methods', " *")
-        self.set_header('Access-Control-Allow-Credentials', "true")
