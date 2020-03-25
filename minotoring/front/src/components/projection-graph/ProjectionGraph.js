@@ -39,7 +39,6 @@ const handleFetchedData = async (
 
 export default function ProjectionGraph(props) {
   const { features } = props;
-  console.log(features);
   const [projectedTrainingData, setProjectedTrainingData] = useState([]);
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
 

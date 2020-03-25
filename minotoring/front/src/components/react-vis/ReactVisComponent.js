@@ -53,7 +53,6 @@ export default function ReactVisComponent({ children, ...props }) {
       height={height}
       width={width}
       onMouseLeave={() => setCrosshairValues([])}
-      position="relative"
     >
       <VerticalGridLines />
       <HorizontalGridLines />
