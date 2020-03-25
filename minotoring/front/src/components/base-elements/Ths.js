@@ -1,10 +1,8 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
-// PropTypes
-import VERBOSE_COL_NAMES_PROPTYPE from './PropTypes/Table';
-
-export default function Ths({ columns, verboseColNames }) {
+export default function Ths(props) {
+  const { columns, verboseColNames } = props;
   return (
     <tr>
       {columns.map(col => (
@@ -18,7 +16,7 @@ export default function Ths({ columns, verboseColNames }) {
 
 Ths.propTypes = {
   columns: PropTypes.arrayOf(string).isRequired,
-  verboseColNames: VERBOSE_COL_NAMES_PROPTYPE,
+  verboseColNames: PropTypes.objectOf(string),
 };
 
 Ths.defaultProps = {

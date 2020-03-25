@@ -4,18 +4,9 @@ import React, { useState, useEffect } from 'react';
 // Components
 import TableControl from './TableControl';
 import Ths from './Ths';
-
-// PropTypes
-import VERBOSE_COL_NAMES_PROPTYPE from './PropTypes/Table';
+import Trs from './Trs';
 
 // Utils
-const buildTds = (row, keys) => keys.map(key => <td key={key}>{row[key]}</td>);
-export const buildTrs = (rows, keys, onClick = null) =>
-  rows.map(row => (
-    <tr key={row[keys[0]]} onClick={onClick}>
-      {buildTds(row, keys)}
-    </tr>
-  ));
 const onOptionSelected = (setter, selected) => key =>
   selected.includes(key)
     ? setter(selected.filter(elt => elt !== key))
@@ -29,6 +20,7 @@ export default function Table(props) {
     isRowFiltrable,
     mainCol,
     nbColDisplayed,
+    nbRowDisplayed,
     onRowClicked,
     orderedColumns,
     verboseColNames,
@@ -39,23 +31,18 @@ export default function Table(props) {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const columns = isColFiltrable ? selectedCols : orderedColumns;
-
-  // Building rows
-  const trs = buildTrs(
-    data.filter(d => selectedRows.includes(d[mainCol])),
-    columns,
-    onRowClicked
-  );
+  const rows = isRowFiltrable
+    ? data.filter(d => selectedRows.includes(d[mainCol]))
+    : data;
 
   useEffect(() => {
     setSelectedCols(orderedColumns.slice(0, nbColDisplayed));
-    setSelectedRows(data.map(d => d[mainCol]));
+    setSelectedRows(data.map(d => d[mainCol]).slice(0, nbRowDisplayed));
   }, [orderedColumns, data]);
 
-  // Objects Definitions
+  // Dropdown Definitions
   const toggleSelectedCol = onOptionSelected(setSelectedCols, selectedCols);
   const toggleSelectedRow = onOptionSelected(setSelectedRows, selectedRows);
-
   const COL_DROPDOWN = {
     name: 'Select Features',
     onOptionSelected: toggleSelectedCol,
@@ -79,7 +66,9 @@ export default function Table(props) {
         <thead>
           <Ths {...{ columns, verboseColNames }} />
         </thead>
-        <tbody>{trs}</tbody>
+        <tbody>
+          <Trs {...{ columns, mainCol, onRowClicked, rows }} />
+        </tbody>
       </table>
     </div>
   );
@@ -91,14 +80,16 @@ Table.propTypes = {
   isRowFiltrable: PropTypes.bool,
   mainCol: PropTypes.string.isRequired,
   nbColDisplayed: PropTypes.number,
+  nbRowDisplayed: PropTypes.number,
   onRowClicked: PropTypes.func.isRequired,
   orderedColumns: PropTypes.arrayOf(string).isRequired,
-  verboseColNames: VERBOSE_COL_NAMES_PROPTYPE,
+  verboseColNames: PropTypes.objectOf(string),
 };
 
 Table.defaultProps = {
   isColFiltrable: false,
   isRowFiltrable: false,
   nbColDisplayed: 6,
+  nbRowDisplayed: 10,
   verboseColNames: {},
 };
