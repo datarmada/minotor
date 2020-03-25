@@ -1,47 +1,26 @@
 import PropTypes, { string } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 
+// Components
+import DropdownList from './DropdownList';
+
 // Utils
-const orderOptions = (keys, query = '') => {
+const orderOptions = (options, query = '') => {
   if (query === '') {
-    return keys.sort();
+    return options.sort();
   }
-  const [selected, others] = keys.reduce(
-    ([passed, fails], key) =>
-      key.startsWith(query)
-        ? [[...passed, key], fails]
-        : [passed, [...fails, key]],
+  const [matched, others] = options.reduce(
+    ([passed, fails], option) =>
+      option.startsWith(query)
+        ? [[...passed, option], fails]
+        : [passed, [...fails, option]],
     [[], []]
   );
-  return [...selected.sort(), ...others.sort()];
+  return [...matched.sort(), ...others.sort()];
 };
-
-// Event functions
-const keyPressWrapper = (options, onOptionSelected) => e => {
-  if (e.key === 'Enter') {
-    onOptionSelected(options[0]);
-  }
-};
-const optionClicked = onOptionSelected => key => () => onOptionSelected(key);
-const pageClickWrapper = (ref, setter) => e => {
-  // click outside of the node wraps the dropdown
-  if (ref.current && !ref.current.contains(e.target)) {
-    setter(false);
-  }
-};
-const queryChangeWrapper = (options, setter) => e => {
-  const newOptions = orderOptions(options, e.currentTarget.value);
-  setter(newOptions);
-};
-const unwrapWrapper = setter => e => {
-  setter(true);
-  e.stopPropagation();
-};
-
 // className builders
-const buildDropdownEltClasses = (key, selected) => {
-  return selected.includes(key) ? 'dropdown-elt selected' : 'dropdown-elt';
-};
+const buildDropdownClasses = active =>
+  active ? 'dropdown active' : 'dropdown';
 
 export default function Dropdown(props) {
   // props
@@ -52,15 +31,26 @@ export default function Dropdown(props) {
   const [active, setActive] = useState(false);
   const [options, setOptions] = useState([]);
 
-  // className builders
-  const buildDropdownClasses = () => (active ? 'dropdown active' : 'dropdown');
-
   // Event functions
-  const handleKeyPress = keyPressWrapper(options, onOptionSelected);
-  const handleOptionClicked = optionClicked(onOptionSelected);
-  const handlePageClick = pageClickWrapper(mainDiv, setActive);
-  const handleQueryChange = queryChangeWrapper(options, setOptions);
-  const unwrap = unwrapWrapper(setActive);
+  const handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      onOptionSelected(options[0]);
+    }
+  };
+  const handlePageClick = e => {
+    // click outside of the node wraps the dropdown
+    if (mainDiv.current && !mainDiv.current.contains(e.target)) {
+      setActive(false);
+    }
+  };
+  const handleQueryChange = e => {
+    const newOptions = orderOptions(options, e.currentTarget.value);
+    setOptions(newOptions);
+  };
+  const unwrap = e => {
+    setActive(true);
+    e.stopPropagation();
+  };
 
   useEffect(() => {
     setOptions(orderOptions(propOptions));
@@ -72,7 +62,7 @@ export default function Dropdown(props) {
   }, [propOptions]);
 
   return (
-    <div ref={mainDiv} className={buildDropdownClasses()}>
+    <div ref={mainDiv} className={buildDropdownClasses(active)}>
       <input
         className="dropdown-name"
         onClick={unwrap}
@@ -80,22 +70,7 @@ export default function Dropdown(props) {
         onChange={handleQueryChange}
         placeholder={name}
       />
-      <ul className="dropdown-elt-container">
-        {options.map(key => {
-          return (
-            <li
-              key={key}
-              className={buildDropdownEltClasses(key, selected)}
-              onClick={handleOptionClicked(key)}
-              role="presentation"
-            >
-              <span>
-                {key} {selected.includes(key) ? <b>x</b> : null}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+      <DropdownList {...{ onOptionSelected, options, selected }} />
     </div>
   );
 }
