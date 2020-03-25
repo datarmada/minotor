@@ -46,6 +46,7 @@ const buildDropdownEltClasses = (key, selected) => {
 export default function Dropdown(props) {
   // props
   const { name, options: propOptions, selected, toggleSelected } = props;
+
   // refs
   const mainDiv = useRef(null);
   // states
@@ -69,7 +70,7 @@ export default function Dropdown(props) {
     return () => {
       document.removeEventListener('click', handlePageClick);
     };
-  }, []);
+  }, [propOptions]);
 
   return (
     <div ref={mainDiv} className={buildDropdownClasses()}>

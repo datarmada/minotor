@@ -42,4 +42,8 @@ div.table-controls {
   background-color: $light-grey;
   padding: 10px 20px;
   box-shadow: $table-box-shadow;
+
+  & > div {
+    margin: 0 15px;
+  }
 }
