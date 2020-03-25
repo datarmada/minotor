@@ -79,14 +79,14 @@ export default function Table(props) {
     <div>
       {colFiltrable || rowFiltrable ? (
         <div className="table-controls">
-          {colFiltrable && true
+          {colFiltrable
             ? buildColFilter(
                 orderedKeys.slice(1, orderedKeys.length),
                 selectedCols,
                 toggleSelectedCols
               )
             : null}
-          {rowFiltrable && true
+          {rowFiltrable
             ? buildRowFilter(
                 data.map(d => d[orderedKeys[0]]),
                 selectedRows,
