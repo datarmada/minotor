@@ -105,6 +105,7 @@ export default function FeaturesAnalytics(props) {
         {...buildTableProps(featureData)}
         onTrClicked={onTrClicked}
         colFiltrable
+        rowFiltrable
       />
       {buildProjectedPlot(projectedTrainingData, projectedPredictionData)}
       {buildPlots(featureData, activeFeature)}

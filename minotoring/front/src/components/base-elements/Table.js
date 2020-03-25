@@ -1,5 +1,5 @@
 import PropTypes, { string } from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Components
 import Dropdown from './Dropdown';
@@ -12,8 +12,7 @@ export const buildThs = (keys, names = null) => (
     ))}
   </tr>
 );
-const buildTds = (row, keys) =>
-  keys.map((key, idx) => <td key={idx}>{row[key]}</td>);
+const buildTds = (row, keys) => keys.map(key => <td key={key}>{row[key]}</td>);
 export const buildTrs = (rows, keys, onClick = null) =>
   rows.map(row => (
     <tr key={row[keys[0]]} onClick={onClick}>
@@ -28,6 +27,14 @@ const buildColFilter = (keys, selected, toggleSelected) => (
     toggleSelected={toggleSelected}
   />
 );
+const buildRowFilter = (keys, selected, toggleSelected) => (
+  <Dropdown
+    name="Select Rows"
+    options={keys}
+    selected={selected}
+    toggleSelected={toggleSelected}
+  />
+);
 
 export default function Table(props) {
   const {
@@ -36,30 +43,55 @@ export default function Table(props) {
     orderedKeys,
     verboseKeyNames,
     colFiltrable,
+    rowFiltrable,
     nbColDisplayed,
   } = props;
 
-  const [selected, setSelected] = useState(
-    orderedKeys.slice(0, nbColDisplayed)
-  );
+  const [selectedCols, setSelectedCols] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
 
-  const columns = colFiltrable ? selected : orderedKeys;
+  const columns = colFiltrable ? selectedCols : orderedKeys;
 
-  const toggleSelected = key =>
-    selected.includes(key)
-      ? setSelected(selected.filter(elt => elt !== key))
-      : setSelected([...selected, key]);
+  const toggleSelectedCols = key =>
+    selectedCols.includes(key)
+      ? setSelectedCols(selectedCols.filter(elt => elt !== key))
+      : setSelectedCols([...selectedCols, key]);
+
+  const toggleSelectedRows = key =>
+    selectedRows.includes(key)
+      ? setSelectedRows(selectedRows.filter(elt => elt !== key))
+      : setSelectedRows([...selectedRows, key]);
 
   // Building rows
   const ths = buildThs(columns, verboseKeyNames);
-  const trs = buildTrs(data, columns, onTrClicked);
+  const trs = buildTrs(
+    data.filter(d => selectedRows.includes(d[orderedKeys[0]])),
+    columns,
+    onTrClicked
+  );
+
+  useEffect(() => {
+    setSelectedCols(orderedKeys.slice(0, nbColDisplayed));
+    setSelectedRows(data.map(d => d[orderedKeys[0]]));
+  }, [orderedKeys, data]);
 
   return (
     <div>
-      {colFiltrable ? (
+      {colFiltrable || rowFiltrable ? (
         <div className="table-controls">
-          {colFiltrable
-            ? buildColFilter(orderedKeys, selected, toggleSelected)
+          {colFiltrable && true
+            ? buildColFilter(
+                orderedKeys.slice(1, orderedKeys.length),
+                selectedCols,
+                toggleSelectedCols
+              )
+            : null}
+          {rowFiltrable && true
+            ? buildRowFilter(
+                data.map(d => d[orderedKeys[0]]),
+                selectedRows,
+                toggleSelectedRows
+              )
             : null}
         </div>
       ) : null}
@@ -77,11 +109,13 @@ Table.propTypes = {
   nbColDisplayed: PropTypes.number,
   onTrClicked: PropTypes.func.isRequired,
   orderedKeys: PropTypes.arrayOf(string).isRequired,
+  rowFiltrable: PropTypes.bool,
   verboseKeyNames: PropTypes.objectOf(string),
 };
 
 Table.defaultProps = {
   colFiltrable: false,
   nbColDisplayed: 6,
+  rowFiltrable: false,
   verboseKeyNames: {},
 };
