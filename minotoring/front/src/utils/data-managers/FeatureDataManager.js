@@ -34,14 +34,15 @@ export const buildTableData = featureData =>
 // raw data pulled from the server
 export const buildTableProps = featureData => {
   return {
-    orderedKeys: ['featureName', 'mean', 'std', 'nan_percentage'],
-    verboseKeyNames: {
+    data: buildTableData(featureData),
+    mainCol: 'featureName',
+    orderedColumns: ['featureName', 'mean', 'std', 'nan_percentage'],
+    verboseColNames: {
       featureName: 'Name of the features',
       mean: 'Mean',
       std: 'Standard Deviation',
       nan_percentage: '% of NaN',
     },
-    data: buildTableData(featureData),
   };
 };
 

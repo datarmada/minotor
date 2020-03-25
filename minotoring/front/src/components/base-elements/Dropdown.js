@@ -17,12 +17,12 @@ const orderOptions = (keys, query = '') => {
 };
 
 // Event functions
-const keyPressWrapper = (options, toggleSelected) => e => {
+const keyPressWrapper = (options, onOptionSelected) => e => {
   if (e.key === 'Enter') {
-    toggleSelected(options[0]);
+    onOptionSelected(options[0]);
   }
 };
-const optionClicked = toggleSelected => key => () => toggleSelected(key);
+const optionClicked = onOptionSelected => key => () => onOptionSelected(key);
 const pageClickWrapper = (ref, setter) => e => {
   // click outside of the node wraps the dropdown
   if (ref.current && !ref.current.contains(e.target)) {
@@ -45,8 +45,7 @@ const buildDropdownEltClasses = (key, selected) => {
 
 export default function Dropdown(props) {
   // props
-  const { name, options: propOptions, selected, toggleSelected } = props;
-
+  const { name, onOptionSelected, options: propOptions, selected } = props;
   // refs
   const mainDiv = useRef(null);
   // states
@@ -57,8 +56,8 @@ export default function Dropdown(props) {
   const buildDropdownClasses = () => (active ? 'dropdown active' : 'dropdown');
 
   // Event functions
-  const handleKeyPress = keyPressWrapper(options, toggleSelected);
-  const handleOptionClicked = optionClicked(toggleSelected);
+  const handleKeyPress = keyPressWrapper(options, onOptionSelected);
+  const handleOptionClicked = optionClicked(onOptionSelected);
   const handlePageClick = pageClickWrapper(mainDiv, setActive);
   const handleQueryChange = queryChangeWrapper(options, setOptions);
   const unwrap = unwrapWrapper(setActive);
@@ -104,7 +103,7 @@ export default function Dropdown(props) {
 Dropdown.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(string).isRequired,
-  toggleSelected: PropTypes.func.isRequired,
+  onOptionSelected: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(string),
 };
 
