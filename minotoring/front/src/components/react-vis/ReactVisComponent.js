@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-
 import {
-  Crosshair,
   DiscreteColorLegend,
   HorizontalGridLines,
   VerticalGridLines,
@@ -10,82 +8,59 @@ import {
   XYPlot,
   YAxis,
 } from 'react-vis';
-
-// Utils
-const createLayerMaker = (children, setCrosshairValues) => (
-  first,
-  data,
-  layerData,
-  name,
-  color = '#79C7E3'
-) => (
-  <children.type
-    key={name}
-    {...children.props}
-    color={color}
-    opacity={0.5}
-    data={layerData}
-    onNearestX={
-      first
-        ? (value, { index }) => {
-            setCrosshairValues(data.map(elt => elt.data[index]));
-          }
-        : null
-    }
-  />
-);
+import CrosshairComponent from './CrosshairComponent';
+import DraggableComponent from './DraggableComponent';
 
 export default function ReactVisComponent({ children, ...props }) {
-  const { data, xTitle, yTitle, width, height, axisStyle, legendStyle } = props;
-  const [crosshairValues, setCrosshairValues] = useState([]);
+  const {
+    data,
+    xTitle,
+    yTitle,
+    width,
+    height,
+    axisStyle,
+    legendStyle,
+    isCrosshair,
+    isDraggable,
+  } = props;
+
+  const plotFactory = isDraggable ? DraggableComponent : CrosshairComponent;
+
+  const [XYPlotMouseLeave, setXYPlotMouseLeave] = useState(() => () => {});
   // If no data at all, return null component
   if (!data) {
     return null;
   }
-  // Generating layers
-  const makeLayer = createLayerMaker(children, setCrosshairValues);
-  const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
-    makeLayer(idx === 0, data, layerData, name, color)
-  );
-
   return (
-    <XYPlot
-      height={height}
-      width={width}
-      onMouseLeave={() => setCrosshairValues([])}
-    >
+    <XYPlot height={height} width={width} onMouseLeave={XYPlotMouseLeave}>
       <VerticalGridLines />
       <HorizontalGridLines />
-      {renderedLayers}
       <XAxis title={xTitle} style={axisStyle} />
       <YAxis title={yTitle} style={axisStyle} />
       <DiscreteColorLegend
         items={data.map(({ name, color }) => ({ title: name, color }))}
         style={legendStyle}
       />
-      <Crosshair values={crosshairValues} />
+      {plotFactory({ child: children, data, setXYPlotMouseLeave })}
     </XYPlot>
   );
 }
 
 ReactVisComponent.propTypes = {
-  // data has to contain :
-  // [
-  //  {
-  //    data: [{x, y}, {x, y}, ...],
-  //    name: Name of the layer,
-  //    color: string of a color, optional
-  //  },
-  //  ...
-  // ]
   children: PropTypes.object.isRequired,
   data: PropTypes.arrayOf(Object).isRequired,
   xTitle: PropTypes.string.isRequired,
   yTitle: PropTypes.string.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
-  axisStyle: PropTypes.object,
-  legendStyle: PropTypes.object,
+  axisStyle: PropTypes.objectOf(
+    PropTypes.oneOf([PropTypes.object, PropTypes.string, PropTypes.number])
+  ),
+  legendStyle: PropTypes.objectOf(
+    PropTypes.oneOf([PropTypes.string, PropTypes.number])
+  ),
+  isCrosshair: PropTypes.bool,
+  isDraggable: PropTypes.bool,
 };
 
 ReactVisComponent.defaultProps = {
@@ -102,4 +77,6 @@ ReactVisComponent.defaultProps = {
     top: 0,
     right: 0,
   },
+  isCrosshair: true,
+  isDraggable: false,
 };
