@@ -49,11 +49,7 @@ export default function ReactVisComponent({ children, ...props }) {
   );
 
   return (
-    <FlexibleXYPlot
-      height={height}
-      width={width}
-      onMouseLeave={() => setCrosshairValues([])}
-    >
+    <FlexibleXYPlot {...props} onMouseLeave={() => setCrosshairValues([])}>
       <VerticalGridLines />
       <HorizontalGridLines />
       {renderedLayers}
