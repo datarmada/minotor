@@ -20,7 +20,6 @@ export default function ReactVisComponent({ children, ...props }) {
     height,
     axisStyle,
     legendStyle,
-    isCrosshair,
     isDraggable,
   } = props;
 
@@ -59,7 +58,6 @@ ReactVisComponent.propTypes = {
   legendStyle: PropTypes.objectOf(
     PropTypes.oneOf([PropTypes.string, PropTypes.number])
   ),
-  isCrosshair: PropTypes.bool,
   isDraggable: PropTypes.bool,
 };
 
@@ -77,6 +75,5 @@ ReactVisComponent.defaultProps = {
     top: 0,
     right: 0,
   },
-  isCrosshair: true,
   isDraggable: false,
 };
