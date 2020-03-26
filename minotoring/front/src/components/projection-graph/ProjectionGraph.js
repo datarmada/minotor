@@ -1,20 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import DataFetcher from '../../utils/data-managers/DataFetcher';
 import DragableScatterPlot from '../react-vis/DragableScatterPlot';
-
-const buildProjectedPlot = (projectedTrainingData, projectedPredictionData) => (
-  <DragableScatterPlot
-    data={[
-      { data: projectedTrainingData, name: 'Training' },
-      {
-        data: projectedPredictionData,
-        name: 'Prediction',
-        color: 'red',
-      },
-    ]}
-  />
-);
+import { postDataFetcher } from '../../utils/data-managers/DataFetcher';
 
 const handleFetchedData = async (
   response,
@@ -44,22 +31,26 @@ export default function ProjectionGraph(props) {
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(features),
-    };
-    const dataFetcher = DataFetcher(
-      requestOptions,
+    const fetchData = postDataFetcher(
       'projection',
-      handleFetchedData
+      handleFetchedData,
+      JSON.stringify(features)
     );
-    dataFetcher(setProjectedTrainingData, setProjectedPredictionData);
+    fetchData(setProjectedTrainingData, setProjectedPredictionData);
   }, []);
 
   return (
     <div>
-      {buildProjectedPlot(projectedTrainingData, projectedPredictionData)}
+      <DragableScatterPlot
+        data={[
+          { data: projectedTrainingData, name: 'Training' },
+          {
+            data: projectedPredictionData,
+            name: 'Prediction',
+            color: 'red',
+          },
+        ]}
+      />
     </div>
   );
 }

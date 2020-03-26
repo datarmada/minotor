@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProjectionGraph from '../components/projection-graph/ProjectionGraph';
-import DataFetcher from '../utils/data-managers/DataFetcher';
+import { getDataFetcher } from '../utils/data-managers/DataFetcher';
 import Table from '../components/base-elements/Table';
 import { buildTableProps } from '../utils/data-managers/FeatureDataManager';
 
@@ -14,10 +14,7 @@ export default function FeaturesAnalytics() {
   const [featureData, setFeatureData] = useState({});
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    };
-    const dataFetcher = DataFetcher(requestOptions, 'data', dataSetter);
+    const dataFetcher = getDataFetcher('data', dataSetter);
     dataFetcher(setFeatureData);
   }, []);
 
