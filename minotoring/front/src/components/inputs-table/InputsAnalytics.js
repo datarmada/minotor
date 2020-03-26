@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
 import { buildTableProps } from '../../utils/data-managers/FeatureDataManager';
 import Table from '../base-elements/Table';
+import buildInputTableProps from '../../utils/data-managers/InputDataManager';
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
@@ -15,12 +16,11 @@ export default function InputsAnalytics() {
     const dataFetcher = getDataFetcher('data', dataSetter);
     dataFetcher(setFeatureData);
   }, []);
-
   return (
     <div>
       <h1>Inputs Analytics</h1>
       <Table
-        {...buildTableProps(featureData)}
+        {...buildInputTableProps(featureData)}
         onCellClicked={() => {
           console.log('cell');
         }}
