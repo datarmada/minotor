@@ -7,7 +7,7 @@ import {
   HorizontalGridLines,
   VerticalGridLines,
   XAxis,
-  XYPlot,
+  FlexibleXYPlot,
   YAxis,
 } from 'react-vis';
 
@@ -49,7 +49,7 @@ export default function ReactVisComponent({ children, ...props }) {
   );
 
   return (
-    <XYPlot
+    <FlexibleXYPlot
       height={height}
       width={width}
       onMouseLeave={() => setCrosshairValues([])}
@@ -64,7 +64,7 @@ export default function ReactVisComponent({ children, ...props }) {
         style={legendStyle}
       />
       <Crosshair values={crosshairValues} />
-    </XYPlot>
+    </FlexibleXYPlot>
   );
 }
 
@@ -82,15 +82,13 @@ ReactVisComponent.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
   xTitle: PropTypes.string.isRequired,
   yTitle: PropTypes.string.isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.number, // eslint-disable-line
+  height: PropTypes.number, // eslint-disable-line
   axisStyle: PropTypes.object,
   legendStyle: PropTypes.object,
 };
 
 ReactVisComponent.defaultProps = {
-  width: 600,
-  height: 400,
   axisStyle: {
     title: {
       fontWeight: 900,

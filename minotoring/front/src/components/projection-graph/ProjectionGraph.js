@@ -37,21 +37,20 @@ export default function ProjectionGraph(props) {
       JSON.stringify(featureNames)
     );
     fetchData(setProjectedTrainingData, setProjectedPredictionData);
-  }, []);
+  }, [featureNames]);
 
   return (
-    <div>
-      <DraggableScatterPlot
-        data={[
-          { data: projectedTrainingData, name: 'Training' },
-          {
-            data: projectedPredictionData,
-            name: 'Prediction',
-            color: 'red',
-          },
-        ]}
-      />
-    </div>
+    <DraggableScatterPlot
+      data={[
+        { data: projectedTrainingData, name: 'Training' },
+        {
+          data: projectedPredictionData,
+          name: 'Prediction',
+          color: 'red',
+        },
+      ]}
+      {...props}
+    />
   );
 }
 

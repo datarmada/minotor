@@ -1,0 +1,21 @@
+.feature-analyzer {
+  min-height: 600px;
+  display: flex;
+}
+
+.projection-graph-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 50px;
+  flex-grow: 1;
+
+  .no-feature-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: $light-grey;
+  }
+}

@@ -1,17 +1,36 @@
 import React, { useEffect, useState } from 'react';
 
+// Data managers
 import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
+import { buildFeatureKlTableProps } from '../../utils/data-managers/FeatureDataManager';
 
 // Components
+import ProjectionGraph from '../projection-graph/ProjectionGraph';
 import Table from '../base-elements/Table';
+
+// Utils
+const toggleSelectedFeature = (feature, selectedFeatures) =>
+  selectedFeatures.includes(feature)
+    ? selectedFeatures.filter(f => f !== feature)
+    : [...selectedFeatures, feature];
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
   setFeatureData(data.features);
 };
 
-export default function FeatureAnalyzer(props) {
+export default function FeatureAnalyzer() {
   const [featureData, setFeatureData] = useState({});
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+
+  // Event functions
+  const handleRowClicked = e => {
+    const tr = e.currentTarget;
+    tr.classList.toggle('selected');
+    const feature = tr.firstChild.innerText;
+    const newFeatures = toggleSelectedFeature(feature, selectedFeatures);
+    setSelectedFeatures(newFeatures);
+  };
 
   useEffect(() => {
     const dataFetcher = getDataFetcher('data', dataSetter);
@@ -19,17 +38,20 @@ export default function FeatureAnalyzer(props) {
   }, []);
 
   return (
-    <div className="feature-analyzet" style={{ padding: '30px' }}>
+    <div className="feature-analyzer" style={{ padding: '30px' }}>
       <Table
-        data={Object.keys(featureData).map(name => ({
-          name,
-          kl_divergence: featureData[name].predict.kl_divergence,
-        }))}
-        mainCol="name"
-        onRowClicked={() => 1}
-        orderedColumns={['name', 'kl_divergence']}
-        isRowFiltrable
+        {...buildFeatureKlTableProps(featureData)}
+        onRowClicked={handleRowClicked}
       />
+      <div className="projection-graph-container">
+        {selectedFeatures.length > 0 ? (
+          <ProjectionGraph featureNames={selectedFeatures} />
+        ) : (
+          <div className="no-feature-selected">
+            <p>Select one or several features to analyze them</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -32,6 +32,19 @@ export const buildTableData = featureData =>
 //
 // featureData correspond to the entire object linked to the features key in the
 // raw data pulled from the server
+export const buildFeatureKlTableProps = featureData => {
+  return {
+    data: buildTableData(featureData),
+    isRowFiltrable: true,
+    mainCol: 'featureName',
+    orderedColumns: ['featureName', 'kl_divergence'],
+    verboseColNames: {
+      featureName: 'Name of the features',
+      kl_divergence: 'KL Divergence',
+    },
+  };
+};
+
 export const buildTableProps = featureData => {
   return {
     data: buildTableData(featureData),
