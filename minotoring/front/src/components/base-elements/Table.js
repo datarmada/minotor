@@ -2,120 +2,94 @@ import PropTypes, { string } from 'prop-types';
 import React, { useState, useEffect } from 'react';
 
 // Components
-import Dropdown from './Dropdown';
+import TableControl from './TableControl';
+import Ths from './Ths';
+import Trs from './Trs';
 
 // Utils
-export const buildThs = (keys, names = null) => (
-  <tr>
-    {keys.map(key => (
-      <th key={key}>{names ? names[key] : key}</th>
-    ))}
-  </tr>
-);
-const buildTds = (row, keys) => keys.map(key => <td key={key}>{row[key]}</td>);
-export const buildTrs = (rows, keys, onClick = null) =>
-  rows.map(row => (
-    <tr key={row[keys[0]]} onClick={onClick}>
-      {buildTds(row, keys)}
-    </tr>
-  ));
-const buildColFilter = (keys, selected, toggleSelected) => (
-  <Dropdown
-    name="Select Features"
-    options={keys}
-    selected={selected}
-    toggleSelected={toggleSelected}
-  />
-);
-const buildRowFilter = (keys, selected, toggleSelected) => (
-  <Dropdown
-    name="Select Rows"
-    options={keys}
-    selected={selected}
-    toggleSelected={toggleSelected}
-  />
-);
+const onOptionSelected = (setter, selected) => key =>
+  selected.includes(key)
+    ? setter(selected.filter(elt => elt !== key))
+    : setter([...selected, key]);
 
 export default function Table(props) {
+  // Props
   const {
     data,
-    onTrClicked,
-    orderedKeys,
-    verboseKeyNames,
-    colFiltrable,
-    rowFiltrable,
+    isColFiltrable,
+    isRowFiltrable,
+    mainCol,
     nbColDisplayed,
+    nbRowDisplayed,
+    onRowClicked,
+    orderedColumns,
+    verboseColNames,
   } = props;
 
+  // Init States
   const [selectedCols, setSelectedCols] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const columns = colFiltrable ? selectedCols : orderedKeys;
-
-  const toggleSelectedCols = key =>
-    selectedCols.includes(key)
-      ? setSelectedCols(selectedCols.filter(elt => elt !== key))
-      : setSelectedCols([...selectedCols, key]);
-
-  const toggleSelectedRows = key =>
-    selectedRows.includes(key)
-      ? setSelectedRows(selectedRows.filter(elt => elt !== key))
-      : setSelectedRows([...selectedRows, key]);
-
-  // Building rows
-  const ths = buildThs(columns, verboseKeyNames);
-  const trs = buildTrs(
-    data.filter(d => selectedRows.includes(d[orderedKeys[0]])),
-    columns,
-    onTrClicked
-  );
+  const columns = isColFiltrable ? selectedCols : orderedColumns;
+  const rows = isRowFiltrable
+    ? data.filter(d => selectedRows.includes(d[mainCol]))
+    : data;
 
   useEffect(() => {
-    setSelectedCols(orderedKeys.slice(0, nbColDisplayed));
-    setSelectedRows(data.map(d => d[orderedKeys[0]]));
-  }, [orderedKeys, data]);
+    setSelectedCols(orderedColumns.slice(0, nbColDisplayed));
+    setSelectedRows(data.map(d => d[mainCol]).slice(0, nbRowDisplayed));
+  }, [orderedColumns, data]);
+
+  // Dropdown Definitions
+  const toggleSelectedCol = onOptionSelected(setSelectedCols, selectedCols);
+  const toggleSelectedRow = onOptionSelected(setSelectedRows, selectedRows);
+  const COL_DROPDOWN = {
+    name: 'Select Features',
+    onOptionSelected: toggleSelectedCol,
+    options: orderedColumns.filter(col => col !== mainCol),
+    selected: selectedCols,
+  };
+  const ROW_DROPDOWN = {
+    name: 'Select Rows',
+    onOptionSelected: toggleSelectedRow,
+    options: data.map(d => d[mainCol]),
+    selected: selectedRows,
+  };
 
   return (
     <div>
-      {colFiltrable || rowFiltrable ? (
-        <div className="table-controls">
-          {colFiltrable
-            ? buildColFilter(
-                orderedKeys.slice(1, orderedKeys.length),
-                selectedCols,
-                toggleSelectedCols
-              )
-            : null}
-          {rowFiltrable
-            ? buildRowFilter(
-                data.map(d => d[orderedKeys[0]]),
-                selectedRows,
-                toggleSelectedRows
-              )
-            : null}
-        </div>
-      ) : null}
+      <TableControl
+        colDropdown={isColFiltrable ? COL_DROPDOWN : null}
+        rowDropdown={isRowFiltrable ? ROW_DROPDOWN : null}
+      />
       <table className="table">
-        <thead>{ths}</thead>
-        <tbody>{trs}</tbody>
+        <thead>
+          <Ths {...{ columns, verboseColNames }} />
+        </thead>
+        <tbody>
+          <Trs {...{ columns, mainCol, onRowClicked, rows }} />
+        </tbody>
       </table>
     </div>
   );
 }
 
 Table.propTypes = {
-  colFiltrable: PropTypes.bool,
   data: PropTypes.arrayOf(Object).isRequired,
+  isColFiltrable: PropTypes.bool,
+  isRowFiltrable: PropTypes.bool,
+  mainCol: PropTypes.string.isRequired,
   nbColDisplayed: PropTypes.number,
-  onTrClicked: PropTypes.func.isRequired,
-  orderedKeys: PropTypes.arrayOf(string).isRequired,
-  rowFiltrable: PropTypes.bool,
-  verboseKeyNames: PropTypes.objectOf(string),
+  nbRowDisplayed: PropTypes.number,
+  onRowClicked: PropTypes.func.isRequired,
+  orderedColumns: PropTypes.arrayOf(string).isRequired,
+  verboseColNames: PropTypes.objectOf(string),
 };
 
 Table.defaultProps = {
-  colFiltrable: false,
+  isColFiltrable: false,
+  isRowFiltrable: false,
   nbColDisplayed: 6,
-  rowFiltrable: false,
-  verboseKeyNames: {},
+  nbRowDisplayed: 10,
+  verboseColNames: {},
 };
