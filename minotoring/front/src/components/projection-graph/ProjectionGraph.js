@@ -1,19 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ScatterPlot from '../react-vis/ScatterPlot';
-import DataFetcher from '../../utils/data-managers/DataFetcher';
-
-const buildProjectedPlot = (projectedTrainingData, projectedPredictionData) => (
-  <ScatterPlot
-    data={[
-      { data: projectedTrainingData, name: 'Training' },
-      {
-        data: projectedPredictionData,
-        name: 'Prediction',
-        color: 'red',
-      },
-    ]}
-  />
-);
+import { postDataFetcher } from '../../utils/data-managers/DataFetcher';
 
 const handleFetchedData = async (
   response,
@@ -24,13 +11,13 @@ const handleFetchedData = async (
   const trainProjection = data.training;
   const predictProjection = data.prediction;
   setProjectedTrainingData(
-    trainProjection.map(([x, y], idx) => ({
+    trainProjection.map(([x, y]) => ({
       x,
       y,
     }))
   );
   setProjectedPredictionData(
-    predictProjection.map(([x, y], idx) => ({
+    predictProjection.map(([x, y]) => ({
       x,
       y,
     }))
@@ -43,22 +30,26 @@ export default function ProjectionGraph(props) {
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(features),
-    };
-    const dataFetcher = DataFetcher(
-      requestOptions,
+    const fetchData = postDataFetcher(
       'projection',
-      handleFetchedData
+      handleFetchedData,
+      JSON.stringify(features)
     );
-    dataFetcher(setProjectedTrainingData, setProjectedPredictionData);
+    fetchData(setProjectedTrainingData, setProjectedPredictionData);
   }, []);
 
   return (
     <div>
-      {buildProjectedPlot(projectedTrainingData, projectedPredictionData)}
+      <ScatterPlot
+        data={[
+          { data: projectedTrainingData, name: 'Training' },
+          {
+            data: projectedPredictionData,
+            name: 'Prediction',
+            color: 'red',
+          },
+        ]}
+      />
     </div>
   );
 }
