@@ -12,7 +12,7 @@ import {
 } from 'react-vis';
 
 // Utils
-const layerGenerator = (children, setCrosshairValues) => (
+const createLayerMaker = (children, setCrosshairValues) => (
   first,
   data,
   layerData,
@@ -43,9 +43,9 @@ export default function ReactVisComponent({ children, ...props }) {
     return null;
   }
   // Generating layers
-  const layerMaker = layerGenerator(children, setCrosshairValues);
+  const makeLayer = createLayerMaker(children, setCrosshairValues);
   const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
-    layerMaker(idx === 0, data, layerData, name, color)
+    makeLayer(idx === 0, data, layerData, name, color)
   );
 
   return (
