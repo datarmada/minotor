@@ -37,7 +37,7 @@ const createPointHighlighter = filter => d => {
   return leftRight && upDown;
 };
 
-export default function DragableScatterPlot(props) {
+export default function DraggableScatterPlot(props) {
   const { data, xTitle, yTitle, width, height, axisStyle, legendStyle } = props;
   const [filter, setFilter] = useState(null);
   const [highlighting, setHighlighting] = useState(false);
@@ -49,7 +49,7 @@ export default function DragableScatterPlot(props) {
   );
 
   const nbSelectedPoints = Array.prototype
-    .concat(...data.map(data => data.data))
+    .concat(...data.map(category => category.data))
     .filter(highlightPoint).length;
   return (
     <div>
@@ -84,7 +84,7 @@ export default function DragableScatterPlot(props) {
   );
 }
 
-DragableScatterPlot.propTypes = {
+DraggableScatterPlot.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       data: arrayOf(
@@ -99,10 +99,12 @@ DragableScatterPlot.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   axisStyle: PropTypes.objectOf(Object),
-  legendStyle: PropTypes.object,
+  legendStyle: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ),
 };
 
-DragableScatterPlot.defaultProps = {
+DraggableScatterPlot.defaultProps = {
   width: 600,
   height: 400,
   xTitle: '',
