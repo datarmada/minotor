@@ -1,16 +1,10 @@
 table.table {
+  overflow: hidden;
   width: 100%;
   border-spacing: 0;
   padding: 0;
   border-collapse: collapse;
   text-align: left;
-
-  thead tr:hover {
-    box-shadow: $table-box-shadow;
-    z-index: inherit;
-    background-color: inherit;
-    cursor: inherit;
-  }
 
   tr {
     padding-bottom: 10px;
@@ -18,24 +12,46 @@ table.table {
     box-shadow: $table-box-shadow;
     position: relative;
 
-    &:hover {
-      box-shadow: $table-box-shadow-hover;
-      z-index: 1;
-      background-color: rgba(242, 245, 245, 0.8);
-      cursor: pointer;
-    }
-
     td,
     th {
+      cursor: pointer;
       padding: 10px 20px;
-
+      position: relative;
       &:first-child {
         font-weight: bold;
       }
     }
   }
-}
 
+  td:hover{
+    box-shadow: $table-box-shadow-hover;
+    background-color: rgba(242, 245, 245, 0.8);
+  }
+  
+  thead th:hover::after {
+    content: "";
+    position: absolute;
+    box-shadow: $table-box-shadow-hover;
+    background-color: rgba(242, 245, 245, 0.8);
+    left: 0;
+    top: -5000px;
+    height: 10000px;
+    width: 100%;
+    z-index: -1;
+  }
+
+  tbody th:hover::after {
+    box-shadow: $table-box-shadow-hover;
+    background-color: rgba(242, 245, 245, 0.8);
+    content: '';  
+    height: 100%;
+    top: 0;
+    left: -5000px;
+    position: absolute;  
+    width: 10000px;
+    z-index: -1;
+  }
+}
 div.table-control {
   display: flex;
   flex-direction: row-reverse;

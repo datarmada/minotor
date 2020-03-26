@@ -22,6 +22,8 @@ export default function Table(props) {
     nbColDisplayed,
     nbRowDisplayed,
     onRowClicked,
+    onColClicked,
+    onCellClicked,
     orderedColumns,
     verboseColNames,
   } = props;
@@ -64,10 +66,10 @@ export default function Table(props) {
       />
       <table className="table">
         <thead>
-          <Ths {...{ columns, verboseColNames }} />
+          <Ths {...{ columns, verboseColNames, onColClicked }} />
         </thead>
         <tbody>
-          <Trs {...{ columns, mainCol, onRowClicked, rows }} />
+          <Trs {...{ columns, mainCol, onRowClicked, onCellClicked, rows }} />
         </tbody>
       </table>
     </div>
@@ -81,7 +83,9 @@ Table.propTypes = {
   mainCol: PropTypes.string.isRequired,
   nbColDisplayed: PropTypes.number,
   nbRowDisplayed: PropTypes.number,
-  onRowClicked: PropTypes.func.isRequired,
+  onRowClicked: PropTypes.func,
+  onColClicked: PropTypes.func,
+  onCellClicked: PropTypes.func,
   orderedColumns: PropTypes.arrayOf(string).isRequired,
   verboseColNames: PropTypes.objectOf(string),
 };
@@ -92,4 +96,7 @@ Table.defaultProps = {
   nbColDisplayed: 6,
   nbRowDisplayed: 10,
   verboseColNames: {},
+  onRowClicked: () => {},
+  onCellClicked: () => {},
+  onColClicked: () => {},
 };
