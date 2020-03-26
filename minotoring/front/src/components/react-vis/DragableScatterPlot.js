@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { arrayOf } from 'prop-types';
 import React, { useState } from 'react';
 import {
   DiscreteColorLegend,
@@ -49,7 +49,7 @@ export default function DragableScatterPlot(props) {
   );
 
   const nbSelectedPoints = Array.prototype
-    .concat(data[0].data, data[1].data)
+    .concat(...data.map(data => data.data))
     .filter(highlightPoint).length;
   return (
     <div>
@@ -85,27 +85,28 @@ export default function DragableScatterPlot(props) {
 }
 
 DragableScatterPlot.propTypes = {
-  // data has to contain :
-  // [
-  //  {
-  //    data: [{x, y}, {x, y}, ...],
-  //    name: Name of the layer,
-  //    color: string of a color, optional
-  //  },
-  //  ...
-  // ]
-  data: PropTypes.arrayOf(Object).isRequired,
-  xTitle: PropTypes.string.isRequired,
-  yTitle: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      data: arrayOf(
+        PropTypes.shape({ x: PropTypes.number, y: PropTypes.number })
+      ).isRequired,
+      name: PropTypes.string.isRequired,
+      color: PropTypes.string,
+    })
+  ).isRequired,
+  xTitle: PropTypes.string,
+  yTitle: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
   axisStyle: PropTypes.objectOf(Object),
-  legendStyle: PropTypes.objectOf,
+  legendStyle: PropTypes.object,
 };
 
 DragableScatterPlot.defaultProps = {
   width: 600,
   height: 400,
+  xTitle: '',
+  yTitle: '',
   axisStyle: {
     title: {
       fontWeight: 900,

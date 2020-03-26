@@ -26,7 +26,7 @@ const handleFetchedData = async (
 };
 
 export default function ProjectionGraph(props) {
-  const { features } = props;
+  const { featureNames } = props;
   const [projectedTrainingData, setProjectedTrainingData] = useState([]);
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
 
@@ -34,7 +34,7 @@ export default function ProjectionGraph(props) {
     const fetchData = postDataFetcher(
       'projection',
       handleFetchedData,
-      JSON.stringify(features)
+      JSON.stringify(featureNames)
     );
     fetchData(setProjectedTrainingData, setProjectedPredictionData);
   }, []);
@@ -56,5 +56,5 @@ export default function ProjectionGraph(props) {
 }
 
 ProjectionGraph.propTypes = {
-  features: PropTypes.objectOf(Object).isRequired,
+  featureNames: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

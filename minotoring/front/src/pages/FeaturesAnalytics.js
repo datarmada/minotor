@@ -28,7 +28,7 @@ export default function FeaturesAnalytics() {
   return (
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
-      <ProjectionGraph features={Object.keys(featureData)} />
+      <ProjectionGraph featureNames={Object.keys(featureData)} />
       <Table
         {...buildTableProps(featureData)}
         onTrClicked={onTrClicked}
