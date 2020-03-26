@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './components/navbar/NavBar';
 // Pages
 import FeaturesAnalytics from './pages/FeaturesAnalytics';
-import PredictionsAnalytics from './pages/PredictionsAnalytics';
+import PredictionAnalytics from './pages/PredictionsAnalytics';
+import InputsAnalytics from './components/inputs-table/InputsAnalytics';
 // Styles
 import './sass/main.scss';
 
@@ -17,7 +18,8 @@ const App = () => {
         <div id="main-switch">
           <Switch>
             <Route exact path="/features" component={FeaturesAnalytics} />
-            <Route exact path="/predictions" component={PredictionsAnalytics} />
+            <Route exact path="/predictions" component={PredictionAnalytics} />
+            <Route exact path="/inputs" component={InputsAnalytics} />
           </Switch>
         </div>
       </Router>

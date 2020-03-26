@@ -3,6 +3,7 @@ import ProjectionGraph from '../components/projection-graph/ProjectionGraph';
 import { getDataFetcher } from '../utils/data-managers/DataFetcher';
 import Table from '../components/base-elements/Table';
 import { buildTableProps } from '../utils/data-managers/FeatureDataManager';
+import InputsAnalytics from '../components/inputs-table/InputsAnalytics';
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
