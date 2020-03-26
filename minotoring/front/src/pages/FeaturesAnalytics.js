@@ -1,94 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-// Data Managers
-import {
-  buildAreaPlotProps,
-  buildScatterPlotProps,
-  buildTableProps,
-} from '../utils/data-managers/FeatureDataManager';
-// Components
-import AreaPlot from '../components/react-vis/AreaPlot';
-import ScatterPlot from '../components/react-vis/ScatterPlot';
+import React, { useState, useEffect } from 'react';
+import ProjectionGraph from '../components/projection-graph/ProjectionGraph';
+import { getDataFetcher } from '../utils/data-managers/DataFetcher';
 import Table from '../components/base-elements/Table';
+import { buildTableProps } from '../utils/data-managers/FeatureDataManager';
 
-// Utils
-const buildPlots = (featureData, activeFeature) => {
-  if (!(featureData && activeFeature)) {
-    return null;
-  }
-  const data = featureData[activeFeature];
-  const areaPlotData = buildAreaPlotProps(data);
-  const scatterPlotData = buildScatterPlotProps(data);
-  const plots = [
-    <AreaPlot
-      key="Title of area plot"
-      xTitle={activeFeature}
-      yTitle="Occurence"
-      data={areaPlotData}
-    />,
-    <ScatterPlot
-      key="Title of scatter plot"
-      xTitle="Order of appearance"
-      yTitle={activeFeature}
-      data={scatterPlotData}
-    />,
-  ];
-  return plots;
+const dataSetter = async (response, setFeatureData) => {
+  const data = await response.json();
+  setFeatureData(data.features);
 };
 
-const buildProjectedPlot = (projectedTrainingData, projectedPredictionData) => (
-  <ScatterPlot
-    data={[
-      { data: projectedTrainingData, name: 'Training', color: 'blue' },
-      {
-        data: projectedPredictionData,
-        name: 'Prediction',
-        color: 'red',
-      },
-    ]}
-    xTitle="test"
-    yTitle="test"
-    key="key"
-  />
-);
-
-export default function FeaturesAnalytics(props) {
-  const [activeFeature, setActiveFeature] = useState(null);
-  const [projectedTrainingData, setProjectedTrainingData] = useState([]);
-  const [projectedPredictionData, setProjectedPredictionData] = useState([]);
-  const { featureData } = props;
-
-  const fetchProjection = async () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(['sepal_length', 'sepal_width']),
-    };
-    const response = await fetch(
-      'http://0.0.0.0:8888/projection',
-      requestOptions
-    );
-    const data = await response.json();
-    const train_projection = data.training;
-    const predict_projection = data.prediction;
-    setProjectedTrainingData([
-      ...projectedTrainingData,
-      ...train_projection.map(([x, y], idx) => ({
-        x,
-        y,
-      })),
-    ]);
-    setProjectedPredictionData([
-      ...projectedPredictionData,
-      ...predict_projection.map(([x, y], idx) => ({
-        x,
-        y,
-      })),
-    ]);
-  };
+export default function FeaturesAnalytics() {
+  const [activeFeature, setActiveFeature] = useState();
+  const [featureData, setFeatureData] = useState({});
 
   useEffect(() => {
-    fetchProjection();
+    const dataFetcher = getDataFetcher('data', dataSetter);
+    dataFetcher(setFeatureData);
   }, []);
 
   // Event functions
@@ -101,18 +28,13 @@ export default function FeaturesAnalytics(props) {
   return (
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
+      <ProjectionGraph featureNames={Object.keys(featureData)} />
       <Table
         {...buildTableProps(featureData)}
         onRowClicked={onTrClicked}
         isColFiltrable
         isRowFiltrable
       />
-      {buildProjectedPlot(projectedTrainingData, projectedPredictionData)}
-      {buildPlots(featureData, activeFeature)}
     </div>
   );
 }
-
-FeaturesAnalytics.propTypes = {
-  featureData: PropTypes.object.isRequired,
-};
