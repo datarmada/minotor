@@ -10,6 +10,9 @@
 @import 'main/reset';
 @import 'main/variables';
 
+// Analyzers
+@import 'analyzers/FeatureAnalyzer';
+
 // Base Elements
 @import 'base-elements/Dropdown';
 @import 'base-elements/Table';

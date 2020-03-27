@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Components
 import NavBar from './components/navbar/NavBar';
+import FeatureAnalyzer from './components/analyzers/FeatureAnalyzer';
 // Pages
 import FeaturesAnalytics from './pages/FeaturesAnalytics';
 import PredictionsAnalytics from './pages/PredictionsAnalytics';
@@ -18,6 +19,7 @@ const App = () => {
           <Switch>
             <Route exact path="/features" component={FeaturesAnalytics} />
             <Route exact path="/predictions" component={PredictionsAnalytics} />
+            <Route exact path="/feature-analysis" component={FeatureAnalyzer} />
           </Switch>
         </div>
       </Router>
