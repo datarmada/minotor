@@ -37,23 +37,23 @@ export default function ProjectionGraph(props) {
       JSON.stringify(featureNames)
     );
     fetchData(setProjectedTrainingData, setProjectedPredictionData);
-  }, []);
+  }, [featureNames]);
+
   return (
-    <div>
-      <ScatterPlot
-        data={[
-          { data: projectedTrainingData, name: 'Training' },
-          {
-            data: projectedPredictionData,
-            name: 'Prediction',
-            color: 'red',
-          },
-        ]}
-        isDraggable
-        isCrosshair={false}
-        highlightedIdxCallback={setSelectedPoints}
-      />
-    </div>
+    <ScatterPlot
+      data={[
+        { data: projectedTrainingData, name: 'Training' },
+        {
+          data: projectedPredictionData,
+          name: 'Prediction',
+          color: 'red',
+        },
+      ]}
+      isDraggable
+      isCrosshair={false}
+      {...props}
+      highlightedIdxCallback={setSelectedPoints}
+    />
   );
 }
 

@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   DiscreteColorLegend,
+  FlexibleXYPlot,
   HorizontalGridLines,
   VerticalGridLines,
   XAxis,
-  XYPlot,
   YAxis,
 } from 'react-vis';
 import useCrosshair from './CrosshairHook';
@@ -66,8 +66,6 @@ export default function ReactVisComponent({ children, ...props }) {
     data,
     xTitle,
     yTitle,
-    width,
-    height,
     axisStyle,
     legendStyle,
     isDraggable,
@@ -89,7 +87,7 @@ export default function ReactVisComponent({ children, ...props }) {
     return null;
   }
   return (
-    <XYPlot height={height} width={width} {...XYprops}>
+    <FlexibleXYPlot {...props} {...XYprops}>
       <VerticalGridLines />
       <HorizontalGridLines />
       <XAxis title={xTitle} style={axisStyle} />
@@ -100,17 +98,17 @@ export default function ReactVisComponent({ children, ...props }) {
       />
       {additionalComponents}
       {renderedLayers}
-    </XYPlot>
+    </FlexibleXYPlot>
   );
 }
 
 ReactVisComponent.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired, // eslint-disable-line
   data: PropTypes.arrayOf(Object).isRequired,
   xTitle: PropTypes.string,
   yTitle: PropTypes.string,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.number, // eslint-disable-line
+  height: PropTypes.number, // eslint-disable-line
   axisStyle: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number])
   ),
@@ -125,8 +123,6 @@ ReactVisComponent.propTypes = {
 ReactVisComponent.defaultProps = {
   xTitle: '',
   yTitle: '',
-  width: 600,
-  height: 400,
   axisStyle: {
     title: {
       fontWeight: 900,

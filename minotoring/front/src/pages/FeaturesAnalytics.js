@@ -10,7 +10,6 @@ const dataSetter = async (response, setFeatureData) => {
 };
 
 export default function FeaturesAnalytics() {
-  const [activeFeature, setActiveFeature] = useState();
   const [featureData, setFeatureData] = useState({});
 
   useEffect(() => {
@@ -18,23 +17,11 @@ export default function FeaturesAnalytics() {
     dataFetcher(setFeatureData);
   }, []);
 
-  // Event functions
-  const onTrClicked = e => {
-    const tr = e.currentTarget;
-    const selectedFeature = tr.firstChild.innerText;
-    setActiveFeature(selectedFeature);
-  };
-
   return (
     <div id="features-analytics">
       <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
       <ProjectionGraph featureNames={Object.keys(featureData)} />
-      <Table
-        {...buildTableProps(featureData)}
-        onRowClicked={onTrClicked}
-        isColFiltrable
-        isRowFiltrable
-      />
+      <Table {...buildTableProps(featureData)} isColFiltrable isRowFiltrable />
     </div>
   );
 }
