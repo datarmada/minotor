@@ -136,5 +136,5 @@ ReactVisComponent.defaultProps = {
     right: 0,
   },
   isDraggable: false,
-  isCrosshair: true,
+  isCrosshair: false,
 };
