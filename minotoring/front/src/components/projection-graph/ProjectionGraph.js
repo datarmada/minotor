@@ -51,6 +51,7 @@ export default function ProjectionGraph(props) {
           },
         ]}
         isDraggable
+        isCrosshair={false}
       />
     </div>
   );

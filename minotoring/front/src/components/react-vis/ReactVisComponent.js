@@ -5,11 +5,60 @@ import {
   HorizontalGridLines,
   VerticalGridLines,
   XAxis,
-  XYPlot,
   YAxis,
+  XYPlot,
+  MarkSeries,
 } from 'react-vis';
-import CrosshairComponent from './CrosshairComponent';
-import DraggableComponent from './DraggableComponent';
+import useDraggable from './DraggableHook';
+import useCrosshair from './CrosshairHook';
+
+const createLayerMaker = (children, props) => (
+  data,
+  name,
+  color = '#79C7E3',
+  idx
+) => (
+  <children.type
+    key={name}
+    opacity={0.8}
+    data={data}
+    color={color}
+    {...props[idx]}
+    {...children.props}
+  />
+);
+
+const buildAdditionalFeatures = (isDraggable, isCrosshair, data, props) => {
+  const additionalComponents = [];
+  const additionalProps = [];
+
+  const {
+    component: crossHairComponent,
+    customProps: crosshairProps,
+    XYprops,
+  } = isCrosshair ? useCrosshair(props) : {};
+
+  isCrosshair &&
+    additionalComponents.push(crossHairComponent) &&
+    additionalProps.push(crosshairProps);
+
+  const {
+    component: draggableComponent,
+    customProps: draggableProps,
+  } = isDraggable ? useDraggable(props) : {};
+
+  isDraggable &&
+    additionalComponents.push(draggableComponent) &&
+    additionalProps.push(draggableProps);
+
+  const customProps = data.map((_, idx) =>
+    additionalProps.reduce(
+      (obj, newProps) => ({ ...newProps[idx], ...obj }),
+      {}
+    )
+  );
+  return { customProps, additionalComponents, XYprops };
+};
 
 export default function ReactVisComponent({ children, ...props }) {
   const {
@@ -21,17 +70,24 @@ export default function ReactVisComponent({ children, ...props }) {
     axisStyle,
     legendStyle,
     isDraggable,
+    isCrosshair,
   } = props;
 
-  const plotFactory = isDraggable ? DraggableComponent : CrosshairComponent;
-
-  const [XYPlotMouseLeave, setXYPlotMouseLeave] = useState(() => () => {});
+  const {
+    customProps,
+    additionalComponents,
+    XYprops,
+  } = buildAdditionalFeatures(isDraggable, isCrosshair, data, props);
+  const makeLayer = createLayerMaker(children, customProps);
+  const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
+    makeLayer(layerData, name, color, idx)
+  );
   // If no data at all, return null component
   if (!data) {
     return null;
   }
   return (
-    <XYPlot height={height} width={width} onMouseLeave={XYPlotMouseLeave}>
+    <XYPlot height={height} width={width} {...XYprops}>
       <VerticalGridLines />
       <HorizontalGridLines />
       <XAxis title={xTitle} style={axisStyle} />
@@ -40,7 +96,8 @@ export default function ReactVisComponent({ children, ...props }) {
         items={data.map(({ name, color }) => ({ title: name, color }))}
         style={legendStyle}
       />
-      {plotFactory({ child: children, data, setXYPlotMouseLeave })}
+      {additionalComponents}
+      {renderedLayers}
     </XYPlot>
   );
 }
@@ -48,20 +105,23 @@ export default function ReactVisComponent({ children, ...props }) {
 ReactVisComponent.propTypes = {
   children: PropTypes.object.isRequired,
   data: PropTypes.arrayOf(Object).isRequired,
-  xTitle: PropTypes.string.isRequired,
-  yTitle: PropTypes.string.isRequired,
+  xTitle: PropTypes.string,
+  yTitle: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
   axisStyle: PropTypes.objectOf(
-    PropTypes.oneOf([PropTypes.object, PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number])
   ),
   legendStyle: PropTypes.objectOf(
-    PropTypes.oneOf([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ),
   isDraggable: PropTypes.bool,
+  isCrosshair: PropTypes.bool,
 };
 
 ReactVisComponent.defaultProps = {
+  xTitle: '',
+  yTitle: '',
   width: 600,
   height: 400,
   axisStyle: {
@@ -76,4 +136,5 @@ ReactVisComponent.defaultProps = {
     right: 0,
   },
   isDraggable: false,
+  isCrosshair: true,
 };
