@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { isEmpty } from 'lodash';
 import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
 import { buildTableProps } from '../../utils/data-managers/FeatureDataManager';
 import Table from '../base-elements/Table';
@@ -16,6 +17,10 @@ export default function InputsAnalytics() {
     const dataFetcher = getDataFetcher('data', dataSetter);
     dataFetcher(setFeatureData);
   }, []);
+
+  if (isEmpty(featureData)) {
+    return null;
+  }
   return (
     <div>
       <h1>Inputs Analytics</h1>

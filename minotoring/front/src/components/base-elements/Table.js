@@ -96,7 +96,7 @@ Table.defaultProps = {
   nbColDisplayed: 6,
   nbRowDisplayed: 10,
   verboseColNames: {},
-  onRowClicked: () => {},
-  onCellClicked: () => {},
-  onColClicked: () => {},
+  onRowClicked: null,
+  onCellClicked: null,
+  onColClicked: null,
 };

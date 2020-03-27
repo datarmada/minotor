@@ -1,26 +1,35 @@
-import { mapObjectItems } from './FeatureDataManager';
+const createSingleInputData = (featureData, idx) =>
+  Object.entries(featureData).reduce(
+    (newObj, [featureName, singleFeatureData]) => ({
+      [featureName]: singleFeatureData.predict.values[idx],
+      ...newObj,
+    }),
+    {}
+  );
 
-const buildTableData = featureData => {
-  const result = [];
-  const buildData = (featureName, singlefeatureData) => {
-    singlefeatureData.predict.values.map((val, idx) => {
-      if (!result[idx]) {
-        result[idx] = { inputIdx: idx };
-      }
-      result[idx][featureName] = val;
-    });
-  };
-  mapObjectItems(featureData, buildData);
-  return result;
-};
+const buildPredictionData = featureData =>
+  Object.values(featureData)[0].predict.values.map((_, idx) => ({
+    inputId: `Prediction ${idx}`,
+    ...createSingleInputData(featureData, idx),
+  }));
 
+const buildTrainingData = featureData =>
+  Object.values(featureData)[0].train.values.map((_, idx) => ({
+    inputId: `Training ${idx}`,
+    ...createSingleInputData(featureData, idx),
+  }));
+
+const buildTableData = featureData => [
+  ...buildTrainingData(featureData),
+  ...buildPredictionData(featureData),
+];
 const buildInputTableProps = featureData => {
   return {
     data: buildTableData(featureData),
-    mainCol: 'inputIdx',
-    orderedColumns: ['inputIdx', ...Object.keys(featureData)],
+    mainCol: 'inputId',
+    orderedColumns: ['inputId', ...Object.keys(featureData)],
     verboseColNames: {
-      inputIdx: 'Inputs',
+      inputId: 'Inputs',
     },
   };
 };

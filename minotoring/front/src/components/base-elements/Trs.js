@@ -4,10 +4,10 @@ import React from 'react';
 export default function Trs(props) {
   const { columns, mainCol, onRowClicked, onCellClicked, rows } = props;
   return rows.map(row => (
-    <tr key={row[mainCol]}>
+    <tr key={row[mainCol]} onClick={onRowClicked}>
       {columns.map((col, idx) =>
         idx === 0 ? (
-          <th scope="row" key={col} onClick={onRowClicked}>
+          <th scope="row" key={col}>
             {row[col]}
           </th>
         ) : (
@@ -15,8 +15,8 @@ export default function Trs(props) {
           <td
             key={col}
             onClick={e => {
-              if (e.stopPropagation) e.stopPropagation();
-              onCellClicked(e);
+              onCellClicked && e.stopPropagation && e.stopPropagation();
+              onCellClicked && onCellClicked(e);
             }}
           >
             {row[col]}
@@ -36,6 +36,6 @@ Trs.propTypes = {
 };
 
 Trs.defaultProps = {
-  onRowClicked: () => {},
-  onCellClicked: () => {},
+  onRowClicked: null,
+  onCellClicked: null,
 };
