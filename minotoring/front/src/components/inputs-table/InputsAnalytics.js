@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
-import { buildTableProps } from '../../utils/data-managers/FeatureDataManager';
-import Table from '../base-elements/Table';
 import buildInputTableProps from '../../utils/data-managers/InputDataManager';
+import Table from '../base-elements/Table';
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
