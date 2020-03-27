@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import DraggableScatterPlot from '../react-vis/DraggableScatterPlot';
+import ScatterPlot from '../react-vis/ScatterPlot';
 import { postDataFetcher } from '../../utils/data-managers/DataFetcher';
 
 const handleFetchedData = async (
@@ -37,21 +37,22 @@ export default function ProjectionGraph(props) {
       JSON.stringify(featureNames)
     );
     fetchData(setProjectedTrainingData, setProjectedPredictionData);
-  }, []);
+  }, [featureNames]);
 
   return (
-    <div>
-      <DraggableScatterPlot
-        data={[
-          { data: projectedTrainingData, name: 'Training' },
-          {
-            data: projectedPredictionData,
-            name: 'Prediction',
-            color: 'red',
-          },
-        ]}
-      />
-    </div>
+    <ScatterPlot
+      data={[
+        { data: projectedTrainingData, name: 'Training' },
+        {
+          data: projectedPredictionData,
+          name: 'Prediction',
+          color: 'red',
+        },
+      ]}
+      isDraggable
+      isCrosshair={false}
+      {...props}
+    />
   );
 }
 

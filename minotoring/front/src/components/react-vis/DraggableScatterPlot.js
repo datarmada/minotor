@@ -7,7 +7,7 @@ import {
   MarkSeries,
   VerticalGridLines,
   XAxis,
-  XYPlot,
+  FlexibleXYPlot,
   YAxis,
 } from 'react-vis';
 
@@ -38,7 +38,7 @@ const createPointHighlighter = filter => d => {
 };
 
 export default function DraggableScatterPlot(props) {
-  const { data, xTitle, yTitle, width, height, axisStyle, legendStyle } = props;
+  const { data, xTitle, yTitle, axisStyle, legendStyle } = props;
   const [filter, setFilter] = useState(null);
   const [highlighting, setHighlighting] = useState(false);
 
@@ -51,36 +51,35 @@ export default function DraggableScatterPlot(props) {
   const nbSelectedPoints = Array.prototype
     .concat(...data.map(category => category.data))
     .filter(highlightPoint).length;
+
   return (
-    <div>
-      <XYPlot width={width} height={height}>
-        <VerticalGridLines />
-        <HorizontalGridLines />
-        <XAxis title={xTitle} style={axisStyle} />
-        <YAxis title={yTitle} style={axisStyle} />
-        <DiscreteColorLegend
-          items={data.map(({ name, color }) => ({ title: name, color }))}
-          style={legendStyle}
-        />
-        <Highlight
-          drag
-          onBrushStart={() => setHighlighting(true)}
-          onBrush={area => setFilter(area)}
-          onBrushEnd={area => {
-            setHighlighting(false);
-            setFilter(area);
-          }}
-          onDragStart={() => setHighlighting(true)}
-          onDrag={area => setFilter(area)}
-          onDragEnd={area => {
-            setHighlighting(false);
-            setFilter(area);
-          }}
-        />
-        {renderedLayers}
-      </XYPlot>
+    <FlexibleXYPlot {...props}>
+      <VerticalGridLines />
+      <HorizontalGridLines />
+      <XAxis title={xTitle} style={axisStyle} />
+      <YAxis title={yTitle} style={axisStyle} />
+      <DiscreteColorLegend
+        items={data.map(({ name, color }) => ({ title: name, color }))}
+        style={legendStyle}
+      />
+      <Highlight
+        drag
+        onBrushStart={() => setHighlighting(true)}
+        onBrush={area => setFilter(area)}
+        onBrushEnd={area => {
+          setHighlighting(false);
+          setFilter(area);
+        }}
+        onDragStart={() => setHighlighting(true)}
+        onDrag={area => setFilter(area)}
+        onDragEnd={area => {
+          setHighlighting(false);
+          setFilter(area);
+        }}
+      />
+      {renderedLayers}
       <p>There is {nbSelectedPoints} points selected</p>
-    </div>
+    </FlexibleXYPlot>
   );
 }
 
@@ -96,8 +95,8 @@ DraggableScatterPlot.propTypes = {
   ).isRequired,
   xTitle: PropTypes.string,
   yTitle: PropTypes.string,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.number, // eslint-disable-line
+  height: PropTypes.number, // eslint-disable-line
   axisStyle: PropTypes.objectOf(Object),
   legendStyle: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -105,8 +104,6 @@ DraggableScatterPlot.propTypes = {
 };
 
 DraggableScatterPlot.defaultProps = {
-  width: 600,
-  height: 400,
   xTitle: '',
   yTitle: '',
   axisStyle: {

@@ -12,6 +12,10 @@ table.table {
     box-shadow: $table-box-shadow;
     position: relative;
 
+    &.selected {
+      background-color: rgb(121, 199, 227);
+    }
+
     td,
     th {
       cursor: pointer;
