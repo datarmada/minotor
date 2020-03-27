@@ -11,13 +11,13 @@ export default function Trs(props) {
             {row[col]}
           </th>
         ) : (
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
           <td
             key={col}
             onClick={e => {
               onCellClicked && e.stopPropagation && e.stopPropagation();
               onCellClicked && onCellClicked(e);
             }}
+            role="presentation"
           >
             {row[col]}
           </td>
