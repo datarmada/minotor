@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import isEmpty from 'lodash';
-
 // Data managers
 import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
-import {
-  buildAreaPlotProps,
-  buildFeatureKlTableProps,
-  buildScatterPlotProps,
-  buildTableProps,
-} from '../../utils/data-managers/FeatureDataManager';
+import { buildFeatureKlTableProps } from '../../utils/data-managers/FeatureDataManager';
 
 // Components
-import AreaPlot from '../react-vis/AreaPlot';
-import ProjectionGraph from '../projection-graph/ProjectionGraph';
-import ScatterPlot from '../react-vis/ScatterPlot';
 import Table from '../base-elements/Table';
+import FeatureAnalyzerViz from './FeatureAnalyzerViz';
 
 // Utils
 const toggleSelectedFeature = (feature, selectedFeatures) =>
@@ -53,48 +44,8 @@ export default function FeatureAnalyzer() {
         onRowClicked={handleRowClicked}
       />
       <div className="projection-graph-container">
-        {buildVisualizations(featureData, selectedFeatures)}
+        <FeatureAnalyzerViz {...{ featureData, selectedFeatures }} />
       </div>
     </div>
   );
 }
-
-const buildVisualizations = (featureData, selectedFeatures) => {
-  if (selectedFeatures.length === 0) {
-    return (
-      <div className="no-feature-selected">
-        <p>Select one or several features to analyze them</p>
-      </div>
-    );
-  }
-  if (selectedFeatures.length === 1) {
-    const singleFeatureName = selectedFeatures[0];
-    const singleFeatureData = featureData[singleFeatureName];
-    const areaPlotData = buildAreaPlotProps(singleFeatureData);
-    const scatterPlotData = buildScatterPlotProps(singleFeatureData);
-    return (
-      <div className="feature-multi-graph-container">
-        <div className="area-plot">
-          <AreaPlot
-            key="Title of area plot"
-            xTitle={singleFeatureName}
-            yTitle="Occurence"
-            data={areaPlotData}
-          />
-        </div>
-        <div className="scatter-plot">
-          <ScatterPlot
-            key="Title of scatter plot"
-            xTitle="Order of appearance"
-            yTitle={singleFeatureName}
-            data={scatterPlotData}
-          />
-        </div>
-        <div className="table-container">
-          <Table {...buildTableProps([singleFeatureData])} />
-        </div>
-      </div>
-    );
-  }
-  return <ProjectionGraph featureNames={selectedFeatures} />;
-};
