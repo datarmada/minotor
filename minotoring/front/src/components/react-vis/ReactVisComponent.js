@@ -5,12 +5,11 @@ import {
   HorizontalGridLines,
   VerticalGridLines,
   XAxis,
-  YAxis,
   XYPlot,
-  MarkSeries,
+  YAxis,
 } from 'react-vis';
-import useDraggable from './DraggableHook';
 import useCrosshair from './CrosshairHook';
+import useDraggable from './DraggableHook';
 
 const createLayerMaker = (children, props) => (
   data,
@@ -32,6 +31,7 @@ const buildAdditionalFeatures = (isDraggable, isCrosshair, data, props) => {
   const additionalComponents = [];
   const additionalProps = [];
 
+  // Crosshair feature
   const {
     component: crossHairComponent,
     customProps: crosshairProps,
@@ -42,6 +42,7 @@ const buildAdditionalFeatures = (isDraggable, isCrosshair, data, props) => {
     additionalComponents.push(crossHairComponent) &&
     additionalProps.push(crosshairProps);
 
+  // Draggable feature
   const {
     component: draggableComponent,
     customProps: draggableProps,
@@ -78,6 +79,7 @@ export default function ReactVisComponent({ children, ...props }) {
     additionalComponents,
     XYprops,
   } = buildAdditionalFeatures(isDraggable, isCrosshair, data, props);
+
   const makeLayer = createLayerMaker(children, customProps);
   const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
     makeLayer(layerData, name, color, idx)
@@ -117,6 +119,7 @@ ReactVisComponent.propTypes = {
   ),
   isDraggable: PropTypes.bool,
   isCrosshair: PropTypes.bool,
+  highlightedIdxCallback: PropTypes.func,
 };
 
 ReactVisComponent.defaultProps = {
@@ -137,4 +140,5 @@ ReactVisComponent.defaultProps = {
   },
   isDraggable: false,
   isCrosshair: false,
+  highlightedIdxCallback: null,
 };

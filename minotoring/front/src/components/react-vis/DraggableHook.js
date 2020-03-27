@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Highlight } from 'react-vis';
+import highlight from 'react-vis/dist/plot/highlight';
 
 const createPropsBuilder = (highlightPoint, highlighting) => (
   color = '#79C7E3'
@@ -18,14 +19,37 @@ const createPointHighlighter = filter => d => {
   return leftRight && upDown;
 };
 
+const getHighlightedIdx = (highlightPoint, data) =>
+  data.reduce(
+    (obj, { data: layerData, name }) => ({
+      [name]: layerData.reduce(
+        (highlightedPoints, value, idx) =>
+          highlightPoint(value)
+            ? [idx, ...highlightedPoints]
+            : highlightedPoints,
+        []
+      ),
+      ...obj,
+    }),
+    {}
+  );
+
 export default function useDraggable(props) {
-  const { data } = props;
+  const { data, highlightedIdxCallback } = props;
   const [filter, setFilter] = useState(null);
   const [highlighting, setHighlighting] = useState(false);
 
   const highlightPoint = createPointHighlighter(filter);
   const buildProps = createPropsBuilder(highlightPoint, highlighting);
   const customProps = data.map(({ color }) => buildProps(color));
+  const callHighlightedIdxCallback = () => {
+    (highlightedIdxCallback &&
+      highlightedIdxCallback(getHighlightedIdx(highlightPoint, data))) ||
+      (!highlightedIdxCallback &&
+        console.error(
+          'You should specify a callback for selected data points'
+        ));
+  };
   return {
     component: (
       <Highlight
@@ -35,12 +59,14 @@ export default function useDraggable(props) {
         onBrushEnd={area => {
           setHighlighting(false);
           setFilter(area);
+          callHighlightedIdxCallback();
         }}
         onDragStart={() => setHighlighting(true)}
         onDrag={area => setFilter(area)}
         onDragEnd={area => {
           setHighlighting(false);
           setFilter(area);
+          callHighlightedIdxCallback();
         }}
       />
     ),
