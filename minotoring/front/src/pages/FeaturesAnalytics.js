@@ -3,7 +3,6 @@ import ProjectionGraph from '../components/projection-graph/ProjectionGraph';
 import { getDataFetcher } from '../utils/data-managers/DataFetcher';
 import Table from '../components/base-elements/Table';
 import { buildTableProps } from '../utils/data-managers/FeatureDataManager';
-import InputsAnalytics from '../components/inputs-table/InputsAnalytics';
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
@@ -27,8 +26,8 @@ export default function FeaturesAnalytics() {
   };
 
   return (
-    <div id="features-analytics">
-      <h1 style={{ marginBottom: '30px' }}>Features Analytics</h1>
+    <div className="page">
+      <h1>Features Analytics</h1>
       <ProjectionGraph featureNames={Object.keys(featureData)} />
       <Table
         {...buildTableProps(featureData)}

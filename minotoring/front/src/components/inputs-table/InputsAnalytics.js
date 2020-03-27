@@ -22,7 +22,7 @@ export default function InputsAnalytics() {
     return null;
   }
   return (
-    <div>
+    <div className="page">
       <h1>Inputs Analytics</h1>
       <Table
         {...buildInputTableProps(featureData)}
