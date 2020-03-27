@@ -67,8 +67,8 @@ statistic_functions = {
     "std": np.nanstd,
     "hist": _histogram,
     "nan_percentage": _nan_percentage,
-    "95_percentile": percentile_factory(95),
-    "05_percentile": percentile_factory(5)
+    "percentile_95": percentile_factory(95),
+    "percentile_05": percentile_factory(5)
 }
 statistic_library = StatisticLibrary()
 for name, func in statistic_functions.items():

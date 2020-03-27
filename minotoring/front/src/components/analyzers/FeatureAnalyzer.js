@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // Data managers
 import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
-import { buildFeatureKlTableProps } from '../../utils/data-managers/FeatureDataManager';
+import { buildFeatureKLTableProps } from '../../utils/data-managers/FeatureDataManager';
 
 // Components
 import Table from '../base-elements/Table';
@@ -40,7 +40,7 @@ export default function FeatureAnalyzer() {
   return (
     <div className="feature-analyzer" style={{ padding: '30px' }}>
       <Table
-        {...buildFeatureKlTableProps(featureData)}
+        {...buildFeatureKLTableProps(featureData)}
         onRowClicked={handleRowClicked}
       />
       <div className="projection-graph-container">

@@ -32,7 +32,7 @@ export const buildTableData = featureData =>
 //
 // featureData correspond to the entire object linked to the features key in the
 // raw data pulled from the server
-export const buildFeatureKlTableProps = featureData => {
+export const buildFeatureKLTableProps = featureData => {
   return {
     data: buildTableData(featureData),
     isRowFiltrable: true,
@@ -49,12 +49,23 @@ export const buildTableProps = featureData => {
   return {
     data: buildTableData(featureData),
     mainCol: 'featureName',
-    orderedColumns: ['featureName', 'mean', 'std', 'nan_percentage'],
+    orderedColumns: [
+      'featureName',
+      'kl_divergence',
+      'mean',
+      'std',
+      'nan_percentage',
+      'percentile_05',
+      'percentile_95',
+    ],
     verboseColNames: {
-      featureName: 'Name of the features',
+      featureName: 'Feature name',
+      kl_divergence: 'KL Divergence',
       mean: 'Mean',
       std: 'Standard Deviation',
-      nan_percentage: '% of NaN',
+      nan_percentage: '% NaN',
+      percentile_05: '5th perc.',
+      percentile_95: '95th perc.',
     },
   };
 };
@@ -86,8 +97,8 @@ export const buildScatterPlotProps = singleFeatureData => {
   const scatterPlotData = values2reactVisData(singleFeatureData.predict.values);
   const [outliers, regularPoints] = splitOutliers(
     scatterPlotData,
-    singleFeatureData.predict['95_percentile'],
-    singleFeatureData.predict['05_percentile']
+    singleFeatureData.predict.percentile_95,
+    singleFeatureData.predict.percentile_05
   );
   return [
     { data: regularPoints, name: 'Regular Points' },
