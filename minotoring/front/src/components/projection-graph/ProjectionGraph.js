@@ -29,7 +29,7 @@ export default function ProjectionGraph(props) {
   const { featureNames } = props;
   const [projectedTrainingData, setProjectedTrainingData] = useState([]);
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
-
+  const [selectedPoints, setSelectedPoints] = useState({});
   useEffect(() => {
     const fetchData = postDataFetcher(
       'projection',
@@ -52,6 +52,7 @@ export default function ProjectionGraph(props) {
       isDraggable
       isCrosshair={false}
       {...props}
+      onHighlightedPoints={setSelectedPoints}
     />
   );
 }
