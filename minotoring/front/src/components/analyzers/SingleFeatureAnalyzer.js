@@ -33,6 +33,7 @@ export default function SingleFeatureAnalyzer(props) {
           xTitle="Order of appearance"
           yTitle={singleFeatureName}
           data={scatterPlotData}
+          isCrosshair
         />
       </div>
       <div className="table-container">
