@@ -52,7 +52,7 @@ export default function ProjectionGraph(props) {
       isDraggable
       isCrosshair={false}
       {...props}
-      highlightedIdxCallback={setSelectedPoints}
+      onHighlightedPoints={setSelectedPoints}
     />
   );
 }

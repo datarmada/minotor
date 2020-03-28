@@ -35,7 +35,7 @@ const getHighlightedIdx = (highlightPoint, data) =>
   );
 
 export default function useDraggable(props) {
-  const { data, highlightedIdxCallback } = props;
+  const { data, onHighlightedPoints: highlightedIdxCallback } = props;
   const [filter, setFilter] = useState(null);
   const [highlighting, setHighlighting] = useState(false);
 
