@@ -13,7 +13,7 @@ const dataSetter = async (response, setFeatureData) => {
 export default function InputsAnalytics() {
   const [featureData, setFeatureData] = useState({});
   const [selectedFeature, setSelectedFeature] = useState();
-
+  const [hightlightedInput, setHighlightedInput] = useState();
   useEffect(() => {
     const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
     fetchData(setFeatureData);
@@ -36,8 +36,8 @@ export default function InputsAnalytics() {
       ) : null}
       <Table
         {...buildInputTableProps(featureData)}
-        onCellClicked={() => {
-          console.log('cell');
+        onCellClicked={e => {
+          setHighlightedInput(e.target.getAttribute('idxrow'));
         }}
         onRowClicked={() => {
           console.log('row');

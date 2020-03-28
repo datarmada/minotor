@@ -14,6 +14,8 @@ export default function Trs(props) {
       {columns.map((col, idxCol) => (
         <td
           key={col}
+          idxcol={idxCol}
+          idxrow={idxRow}
           onClick={e => {
             onCellClicked && e.stopPropagation && e.stopPropagation();
             onCellClicked && onCellClicked(e);
