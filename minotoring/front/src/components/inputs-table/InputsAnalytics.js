@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
 import buildInputTableProps from '../../utils/data-managers/InputDataManager';
 import Table from '../base-elements/Table';
+import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
@@ -11,6 +12,7 @@ const dataSetter = async (response, setFeatureData) => {
 
 export default function InputsAnalytics() {
   const [featureData, setFeatureData] = useState({});
+  const [selectedFeature, setSelectedFeature] = useState();
 
   useEffect(() => {
     const dataFetcher = getDataFetcher('data', dataSetter);
@@ -23,6 +25,12 @@ export default function InputsAnalytics() {
   return (
     <div className="page">
       <h1>Inputs Analytics</h1>
+      {selectedFeature ? (
+        <SingleFeatureAnalyzer
+          singleFeatureData={featureData[selectedFeature]}
+          singleFeatureName={selectedFeature}
+        />
+      ) : null}
       <Table
         {...buildInputTableProps(featureData)}
         onCellClicked={() => {
@@ -31,8 +39,8 @@ export default function InputsAnalytics() {
         onRowClicked={() => {
           console.log('row');
         }}
-        onColClicked={() => {
-          console.log('col');
+        onColClicked={e => {
+          setSelectedFeature(e.target.textContent);
         }}
       />
     </div>
