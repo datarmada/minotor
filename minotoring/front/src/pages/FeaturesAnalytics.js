@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../components/base-elements/Table';
 import ProjectionGraph from '../components/projection-graph/ProjectionGraph';
-import { getDataFetcher } from '../utils/data-managers/DataFetcher';
+import { buildGetFetcher } from '../utils/data-managers/DataFetcher';
 import { buildTableProps } from '../utils/data-managers/FeatureDataManager';
 
 const dataSetter = async (response, setFeatureData) => {
@@ -13,7 +13,7 @@ export default function FeaturesAnalytics() {
   const [featureData, setFeatureData] = useState({});
 
   useEffect(() => {
-    const dataFetcher = getDataFetcher('data', dataSetter);
+    const dataFetcher = buildGetFetcher('data', dataSetter);
     dataFetcher(setFeatureData);
   }, []);
 

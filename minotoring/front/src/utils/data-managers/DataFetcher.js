@@ -1,35 +1,46 @@
-const basicDataFetcher = (requestOptions, route, callback) => async (
+const buildBasicFetcher = (requestOptions, route, callback) => async (
   ...args
 ) => {
   try {
-    const response = await fetch(
-      `http://0.0.0.0:8888/${route}`,
-      requestOptions
-    );
+    const response = await fetch(`http://0.0.0.0:8888/${route}`, {
+      ...requestOptions,
+    });
     callback(response, ...args);
   } catch (err) {
     console.error(err);
   }
 };
 
-export const postDataFetcher = (route, callback, body) =>
-  basicDataFetcher(
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body,
-    },
-    route,
-    callback
-  );
+export const buildPostFetcher = (route, callback, body) => {
+  const abortController = new AbortController();
+  return {
+    fetchData: buildBasicFetcher(
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+        signal: abortController.signal,
+      },
+      route,
+      callback
+    ),
+    abortController,
+  };
+};
 
-export const getDataFetcher = (route, callback) =>
-  basicDataFetcher(
-    {
-      method: 'GET',
-    },
-    route,
-    callback
-  );
+export const buildGetFetcher = (route, callback) => {
+  const abortController = new AbortController();
 
-export default basicDataFetcher;
+  return {
+    fetchData: buildBasicFetcher(
+      {
+        method: 'GET',
+      },
+      route,
+      callback
+    ),
+    abortController,
+  };
+};
+
+export default buildBasicFetcher;
