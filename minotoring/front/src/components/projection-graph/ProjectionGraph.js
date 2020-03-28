@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ScatterPlot from '../react-vis/ScatterPlot';
-import { postDataFetcher } from '../../utils/data-managers/DataFetcher';
+import { buildPostFetcher } from '../../utils/data-managers/DataFetcher';
 
 const handleFetchedData = async (
   response,
@@ -31,12 +31,15 @@ export default function ProjectionGraph(props) {
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
 
   useEffect(() => {
-    const fetchData = postDataFetcher(
+    const { fetchData, abortController } = buildPostFetcher(
       'projection',
       handleFetchedData,
       JSON.stringify(featureNames)
     );
     fetchData(setProjectedTrainingData, setProjectedPredictionData);
+    return function cleanUp() {
+      abortController.abort();
+    };
   }, [featureNames]);
 
   return (

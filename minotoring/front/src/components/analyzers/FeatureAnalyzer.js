@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Data managers
-import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
+import { buildGetFetcher } from '../../utils/data-managers/DataFetcher';
 import { buildFeatureKLTableProps } from '../../utils/data-managers/FeatureDataManager';
 
 // Components
@@ -33,8 +33,11 @@ export default function FeatureAnalyzer() {
   };
 
   useEffect(() => {
-    const dataFetcher = getDataFetcher('data', dataSetter);
-    dataFetcher(setFeatureData);
+    const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
+    fetchData(setFeatureData);
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   return (

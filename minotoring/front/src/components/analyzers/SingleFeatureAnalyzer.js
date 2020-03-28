@@ -36,7 +36,9 @@ export default function SingleFeatureAnalyzer(props) {
         />
       </div>
       <div className="table-container">
-        <Table {...buildTableProps([singleFeatureData])} />
+        <Table
+          {...buildTableProps({ [singleFeatureName]: singleFeatureData })}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { getDataFetcher } from '../../utils/data-managers/DataFetcher';
+import { buildGetFetcher } from '../../utils/data-managers/DataFetcher';
 import buildInputTableProps from '../../utils/data-managers/InputDataManager';
 import Table from '../base-elements/Table';
 import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
@@ -15,8 +15,11 @@ export default function InputsAnalytics() {
   const [selectedFeature, setSelectedFeature] = useState();
 
   useEffect(() => {
-    const dataFetcher = getDataFetcher('data', dataSetter);
-    dataFetcher(setFeatureData);
+    const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
+    fetchData(setFeatureData);
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   if (isEmpty(featureData)) {

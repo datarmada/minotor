@@ -8,10 +8,12 @@ export default function Ths(props) {
       {columns.map((col, idx) => (
         <th
           key={col}
-          onClick={onColClicked}
+          onClick={idx > 0 ? onColClicked : null}
           onMouseEnter={e => {
-            onColClicked && colRefs[idx].current.classList.add('hovered');
-            onColClicked && e.currentTarget.classList.add('hovered');
+            idx > 0 &&
+              onColClicked &&
+              colRefs[idx].current.classList.add('hovered');
+            idx > 0 && onColClicked && e.currentTarget.classList.add('hovered');
           }}
           onMouseLeave={e => {
             colRefs[idx].current.classList.remove('hovered');
