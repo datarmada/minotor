@@ -18,7 +18,6 @@ table.table {
 
     td,
     th {
-      cursor: pointer;
       padding: 10px 20px;
       position: relative;
       &:first-child {
@@ -27,33 +26,10 @@ table.table {
     }
   }
 
-  td:hover{
+  .hovered{
+    cursor: pointer;
     box-shadow: $table-box-shadow-hover;
     background-color: rgba(242, 245, 245, 0.8);
-  }
-  
-  thead th:hover::after {
-    content: "";
-    position: absolute;
-    box-shadow: $table-box-shadow-hover;
-    background-color: rgba(242, 245, 245, 0.8);
-    left: 0;
-    top: -5000px;
-    height: 10000px;
-    width: 100%;
-    z-index: -1;
-  }
-
-  tbody th:hover::after {
-    box-shadow: $table-box-shadow-hover;
-    background-color: rgba(242, 245, 245, 0.8);
-    content: '';  
-    height: 100%;
-    top: 0;
-    left: -5000px;
-    position: absolute;  
-    width: 10000px;
-    z-index: -1;
   }
 }
 div.table-control {

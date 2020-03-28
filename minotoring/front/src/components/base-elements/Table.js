@@ -37,6 +37,8 @@ export default function Table(props) {
     ? data.filter(d => selectedRows.includes(d[mainCol]))
     : data;
 
+  const colRefs = columns.map(React.createRef);
+
   useEffect(() => {
     setSelectedCols(orderedColumns.slice(0, nbColDisplayed));
     setSelectedRows(data.map(d => d[mainCol]).slice(0, nbRowDisplayed));
@@ -65,8 +67,13 @@ export default function Table(props) {
         rowDropdown={isRowFiltrable ? ROW_DROPDOWN : null}
       />
       <table className="table">
+        <colgroup>
+          {columns.map((col, idx) => (
+            <col key={col} ref={colRefs[idx]} />
+          ))}
+        </colgroup>
         <thead>
-          <Ths {...{ columns, verboseColNames, onColClicked }} />
+          <Ths {...{ columns, verboseColNames, onColClicked, colRefs }} />
         </thead>
         <tbody>
           <Trs {...{ columns, mainCol, onRowClicked, onCellClicked, rows }} />
