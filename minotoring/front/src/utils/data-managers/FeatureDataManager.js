@@ -70,7 +70,6 @@ export const buildTableProps = featureData => {
   };
 };
 
-// export const buildAreaPlotProps = (singleFeatureData) => {
 export const buildAreaPlotProps = singleFeatureData => {
   const {
     train: { hist: tHist },

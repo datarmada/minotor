@@ -22,6 +22,8 @@ export default function Table(props) {
     nbColDisplayed,
     nbRowDisplayed,
     onRowClicked,
+    onColClicked,
+    onCellClicked,
     orderedColumns,
     verboseColNames,
   } = props;
@@ -34,6 +36,8 @@ export default function Table(props) {
   const rows = isRowFiltrable
     ? data.filter(d => selectedRows.includes(d[mainCol]))
     : data;
+
+  const colRefs = columns.map(React.createRef);
 
   useEffect(() => {
     setSelectedCols(orderedColumns.slice(0, nbColDisplayed));
@@ -63,11 +67,16 @@ export default function Table(props) {
         rowDropdown={isRowFiltrable ? ROW_DROPDOWN : null}
       />
       <table className="table">
+        <colgroup>
+          {columns.map((col, idx) => (
+            <col key={col} ref={colRefs[idx]} />
+          ))}
+        </colgroup>
         <thead>
-          <Ths {...{ columns, verboseColNames }} />
+          <Ths {...{ columns, verboseColNames, onColClicked, colRefs }} />
         </thead>
         <tbody>
-          <Trs {...{ columns, mainCol, onRowClicked, rows }} />
+          <Trs {...{ columns, mainCol, onRowClicked, onCellClicked, rows }} />
         </tbody>
       </table>
     </div>
@@ -81,7 +90,9 @@ Table.propTypes = {
   mainCol: PropTypes.string.isRequired,
   nbColDisplayed: PropTypes.number,
   nbRowDisplayed: PropTypes.number,
-  onRowClicked: PropTypes.func.isRequired,
+  onRowClicked: PropTypes.func,
+  onColClicked: PropTypes.func,
+  onCellClicked: PropTypes.func,
   orderedColumns: PropTypes.arrayOf(string).isRequired,
   verboseColNames: PropTypes.objectOf(string),
 };
@@ -92,4 +103,7 @@ Table.defaultProps = {
   nbColDisplayed: 6,
   nbRowDisplayed: 10,
   verboseColNames: {},
+  onRowClicked: null,
+  onCellClicked: null,
+  onColClicked: null,
 };

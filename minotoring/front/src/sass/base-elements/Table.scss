@@ -1,29 +1,16 @@
 table.table {
+  overflow: hidden;
   width: 100%;
   border-spacing: 0;
   padding: 0;
   border-collapse: collapse;
   text-align: left;
 
-  thead tr:hover {
-    box-shadow: $table-box-shadow;
-    z-index: inherit;
-    background-color: inherit;
-    cursor: inherit;
-  }
-
   tr {
     padding-bottom: 10px;
     padding-top: 10px;
     box-shadow: $table-box-shadow;
     position: relative;
-
-    &:hover {
-      box-shadow: $table-box-shadow-hover;
-      z-index: 1;
-      background-color: rgba(242, 245, 245, 0.8);
-      cursor: pointer;
-    }
 
     &.selected {
       background-color: rgb(121, 199, 227);
@@ -32,14 +19,19 @@ table.table {
     td,
     th {
       padding: 10px 20px;
-
+      position: relative;
       &:first-child {
         font-weight: bold;
       }
     }
   }
-}
 
+  .hovered{
+    cursor: pointer;
+    box-shadow: $table-box-shadow-hover;
+    background-color: rgba(242, 245, 245, 0.8);
+  }
+}
 div.table-control {
   display: flex;
   flex-direction: row-reverse;
