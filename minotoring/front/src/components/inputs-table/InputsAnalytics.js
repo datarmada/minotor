@@ -7,7 +7,7 @@ import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
-  setFeatureData(data.features);
+  setFeatureData(data);
 };
 
 export default function InputsAnalytics() {
@@ -21,7 +21,6 @@ export default function InputsAnalytics() {
       abortController.abort();
     };
   }, []);
-
   if (isEmpty(featureData)) {
     return null;
   }

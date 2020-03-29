@@ -8,15 +8,17 @@ const createSingleInputData = (featureData, idx) =>
   );
 
 const buildPredictionData = featureData =>
-  Object.values(featureData)[0].predict.values.map((_, idx) => ({
+  Object.values(featureData.features)[0].predict.values.map((_, idx) => ({
+    id: featureData.valuesInfos.prediction.ids[idx],
     phase: 'Prediction',
-    ...createSingleInputData(featureData, idx),
+    ...createSingleInputData(featureData.features, idx),
   }));
 
 const buildTrainingData = featureData =>
-  Object.values(featureData)[0].train.values.map((_, idx) => ({
+  Object.values(featureData.features)[0].train.values.map((_, idx) => ({
+    id: featureData.valuesInfos.training.ids[idx],
     phase: 'Training',
-    ...createSingleInputData(featureData, idx),
+    ...createSingleInputData(featureData.features, idx),
   }));
 
 const buildTableData = featureData => [
@@ -26,8 +28,8 @@ const buildTableData = featureData => [
 const buildInputTableProps = featureData => {
   return {
     data: buildTableData(featureData),
-    mainCol: 'phase',
-    orderedColumns: ['phase', ...Object.keys(featureData)],
+    mainCol: 'id',
+    orderedColumns: ['id', 'phase', ...Object.keys(featureData.features)],
     verboseColNames: {
       phase: 'Phase of collection',
     },
