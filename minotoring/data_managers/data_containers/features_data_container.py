@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Tuple
 
+import pandas as pd
+
 from minotoring.data_managers.data_containers.single_feature_data_container import SingleFeatureDataContainer
 from minotoring.data_managers.data_containers.values_informations import ValuesInformations
 from minotoring.data_managers.data_types import DataType
@@ -38,9 +40,10 @@ class FeaturesDataContainer:
     def _add_feature(self, feature_name: str, data_type: DataType):
         self.features[feature_name] = SingleFeatureDataContainer(data_type)
 
-    def get_values(self, feature_names: List[str] = None) -> Tuple[List, List]:
+    def get_dataframes(self, feature_names: List[str] = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
         if not feature_names:
             feature_names = self.features.keys()
-        training_values = [self.features[name].training_phase.values for name in feature_names]
-        prediction_values = [self.features[name].prediction_phase.values for name in feature_names]
-        return training_values, prediction_values
+        return pd.DataFrame({name: self.features[name].training_phase.values for name in feature_names},
+                            index=self.values_infos.training.ids), \
+               pd.DataFrame({name: self.features[name].prediction_phase.values for name in feature_names},
+                            index=self.values_infos.prediction.ids)

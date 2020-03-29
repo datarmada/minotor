@@ -11,12 +11,12 @@ class ProjectionHandler(BaseRouteHandler):
             feature_names = json_decode(self.request.body)
             fm = FileManager()
             cached_data = fm.get_features_data()
-            training_values, prediction_values = cached_data.get_values(feature_names)
-            training_projection, prediction_projection = tsne_projector.project(training_values, prediction_values)
+            training_df, prediction_df = cached_data.get_dataframes(feature_names)
+            training_ids, prediction_ids, training_projection, prediction_projection = tsne_projector.project(
+                training_df, prediction_df)
             self.set_header('Content-Type', 'application/json')
-            self.write({"training": training_projection, "prediction": prediction_projection})
+            self.write({"training": {"values": training_projection, "ids": training_ids},
+                        "prediction": {"values": prediction_projection, "ids": prediction_ids}})
             self.set_status(200)
         else:
             self.set_status(400, 'Request should have Content-Type set to application/json')
-
-

@@ -40,10 +40,10 @@ class ValuesInformations:
         if is_training:
             self.training.ids.extend(values_ids)
         else:
-            self.training.ids.extend(values_ids)
+            self.prediction.ids.extend(values_ids)
 
     def add_dates(self, values_dates: List, is_training: bool):
         if is_training:
             self.training.dates.extend(values_dates)
         else:
-            self.training.dates.extend(values_dates)
+            self.prediction.dates.extend(values_dates)

@@ -1,6 +1,6 @@
 from typing import List, Union, Tuple
 
-import numpy as np
+import pandas as pd
 from sklearn.base import TransformerMixin, BaseEstimator
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
@@ -11,27 +11,21 @@ class Projector:
         self.projector = projector
 
     @staticmethod
-    def preprocess(values: List):
-        """
-        :param values: values per feature
-        """
-        # TODO : case where one of the feature is not numerical and has to be removed
-        try:
-            arr = np.array(values).astype("float").transpose()
-        except ValueError:
-            return []
-        arr = arr[~np.isnan(arr).any(axis=1)]
-        return arr
+    def preprocess(df: pd.DataFrame) -> pd.DataFrame:
+        return df.select_dtypes('number').dropna()
 
-    def project(self, training_values: List, prediction_values: List) -> Tuple[List, List]:
-        training_arr = self.preprocess(training_values)
-        prediction_arr = self.preprocess(prediction_values)
-        full_arr = np.concatenate([training_arr, prediction_arr])
-        if full_arr.shape[0] < 2:
-            return [], []
-        projection = self.projector.fit_transform(full_arr)
-        assert training_arr.shape[0] + prediction_arr.shape[0] == projection.shape[0]
-        return projection.tolist()[: training_arr.shape[0]], projection.tolist()[training_arr.shape[0]:]
+    def project(self, training_df: pd.DataFrame, prediction_df: pd.DataFrame) -> Tuple[List, List, List, List]:
+        """
+        :return: kept_training_ids, kept_prediction_ids, projected training vectors, projected prediction vectores
+        """
+        training_df = self.preprocess(training_df)
+        prediction_df = self.preprocess(prediction_df)
+        full_df = pd.concat([training_df, prediction_df])
+        if len(full_df) < 2:
+            return [], [], [], []
+        projection = self.projector.fit_transform(full_df.to_numpy())
+        return list(training_df.index), list(prediction_df.index), \
+               projection.tolist()[: len(training_df)], projection.tolist()[len(training_df):]
 
 
 tsne_projector = Projector(TSNE())
