@@ -23,10 +23,10 @@ const getHighlightedIdx = (highlightPoint, data) =>
   data.reduce(
     (obj, { data: layerData, name }) => ({
       [name]: layerData.reduce(
-        (highlightedPoints, value, idx) =>
+        (highlightedPointIds, value) =>
           highlightPoint(value)
-            ? [idx, ...highlightedPoints]
-            : highlightedPoints,
+            ? [value.id, ...highlightedPointIds]
+            : highlightedPointIds,
         []
       ),
       ...obj,
@@ -35,7 +35,7 @@ const getHighlightedIdx = (highlightPoint, data) =>
   );
 
 export default function useDraggable(props) {
-  const { data, onHighlightedPoints: highlightedIdxCallback } = props;
+  const { data, onHighlightedPoints: highlightedIdsCallback } = props;
   const [filter, setFilter] = useState(null);
   const [highlighting, setHighlighting] = useState(false);
 
@@ -43,9 +43,9 @@ export default function useDraggable(props) {
   const buildProps = createPropsBuilder(highlightPoint, highlighting);
   const customProps = data.map(({ color }) => buildProps(color));
   const callHighlightedIdxCallback = () => {
-    (highlightedIdxCallback &&
-      highlightedIdxCallback(getHighlightedIdx(highlightPoint, data))) ||
-      (!highlightedIdxCallback &&
+    (highlightedIdsCallback &&
+      highlightedIdsCallback(getHighlightedIdx(highlightPoint, data))) ||
+      (!highlightedIdsCallback &&
         console.error(
           'You should specify a callback for selected data points'
         ));
