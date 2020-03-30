@@ -64,7 +64,7 @@ SingleFeatureAnalyzer.propTypes = {
   singleFeatureName: string,
   highlightedPoints: shape({
     train: array,
-    predict: [],
+    predict: array,
   }),
 };
 

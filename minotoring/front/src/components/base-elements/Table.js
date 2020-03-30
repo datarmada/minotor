@@ -26,6 +26,7 @@ export default function Table(props) {
     onCellClicked,
     orderedColumns,
     verboseColNames,
+    areColClickable,
   } = props;
 
   // Init States
@@ -73,10 +74,27 @@ export default function Table(props) {
           ))}
         </colgroup>
         <thead>
-          <Ths {...{ columns, verboseColNames, onColClicked, colRefs }} />
+          <Ths
+            {...{
+              columns,
+              verboseColNames,
+              onColClicked,
+              colRefs,
+              areColClickable,
+            }}
+          />
         </thead>
         <tbody>
-          <Trs {...{ columns, mainCol, onRowClicked, onCellClicked, rows }} />
+          <Trs
+            {...{
+              columns,
+              mainCol,
+              onRowClicked,
+              onCellClicked,
+              rows,
+              areColClickable,
+            }}
+          />
         </tbody>
       </table>
     </div>
@@ -95,6 +113,7 @@ Table.propTypes = {
   onCellClicked: PropTypes.func,
   orderedColumns: PropTypes.arrayOf(string).isRequired,
   verboseColNames: PropTypes.objectOf(string),
+  areColClickable: PropTypes.objectOf(Boolean),
 };
 
 Table.defaultProps = {
@@ -106,4 +125,5 @@ Table.defaultProps = {
   onRowClicked: null,
   onCellClicked: null,
   onColClicked: null,
+  areColClickable: {},
 };

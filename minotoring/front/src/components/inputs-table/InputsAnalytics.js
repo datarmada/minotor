@@ -29,14 +29,14 @@ export default function InputsAnalytics() {
       <h1>Inputs Analytics</h1>
       {selectedFeature ? (
         <SingleFeatureAnalyzer
-          singleFeatureData={featureData[selectedFeature]}
+          singleFeatureData={featureData.features[selectedFeature]}
           singleFeatureName={selectedFeature}
         />
       ) : null}
       <Table
         {...buildInputTableProps(featureData)}
         onCellClicked={e => {
-          setHighlightedInput(e.target.getAttribute('idxrow'));
+          setHighlightedInput(e.target.getAttribute('idrow'));
         }}
         onRowClicked={() => {
           console.log('row');

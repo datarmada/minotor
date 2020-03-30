@@ -1,19 +1,33 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
+const isColClickable = (col, idx, onColClicked, areColClickable) =>
+  idx > 0 &&
+  onColClicked &&
+  (col in areColClickable ? areColClickable[col] : true);
 export default function Ths(props) {
-  const { columns, verboseColNames, onColClicked, colRefs } = props;
+  const {
+    columns,
+    verboseColNames,
+    onColClicked,
+    colRefs,
+    areColClickable,
+  } = props;
+
+  const isColClickableWrapped = (col, idx) =>
+    isColClickable(col, idx, onColClicked, areColClickable);
+
   return (
     <tr>
       {columns.map((col, idx) => (
         <th
           key={col}
-          onClick={idx > 0 ? onColClicked : null}
+          onClick={isColClickableWrapped(col, idx) ? onColClicked : null}
           onMouseEnter={e => {
-            idx > 0 &&
-              onColClicked &&
+            isColClickableWrapped(col, idx) &&
               colRefs[idx].current.classList.add('hovered');
-            idx > 0 && onColClicked && e.currentTarget.classList.add('hovered');
+            isColClickableWrapped(col, idx) &&
+              e.currentTarget.classList.add('hovered');
           }}
           onMouseLeave={e => {
             colRefs[idx].current.classList.remove('hovered');
@@ -36,9 +50,11 @@ Ths.propTypes = {
       current: PropTypes.object,
     })
   ).isRequired,
+  areColClickable: PropTypes.objectOf(Boolean),
 };
 
 Ths.defaultProps = {
   verboseColNames: null,
   onColClicked: null,
+  areColClickable: {},
 };

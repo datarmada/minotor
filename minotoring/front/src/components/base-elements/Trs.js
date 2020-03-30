@@ -1,31 +1,48 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
+const isCellClickable = (col, idx, onCellClicked, areColClickable) =>
+  idx > 0 &&
+  onCellClicked &&
+  (col in areColClickable ? areColClickable[col] : true);
+
+const isRowClickable = (idx, onRowClicked) => idx == 0 && onRowClicked;
+
 export default function Trs(props) {
-  const { columns, mainCol, onRowClicked, onCellClicked, rows } = props;
+  const {
+    columns,
+    mainCol,
+    onRowClicked,
+    onCellClicked,
+    rows,
+    areColClickable,
+  } = props;
   const trsRef = rows.map(React.createRef);
+
+  const isCellClickableWrapped = (col, idx) =>
+    isCellClickable(col, idx, onCellClicked, areColClickable);
+
+  const isRowClickableWrapped = idx => isRowClickable(idx, onRowClicked);
+
   return rows.map((row, idxRow) => (
     <tr
       // eslint-disable-next-line react/no-array-index-key
       key={`${row[mainCol]}-${idxRow}`}
-      onClick={onRowClicked}
       ref={trsRef[idxRow]}
     >
       {columns.map((col, idxCol) => (
         <td
           key={col}
-          idxcol={idxCol}
-          idxrow={idxRow}
+          idcol={col}
+          idrow={row.id}
           onClick={e => {
-            onCellClicked && e.stopPropagation && e.stopPropagation();
-            onCellClicked && onCellClicked(e);
+            isCellClickableWrapped(col, idxCol) && onCellClicked(e);
+            isRowClickableWrapped(idxCol) && onRowClicked(e);
           }}
           onMouseEnter={e => {
-            idxCol > 0 &&
-              onCellClicked &&
+            isCellClickableWrapped(col, idxCol) &&
               e.currentTarget.classList.add('hovered');
-            idxCol === 0 &&
-              onRowClicked &&
+            isRowClickableWrapped(idxCol) &&
               trsRef[idxRow].current.classList.add('hovered');
           }}
           onMouseLeave={e => {
