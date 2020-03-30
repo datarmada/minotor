@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import React, { useState } from 'react';
 import { buildFeatureKLTableProps } from '../../utils/data-managers/FeatureDataManager';
 // Components
@@ -49,6 +49,9 @@ export default function FeatureAnalyzer(props) {
 }
 
 FeatureAnalyzer.propTypes = {
-  featureData: PropTypes.objectOf(Object).isRequired,
+  featureData: PropTypes.shape({
+    features: object,
+    values_infos: object,
+  }).isRequired,
   onSelectedPoints: PropTypes.func.isRequired,
 };
