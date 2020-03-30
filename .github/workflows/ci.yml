@@ -18,6 +18,6 @@ jobs:
     - name: Installing Poetry
       run: pip install poetry
     - name: Installing dependencies with Poetry
-      run: poetry install --no-dev --no-interaction --no-ansi.
+      run: poetry install --no-dev --no-interaction --no-ansi
     - name: Running unittests
       run: python -m unittest discover ./minotoring/tests
