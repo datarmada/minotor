@@ -1,29 +1,46 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
+const isCellClickable = (col, idx, onCellClicked, notClickableCols) =>
+  idx > 0 && onCellClicked && !notClickableCols.has(col);
+
+const isRowClickable = (idx, onRowClicked) => idx === 0 && onRowClicked;
+
 export default function Trs(props) {
-  const { columns, mainCol, onRowClicked, onCellClicked, rows } = props;
+  const {
+    columns,
+    mainCol,
+    onRowClicked,
+    onCellClicked,
+    rows,
+    notClickableCols,
+  } = props;
   const trsRef = rows.map(React.createRef);
+
+  const isCellClickableWrapped = (col, idx) =>
+    isCellClickable(col, idx, onCellClicked, notClickableCols);
+
+  const isRowClickableWrapped = idx => isRowClickable(idx, onRowClicked);
+
   return rows.map((row, idxRow) => (
     <tr
       // eslint-disable-next-line react/no-array-index-key
       key={`${row[mainCol]}-${idxRow}`}
-      onClick={onRowClicked}
       ref={trsRef[idxRow]}
     >
       {columns.map((col, idxCol) => (
         <td
           key={col}
+          idcol={col}
+          idrow={row.id}
           onClick={e => {
-            onCellClicked && e.stopPropagation && e.stopPropagation();
-            onCellClicked && onCellClicked(e);
+            isCellClickableWrapped(col, idxCol) && onCellClicked(e);
+            isRowClickableWrapped(idxCol) && onRowClicked(e);
           }}
           onMouseEnter={e => {
-            idxCol > 0 &&
-              onCellClicked &&
+            isCellClickableWrapped(col, idxCol) &&
               e.currentTarget.classList.add('hovered');
-            idxCol === 0 &&
-              onRowClicked &&
+            isRowClickableWrapped(idxCol) &&
               trsRef[idxRow].current.classList.add('hovered');
           }}
           onMouseLeave={e => {
@@ -40,6 +57,7 @@ export default function Trs(props) {
 }
 
 Trs.propTypes = {
+  notClickableCols: PropTypes.instanceOf(Set),
   columns: PropTypes.arrayOf(string).isRequired,
   mainCol: PropTypes.string.isRequired,
   onRowClicked: PropTypes.func,
@@ -48,6 +66,7 @@ Trs.propTypes = {
 };
 
 Trs.defaultProps = {
+  notClickableCols: new Set(),
   onRowClicked: null,
   onCellClicked: null,
 };

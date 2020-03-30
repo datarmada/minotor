@@ -25,7 +25,7 @@ export default function FeatureAnalyzer() {
 
   // Event functions
   const handleRowClicked = e => {
-    const tr = e.currentTarget;
+    const tr = e.currentTarget.parentElement;
     tr.classList.toggle('selected');
     const feature = tr.firstChild.innerText;
     const newFeatures = toggleSelectedFeature(feature, selectedFeatures);
@@ -39,7 +39,6 @@ export default function FeatureAnalyzer() {
       abortController.abort();
     };
   }, []);
-
   return (
     <div className="feature-analyzer" style={{ padding: '30px' }}>
       <Table

@@ -7,13 +7,13 @@ import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
-  setFeatureData(data.features);
+  setFeatureData(data);
 };
 
 export default function InputsAnalytics() {
   const [featureData, setFeatureData] = useState({});
   const [selectedFeature, setSelectedFeature] = useState();
-
+  const [hightlightedInput, setHighlightedInput] = useState();
   useEffect(() => {
     const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
     fetchData(setFeatureData);
@@ -21,7 +21,6 @@ export default function InputsAnalytics() {
       abortController.abort();
     };
   }, []);
-
   if (isEmpty(featureData)) {
     return null;
   }
@@ -30,14 +29,14 @@ export default function InputsAnalytics() {
       <h1>Inputs Analytics</h1>
       {selectedFeature ? (
         <SingleFeatureAnalyzer
-          singleFeatureData={featureData[selectedFeature]}
+          singleFeatureData={featureData.features[selectedFeature]}
           singleFeatureName={selectedFeature}
         />
       ) : null}
       <Table
         {...buildInputTableProps(featureData)}
-        onCellClicked={() => {
-          console.log('cell');
+        onCellClicked={e => {
+          setHighlightedInput(e.target.getAttribute('idrow'));
         }}
         onRowClicked={() => {
           console.log('row');
