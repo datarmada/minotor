@@ -13,14 +13,21 @@ export default function FeaturesAnalytics() {
   const [featureData, setFeatureData] = useState({});
 
   useEffect(() => {
-    const dataFetcher = buildGetFetcher('data', dataSetter);
-    dataFetcher(setFeatureData);
+    const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
+    fetchData(setFeatureData);
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   return (
     <div className="page">
       <h1>Features Analytics</h1>
-      <ProjectionGraph featureNames={Object.keys(featureData)} />
+      <ProjectionGraph
+        width={600}
+        height={400}
+        featureNames={Object.keys(featureData)}
+      />
       <Table {...buildTableProps(featureData)} isColFiltrable isRowFiltrable />
     </div>
   );

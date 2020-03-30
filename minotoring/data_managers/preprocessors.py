@@ -5,7 +5,7 @@ from typing import List, Tuple
 import numpy as np
 import pandas as pd
 
-from minotoring.constants import DATETIME_FORMAT
+from minotoring.constants import DATETIME_ID_FORMAT
 from minotoring.data_managers.data_types import DataType
 
 
@@ -29,8 +29,9 @@ class PreprocessorABC(ABC):
 
 class NumpyArrayPreprocessor(PreprocessorABC):
     def get_values_infos(self, data: np.ndarray):
-        return [f"{datetime.datetime.now().strftime(DATETIME_FORMAT)}-{i}" for i in range(data.shape[0])], \
-               [datetime.datetime.now() for _ in range(data.shape[0])]
+        current_date = datetime.datetime.now()
+        return [f"{current_date.strftime(DATETIME_ID_FORMAT)}-{i}" for i in range(data.shape[0])], \
+               [current_date for _ in range(data.shape[0])]
 
     def preprocess(self, data: np.ndarray) -> List[Tuple[str, List, DataType]]:
         data = data.transpose()
@@ -40,8 +41,9 @@ class NumpyArrayPreprocessor(PreprocessorABC):
 
 class PandasDataFramePreprocessor(PreprocessorABC):
     def get_values_infos(self, data: pd.DataFrame) -> Tuple[List, List]:
-        return [f"{datetime.datetime.now().strftime(DATETIME_FORMAT)}-{id}" for id in data.index], \
-               [datetime.datetime.now() for _ in range(len(data))]
+        current_date = datetime.datetime.now()
+        return [f"{current_date.strftime(DATETIME_ID_FORMAT)}-{id}" for id in data.index], \
+               [current_date for _ in range(len(data))]
 
     def preprocess(self, data: pd.DataFrame) -> List[Tuple[str, List, DataType]]:
         return [(col, _replace_nan_with_none(data[col].values), DataType.type2value(data[col].dtype)) for col in data]
