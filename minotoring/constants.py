@@ -6,5 +6,6 @@ DATA_DIR = Path.home() / ".cache" / "pyminotor"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 DATETIME_FORMAT = "%m/%d/%y %H:%M:%S"
+DATETIME_ID_FORMAT="%m%d%y%H%M%S"
 
 BACK_END_ROUTE = "http://0.0.0.0:8888/data"
