@@ -7,27 +7,48 @@ const createSingleInputData = (featureData, idx) =>
     {}
   );
 
-const buildPredictionData = featureData =>
-  Object.values(featureData.features)[0].predict.values.map((_, idx) => ({
-    id: featureData.valuesInfos.prediction.ids[idx],
-    phase: 'Prediction',
-    ...createSingleInputData(featureData.features, idx),
-  }));
+// TODO: To be refactored because these functions are duplicated
+// (Train vs training must be uniformized at the API level)
+const buildPredictionData = (featureData, selectedIds) =>
+  Object.values(featureData.features)[0].predict.values.reduce(
+    (arr, _, idx) => {
+      const id = featureData.valuesInfos.prediction.ids[idx];
+      return selectedIds.has(id)
+        ? [
+            {
+              id,
+              phase: 'Prediction',
+              ...createSingleInputData(featureData.features, idx),
+            },
+            ...arr,
+          ]
+        : arr;
+    },
+    []
+  );
 
-const buildTrainingData = featureData =>
-  Object.values(featureData.features)[0].train.values.map((_, idx) => ({
-    id: featureData.valuesInfos.training.ids[idx],
-    phase: 'Training',
-    ...createSingleInputData(featureData.features, idx),
-  }));
+const buildTrainingData = (featureData, selectedIds) =>
+  Object.values(featureData.features)[0].train.values.reduce((arr, _, idx) => {
+    const id = featureData.valuesInfos.training.ids[idx];
+    return selectedIds.has(id)
+      ? [
+          {
+            id,
+            phase: 'Training',
+            ...createSingleInputData(featureData.features, idx),
+          },
+          ...arr,
+        ]
+      : arr;
+  }, []);
 
-const buildTableData = featureData => [
-  ...buildTrainingData(featureData),
-  ...buildPredictionData(featureData),
+const buildTableData = (featureData, selectedInputs) => [
+  ...buildTrainingData(featureData, selectedInputs.Training),
+  ...buildPredictionData(featureData, selectedInputs.Prediction),
 ];
-const buildInputTableProps = featureData => {
+const buildInputTableProps = (featureData, selectedInputs) => {
   return {
-    data: buildTableData(featureData),
+    data: buildTableData(featureData, selectedInputs),
     mainCol: 'id',
     orderedColumns: ['id', 'phase', ...Object.keys(featureData.features)],
     verboseColNames: {

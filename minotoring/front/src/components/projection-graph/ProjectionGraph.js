@@ -30,10 +30,10 @@ const handleFetchedData = async (
 };
 
 export default function ProjectionGraph(props) {
-  const { featureNames } = props;
+  const { featureNames, onSelectedPoints } = props;
   const [projectedTrainingData, setProjectedTrainingData] = useState([]);
   const [projectedPredictionData, setProjectedPredictionData] = useState([]);
-  const [selectedPoints, setSelectedPoints] = useState({});
+
   useEffect(() => {
     const { fetchData, abortController } = buildPostFetcher(
       'projection',
@@ -45,7 +45,7 @@ export default function ProjectionGraph(props) {
       abortController.abort();
     };
   }, [featureNames]);
-  console.log(selectedPoints);
+
   return (
     <ScatterPlot
       data={[
@@ -59,11 +59,12 @@ export default function ProjectionGraph(props) {
       isDraggable
       isCrosshair={false}
       {...props}
-      onHighlightedPoints={setSelectedPoints}
+      onHighlightedPoints={onSelectedPoints}
     />
   );
 }
 
 ProjectionGraph.propTypes = {
   featureNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onSelectedPoints: PropTypes.func.isRequired,
 };

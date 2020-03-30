@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-
-// Data managers
-import { buildGetFetcher } from '../../utils/data-managers/DataFetcher';
+import { isEmpty } from 'lodash';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { buildFeatureKLTableProps } from '../../utils/data-managers/FeatureDataManager';
-
 // Components
 import Table from '../base-elements/Table';
 import FeatureAnalyzerViz from './FeatureAnalyzerViz';
@@ -14,14 +12,13 @@ const toggleSelectedFeature = (feature, selectedFeatures) =>
     ? selectedFeatures.filter(f => f !== feature)
     : [...selectedFeatures, feature];
 
-const dataSetter = async (response, setFeatureData) => {
-  const data = await response.json();
-  setFeatureData(data.features);
-};
-
-export default function FeatureAnalyzer() {
-  const [featureData, setFeatureData] = useState({});
+export default function FeatureAnalyzer(props) {
+  const { featureData, onSelectedPoints } = props;
   const [selectedFeatures, setSelectedFeatures] = useState([]);
+
+  if (isEmpty(featureData)) {
+    return null;
+  }
 
   // Event functions
   const handleRowClicked = e => {
@@ -32,22 +29,26 @@ export default function FeatureAnalyzer() {
     setSelectedFeatures(newFeatures);
   };
 
-  useEffect(() => {
-    const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
-    fetchData(setFeatureData);
-    return () => {
-      abortController.abort();
-    };
-  }, []);
   return (
     <div className="feature-analyzer" style={{ padding: '30px' }}>
       <Table
-        {...buildFeatureKLTableProps(featureData)}
+        {...buildFeatureKLTableProps(featureData.features)}
         onRowClicked={handleRowClicked}
       />
       <div className="projection-graph-container">
-        <FeatureAnalyzerViz {...{ featureData, selectedFeatures }} />
+        <FeatureAnalyzerViz
+          {...{
+            featureData,
+            selectedFeatures,
+            onSelectedPoints,
+          }}
+        />
       </div>
     </div>
   );
 }
+
+FeatureAnalyzer.propTypes = {
+  featureData: PropTypes.objectOf(Object),
+  onSelectedPoints: PropTypes.func.isRequired,
+};

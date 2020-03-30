@@ -20,8 +20,6 @@ const App = () => {
           <Switch>
             <Route exact path="/features" component={FeaturesAnalytics} />
             <Route exact path="/predictions" component={PredictionAnalytics} />
-            <Route exact path="/inputs" component={InputsAnalytics} />
-            <Route exact path="/feature-analysis" component={FeatureAnalyzer} />
           </Switch>
         </div>
       </Router>
