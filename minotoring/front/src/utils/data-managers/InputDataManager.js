@@ -33,7 +33,7 @@ const buildInputTableProps = featureData => {
     verboseColNames: {
       phase: 'Phase of collection',
     },
-    colNotClickable: new Set(['phase']),
+    notClickableCols: new Set(['phase']),
   };
 };
 

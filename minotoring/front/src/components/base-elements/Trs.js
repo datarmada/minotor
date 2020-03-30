@@ -1,8 +1,8 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
-const isCellClickable = (col, idx, onCellClicked, colNotClickable) =>
-  idx > 0 && onCellClicked && !colNotClickable.has(col);
+const isCellClickable = (col, idx, onCellClicked, notClickableCols) =>
+  idx > 0 && onCellClicked && !notClickableCols.has(col);
 
 const isRowClickable = (idx, onRowClicked) => idx === 0 && onRowClicked;
 
@@ -13,12 +13,12 @@ export default function Trs(props) {
     onRowClicked,
     onCellClicked,
     rows,
-    colNotClickable,
+    notClickableCols,
   } = props;
   const trsRef = rows.map(React.createRef);
 
   const isCellClickableWrapped = (col, idx) =>
-    isCellClickable(col, idx, onCellClicked, colNotClickable);
+    isCellClickable(col, idx, onCellClicked, notClickableCols);
 
   const isRowClickableWrapped = idx => isRowClickable(idx, onRowClicked);
 
@@ -57,7 +57,7 @@ export default function Trs(props) {
 }
 
 Trs.propTypes = {
-  colNotClickable: PropTypes.instanceOf(Set),
+  notClickableCols: PropTypes.instanceOf(Set),
   columns: PropTypes.arrayOf(string).isRequired,
   mainCol: PropTypes.string.isRequired,
   onRowClicked: PropTypes.func,
@@ -66,7 +66,7 @@ Trs.propTypes = {
 };
 
 Trs.defaultProps = {
-  colNotClickable: new Set(),
+  notClickableCols: new Set(),
   onRowClicked: null,
   onCellClicked: null,
 };
