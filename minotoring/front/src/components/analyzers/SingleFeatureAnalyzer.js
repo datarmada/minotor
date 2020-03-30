@@ -1,4 +1,4 @@
-import { arrayOf, exact, number, shape, string, array } from 'prop-types';
+import PropTypes, { arrayOf, exact, number, shape, string } from 'prop-types';
 import React from 'react';
 
 // Data managers
@@ -14,9 +14,18 @@ import ScatterPlot from '../react-vis/ScatterPlot';
 import Table from '../base-elements/Table';
 
 export default function SingleFeatureAnalyzer(props) {
-  const { singleFeatureData, singleFeatureName, highlightedPoints } = props;
+  const {
+    singleFeatureData,
+    singleFeatureName,
+    highlightedIds,
+    valuesInfos,
+  } = props;
   const areaPlotData = buildAreaPlotProps(singleFeatureData);
-  const scatterPlotData = buildScatterPlotProps(singleFeatureData);
+  const scatterPlotData = buildScatterPlotProps(
+    singleFeatureData,
+    valuesInfos,
+    highlightedIds
+  );
   return (
     <div className="feature-multi-graph-container">
       <div className="area-plot">
@@ -62,16 +71,10 @@ SingleFeatureAnalyzer.propTypes = {
     predict: exact(BASE_FEATURE_PROPTYPES),
   }).isRequired,
   singleFeatureName: string,
-  highlightedPoints: shape({
-    train: arrayOf(string),
-    predict: arrayOf(string),
-  }),
+  highlightedIds: PropTypes.instanceOf(Set),
 };
 
 SingleFeatureAnalyzer.defaultProps = {
   singleFeatureName: 'Feature',
-  highlightedPoints: {
-    train: [],
-    predict: [],
-  },
+  highlightedIds: new Set(),
 };

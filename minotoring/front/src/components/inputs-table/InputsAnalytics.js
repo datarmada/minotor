@@ -8,7 +8,7 @@ import Table from '../base-elements/Table';
 export default function InputsAnalytics(props) {
   const { featureData, selectedInputs } = props;
   const [selectedFeature, setSelectedFeature] = useState();
-  const [hightlightedInput, setHighlightedInput] = useState();
+  const [highlightedIds, setHighlightedIds] = useState(new Set());
   if (
     isEmpty(featureData) ||
     isEmpty(selectedInputs) ||
@@ -22,7 +22,8 @@ export default function InputsAnalytics(props) {
       <Table
         {...buildInputTableProps(featureData, selectedInputs)}
         onCellClicked={e => {
-          setHighlightedInput(e.target.getAttribute('idrow'));
+          setHighlightedIds(new Set([e.target.getAttribute('idrow')]));
+          setSelectedFeature(e.target.getAttribute('idcol'));
         }}
         onRowClicked={() => {
           console.log('row');
@@ -35,6 +36,8 @@ export default function InputsAnalytics(props) {
         <SingleFeatureAnalyzer
           singleFeatureData={featureData.features[selectedFeature]}
           singleFeatureName={selectedFeature}
+          highlightedIds={highlightedIds}
+          valuesInfos={featureData.valuesInfos}
         />
       ) : null}
     </div>

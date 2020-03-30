@@ -1,14 +1,30 @@
+import { isEmpty } from 'lodash';
+
 //
 // Utils
 //
-const splitOutliers = (data, upperTreshold, lowerTreshold) =>
-  data.reduce(
-    ([outliers, regularPoints], { x, y }) =>
-      y < lowerTreshold || y > upperTreshold
-        ? [[...outliers, { x, y }], regularPoints]
-        : [outliers, [...regularPoints, { x, y }]],
+
+const partition = (array, isValid) =>
+  array.reduce(
+    ([pass, fail], elem, idx) =>
+      isValid(array[idx], idx)
+        ? [[...pass, elem], fail]
+        : [pass, [...fail, elem]],
     [[], []]
   );
+
+const partitionWithThresholds = (
+  array,
+  upperThreshold,
+  lowerThreshold,
+  siblingArrays = []
+) =>
+  partition(
+    array,
+    elem => elem.y <= upperThreshold && elem.y >= lowerThreshold,
+    siblingArrays
+  );
+
 export const hist2reactVisData = ([Y, X]) =>
   Y.map((y, idx) => ({ x: X[idx], y }));
 export const values2reactVisData = values =>
@@ -92,14 +108,31 @@ export const buildAreaPlotProps = singleFeatureData => {
   return layers;
 };
 
-export const buildScatterPlotProps = singleFeatureData => {
+const isHighlighted = (idx, valuesInfos, highlightedIds) => {
+  return highlightedIds.has(valuesInfos.prediction.ids[idx]);
+};
+
+export const buildScatterPlotProps = (
+  singleFeatureData,
+  valuesInfos,
+  highlightedIds
+) => {
+  console.log(highlightedIds);
   const scatterPlotData = values2reactVisData(singleFeatureData.predict.values);
-  const [outliers, regularPoints] = splitOutliers(
+  const [highlightedPoints, notHightlightedPoints] = partition(
     scatterPlotData,
-    singleFeatureData.predict.percentile_95,
-    singleFeatureData.predict.percentile_05
+    (_, idx) => isHighlighted(idx, valuesInfos, highlightedIds)
   );
+  const lowerThreshold = singleFeatureData.predict.percentile_05;
+  const upperThreshold = singleFeatureData.predict.percentile_95;
+  const [regularPoints, outliers] = partitionWithThresholds(
+    notHightlightedPoints,
+    upperThreshold,
+    lowerThreshold
+  );
+  console.log(highlightedPoints);
   return [
+    { data: highlightedPoints, name: 'Highlighted Points', color: 'green' },
     { data: regularPoints, name: 'Regular Points' },
     { data: outliers, name: 'Outliers', color: 'red' },
   ];
