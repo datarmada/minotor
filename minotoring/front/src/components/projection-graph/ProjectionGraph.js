@@ -9,18 +9,22 @@ const handleFetchedData = async (
   setProjectedPredictionData
 ) => {
   const data = await response.json();
-  const trainProjection = data.training;
-  const predictProjection = data.prediction;
+  const trainIds = data.training.ids;
+  const trainProjection = data.training.values;
+  const predictIds = data.prediction.ids;
+  const predictProjection = data.prediction.values;
   setProjectedTrainingData(
-    trainProjection.map(([x, y]) => ({
+    trainProjection.map(([x, y], idx) => ({
       x,
       y,
+      id: trainIds[idx],
     }))
   );
   setProjectedPredictionData(
-    predictProjection.map(([x, y]) => ({
+    predictProjection.map(([x, y], idx) => ({
       x,
       y,
+      id: predictIds[idx],
     }))
   );
 };
@@ -41,7 +45,7 @@ export default function ProjectionGraph(props) {
       abortController.abort();
     };
   }, [featureNames]);
-
+  console.log(selectedPoints);
   return (
     <ScatterPlot
       data={[
