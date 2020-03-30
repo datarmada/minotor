@@ -1,17 +1,15 @@
 import PropTypes, { arrayOf, exact, number, shape, string } from 'prop-types';
 import React from 'react';
-
 // Data managers
 import {
   buildAreaPlotProps,
   buildScatterPlotProps,
   buildTableProps,
 } from '../../utils/data-managers/FeatureDataManager';
-
+import Table from '../base-elements/Table';
 // Components
 import AreaPlot from '../react-vis/AreaPlot';
 import ScatterPlot from '../react-vis/ScatterPlot';
-import Table from '../base-elements/Table';
 
 export default function SingleFeatureAnalyzer(props) {
   const {
@@ -72,6 +70,16 @@ SingleFeatureAnalyzer.propTypes = {
   }).isRequired,
   singleFeatureName: string,
   highlightedIds: PropTypes.instanceOf(Set),
+  valuesInfos: PropTypes.shape({
+    training: shape({
+      ids: arrayOf(string),
+      dates: arrayOf(string),
+    }),
+    prediction: shape({
+      ids: arrayOf(string),
+      dates: arrayOf(string),
+    }),
+  }).isRequired,
 };
 
 SingleFeatureAnalyzer.defaultProps = {

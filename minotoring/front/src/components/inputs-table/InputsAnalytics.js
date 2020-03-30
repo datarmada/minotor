@@ -47,7 +47,7 @@ export default function InputsAnalytics(props) {
 InputsAnalytics.propTypes = {
   featureData: PropTypes.shape({
     features: object,
-    values_infos: object,
+    valuesInfos: object,
   }).isRequired,
   selectedInputs: PropTypes.shape({
     Training: PropTypes.instanceOf(Set),
