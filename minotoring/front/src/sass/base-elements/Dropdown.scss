@@ -17,13 +17,38 @@
   }
 
   .dropdown-elt-container {
-    background-color: white;
     display: none;
+    border-left: $dropdown-border;
+    border-right: $dropdown-border;
+    border-bottom: $dropdown-border;
+    border-bottom-left-radius: $dropdown-radius;
+    border-bottom-right-radius: $dropdown-radius;
+    max-height: 195px;
+    overflow-y: overlay;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: grey;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background-color: transparent;
+      border-color: transparent;
+    }
 
     .dropdown-elt {
+      background-color: white;
       border-radius: 0;
-      border-left: $dropdown-border;
-      border-right: $dropdown-border;
 
       &:first-child {
         background-color: $light-grey;
@@ -42,12 +67,6 @@
           background-color: black;
         }
       }
-    }
-
-    .dropdown-elt:last-child {
-      border-bottom: $dropdown-border;
-      border-bottom-left-radius: $dropdown-radius;
-      border-bottom-right-radius: $dropdown-radius;
     }
   }
 
