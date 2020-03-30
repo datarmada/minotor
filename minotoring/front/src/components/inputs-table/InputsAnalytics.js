@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import PropTypes, { object, arrayOf, string, instanceOf } from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import React, { useState } from 'react';
 import buildInputTableProps from '../../utils/data-managers/InputDataManager';
 import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';

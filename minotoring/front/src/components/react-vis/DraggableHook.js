@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Highlight } from 'react-vis';
-import highlight from 'react-vis/dist/plot/highlight';
 
 const createPropsBuilder = (highlightPoint, highlighting) => (
   color = '#79C7E3'

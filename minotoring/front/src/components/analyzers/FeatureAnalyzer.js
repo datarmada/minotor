@@ -49,6 +49,6 @@ export default function FeatureAnalyzer(props) {
 }
 
 FeatureAnalyzer.propTypes = {
-  featureData: PropTypes.objectOf(Object),
+  featureData: PropTypes.objectOf(Object).isRequired,
   onSelectedPoints: PropTypes.func.isRequired,
 };
