@@ -15,6 +15,7 @@ const onOptionSelected = (setter, selected) => key =>
 export default function Table(props) {
   // Props
   const {
+    colNotClickable,
     data,
     isColFiltrable,
     isRowFiltrable,
@@ -26,7 +27,6 @@ export default function Table(props) {
     onCellClicked,
     orderedColumns,
     verboseColNames,
-    areColClickable,
   } = props;
 
   // Init States
@@ -80,7 +80,7 @@ export default function Table(props) {
               verboseColNames,
               onColClicked,
               colRefs,
-              areColClickable,
+              colNotClickable,
             }}
           />
         </thead>
@@ -92,7 +92,7 @@ export default function Table(props) {
               onRowClicked,
               onCellClicked,
               rows,
-              areColClickable,
+              colNotClickable,
             }}
           />
         </tbody>
@@ -102,6 +102,7 @@ export default function Table(props) {
 }
 
 Table.propTypes = {
+  colNotClickable: PropTypes.instanceOf(Set),
   data: PropTypes.arrayOf(Object).isRequired,
   isColFiltrable: PropTypes.bool,
   isRowFiltrable: PropTypes.bool,
@@ -113,10 +114,10 @@ Table.propTypes = {
   onCellClicked: PropTypes.func,
   orderedColumns: PropTypes.arrayOf(string).isRequired,
   verboseColNames: PropTypes.objectOf(string),
-  areColClickable: PropTypes.objectOf(Boolean),
 };
 
 Table.defaultProps = {
+  colNotClickable: new Set(),
   isColFiltrable: false,
   isRowFiltrable: false,
   nbColDisplayed: 6,
@@ -125,5 +126,4 @@ Table.defaultProps = {
   onRowClicked: null,
   onCellClicked: null,
   onColClicked: null,
-  areColClickable: {},
 };

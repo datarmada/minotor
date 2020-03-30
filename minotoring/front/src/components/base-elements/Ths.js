@@ -1,22 +1,20 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
-const isColClickable = (col, idx, onColClicked, areColClickable) =>
-  idx > 0 &&
-  onColClicked &&
-  (col in areColClickable ? areColClickable[col] : true);
+const isColClickable = (col, idx, onColClicked, colNotClickable) =>
+  idx > 0 && onColClicked && !colNotClickable.has(col);
 export default function Ths(props) {
   const {
     columns,
     verboseColNames,
     onColClicked,
     colRefs,
-    areColClickable,
+    colNotClickable,
   } = props;
 
   const isColClickableWrapped = (col, idx) =>
-    isColClickable(col, idx, onColClicked, areColClickable);
-
+    isColClickable(col, idx, onColClicked, colNotClickable);
+  console.log(colNotClickable);
   return (
     <tr>
       {columns.map((col, idx) => (
@@ -50,11 +48,11 @@ Ths.propTypes = {
       current: PropTypes.object,
     })
   ).isRequired,
-  areColClickable: PropTypes.objectOf(Boolean),
+  colNotClickable: PropTypes.instanceOf(Set),
 };
 
 Ths.defaultProps = {
   verboseColNames: null,
   onColClicked: null,
-  areColClickable: {},
+  colNotClickable: new Set(),
 };
