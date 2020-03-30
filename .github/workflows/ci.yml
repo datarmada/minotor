@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v1.2.0
+      with:
+        python-version: 3.7
+    - name: Installing Poetry
+      run: pip install poetry
+    - name: Installing dependencies with Poetry
+      run: |
+        poetry config virtualenvs.create false,
+        poetry install --no-dev --no-interaction --no-ansi.
+    - name: Running unittests
+      run: python -m unittest discover ./minotoring/tests
