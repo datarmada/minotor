@@ -117,7 +117,6 @@ export const buildScatterPlotProps = (
   valuesInfos,
   highlightedIds
 ) => {
-  console.log(highlightedIds);
   const scatterPlotData = values2reactVisData(singleFeatureData.predict.values);
   const [highlightedPoints, notHightlightedPoints] = partition(
     scatterPlotData,
@@ -130,7 +129,6 @@ export const buildScatterPlotProps = (
     upperThreshold,
     lowerThreshold
   );
-  console.log(highlightedPoints);
   return [
     { data: highlightedPoints, name: 'Highlighted Points', color: 'green' },
     { data: regularPoints, name: 'Regular Points' },
