@@ -19,12 +19,6 @@ export default function InputsAnalytics(props) {
   return (
     <div className="page">
       <h1>Inputs Analytics</h1>
-      {selectedFeature ? (
-        <SingleFeatureAnalyzer
-          singleFeatureData={featureData.features[selectedFeature]}
-          singleFeatureName={selectedFeature}
-        />
-      ) : null}
       <Table
         {...buildInputTableProps(featureData, selectedInputs)}
         onCellClicked={e => {
@@ -37,6 +31,12 @@ export default function InputsAnalytics(props) {
           setSelectedFeature(e.target.textContent);
         }}
       />
+      {selectedFeature ? (
+        <SingleFeatureAnalyzer
+          singleFeatureData={featureData.features[selectedFeature]}
+          singleFeatureName={selectedFeature}
+        />
+      ) : null}
     </div>
   );
 }

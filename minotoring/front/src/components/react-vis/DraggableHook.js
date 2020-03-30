@@ -69,6 +69,7 @@ export default function useDraggable(props) {
           setFilter(area);
           callHighlightedIdxCallback();
         }}
+        key="highlight"
       />
     ),
     customProps,
