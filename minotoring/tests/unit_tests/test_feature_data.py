@@ -11,19 +11,27 @@ class TestProjectData(unittest.TestCase):
         project_data = FeaturesDataContainer()
         self.assertDictEqual(project_data.get_dict(), {
             "features": {
+            },
+            "valuesInfos":{
+                "training":{
+                    "dates":[],
+                    "ids":[]
+                },
+                "prediction":{
+                    "dates":[],
+                    "ids":[]
+                }
             }
         })
 
     def test_add_feature(self):
         project_data = FeaturesDataContainer()
         project_data._add_feature("feature_test", DataType.INT)
-        self.assertDictEqual(project_data.get_dict(), {
-            "features": {
-                "feature_test": {
-                    "type": "int",
-                    "train": {"values": []},
-                    "predict": {"values": []}
-                }
+        self.assertDictEqual(project_data.get_dict()["features"], {
+            "feature_test": {
+                "type": "int",
+                "train": {"values": []},
+                "predict": {"values": []}
             }
         })
 

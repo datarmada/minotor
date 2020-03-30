@@ -19,7 +19,7 @@ export default function useCrosshair(props) {
   const customProps = data.map((_, idx) => buildProps(idx === 0));
 
   return {
-    component: <Crosshair values={crosshairValues} />,
+    component: <Crosshair key="crosshair" values={crosshairValues} />,
     customProps,
     XYprops,
   };

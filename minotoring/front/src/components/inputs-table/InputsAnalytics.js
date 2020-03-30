@@ -1,40 +1,26 @@
 import { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { buildGetFetcher } from '../../utils/data-managers/DataFetcher';
+import PropTypes, { object } from 'prop-types';
+import React, { useState } from 'react';
 import buildInputTableProps from '../../utils/data-managers/InputDataManager';
-import Table from '../base-elements/Table';
 import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
+import Table from '../base-elements/Table';
 
-const dataSetter = async (response, setFeatureData) => {
-  const data = await response.json();
-  setFeatureData(data);
-};
-
-export default function InputsAnalytics() {
-  const [featureData, setFeatureData] = useState({});
+export default function InputsAnalytics(props) {
+  const { featureData, selectedInputs } = props;
   const [selectedFeature, setSelectedFeature] = useState();
   const [hightlightedInput, setHighlightedInput] = useState();
-  useEffect(() => {
-    const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
-    fetchData(setFeatureData);
-    return () => {
-      abortController.abort();
-    };
-  }, []);
-  if (isEmpty(featureData)) {
+  if (
+    isEmpty(featureData) ||
+    isEmpty(selectedInputs) ||
+    (isEmpty(selectedInputs.Training) && isEmpty(selectedInputs.Prediction))
+  ) {
     return null;
   }
   return (
     <div className="page">
       <h1>Inputs Analytics</h1>
-      {selectedFeature ? (
-        <SingleFeatureAnalyzer
-          singleFeatureData={featureData.features[selectedFeature]}
-          singleFeatureName={selectedFeature}
-        />
-      ) : null}
       <Table
-        {...buildInputTableProps(featureData)}
+        {...buildInputTableProps(featureData, selectedInputs)}
         onCellClicked={e => {
           setHighlightedInput(e.target.getAttribute('idrow'));
         }}
@@ -45,6 +31,23 @@ export default function InputsAnalytics() {
           setSelectedFeature(e.target.textContent);
         }}
       />
+      {selectedFeature ? (
+        <SingleFeatureAnalyzer
+          singleFeatureData={featureData.features[selectedFeature]}
+          singleFeatureName={selectedFeature}
+        />
+      ) : null}
     </div>
   );
 }
+
+InputsAnalytics.propTypes = {
+  featureData: PropTypes.shape({
+    features: object,
+    values_infos: object,
+  }).isRequired,
+  selectedInputs: PropTypes.shape({
+    Training: PropTypes.instanceOf(Set),
+    Prediction: PropTypes.instanceOf(Set),
+  }).isRequired,
+};

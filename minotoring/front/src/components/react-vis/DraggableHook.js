@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Highlight } from 'react-vis';
-import highlight from 'react-vis/dist/plot/highlight';
 
 const createPropsBuilder = (highlightPoint, highlighting) => (
   color = '#79C7E3'
@@ -19,15 +18,17 @@ const createPointHighlighter = filter => d => {
   return leftRight && upDown;
 };
 
-const getHighlightedIdx = (highlightPoint, data) =>
+const getHighlightedIds = (highlightPoint, data) =>
   data.reduce(
     (obj, { data: layerData, name }) => ({
-      [name]: layerData.reduce(
-        (highlightedPointIds, value) =>
-          highlightPoint(value)
-            ? [value.id, ...highlightedPointIds]
-            : highlightedPointIds,
-        []
+      [name]: new Set(
+        layerData.reduce(
+          (highlightedPointIds, value) =>
+            highlightPoint(value)
+              ? [value.id, ...highlightedPointIds]
+              : highlightedPointIds,
+          []
+        )
       ),
       ...obj,
     }),
@@ -44,7 +45,7 @@ export default function useDraggable(props) {
   const customProps = data.map(({ color }) => buildProps(color));
   const callHighlightedIdxCallback = () => {
     (highlightedIdsCallback &&
-      highlightedIdsCallback(getHighlightedIdx(highlightPoint, data))) ||
+      highlightedIdsCallback(getHighlightedIds(highlightPoint, data))) ||
       (!highlightedIdsCallback &&
         console.error(
           'You should specify a callback for selected data points'
@@ -68,6 +69,7 @@ export default function useDraggable(props) {
           setFilter(area);
           callHighlightedIdxCallback();
         }}
+        key="highlight"
       />
     ),
     customProps,

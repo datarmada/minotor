@@ -28,12 +28,6 @@ export default function NavBar() {
           <p>Predictions</p>
         </Link>
       </li>
-      <li>
-        <Link to="/inputs">
-          <Predictions className="icon" />
-          <p>Inputs</p>
-        </Link>
-      </li>
     </ul>
   );
 }

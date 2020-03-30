@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import Table from '../components/base-elements/Table';
-import ProjectionGraph from '../components/projection-graph/ProjectionGraph';
 import { buildGetFetcher } from '../utils/data-managers/DataFetcher';
-import { buildTableProps } from '../utils/data-managers/FeatureDataManager';
+import FeatureAnalyzer from '../components/analyzers/FeatureAnalyzer';
+import InputsAnalytics from '../components/inputs-table/InputsAnalytics';
 
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
-  setFeatureData(data.features);
+  setFeatureData(data);
 };
 
 export default function FeaturesAnalytics() {
   const [featureData, setFeatureData] = useState({});
+  const [selectedInputs, setSelectedInputs] = useState({});
 
   useEffect(() => {
     const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
@@ -19,16 +19,17 @@ export default function FeaturesAnalytics() {
       abortController.abort();
     };
   }, []);
-
   return (
     <div className="page">
       <h1>Features Analytics</h1>
-      <ProjectionGraph
-        width={600}
-        height={400}
-        featureNames={Object.keys(featureData)}
+      <FeatureAnalyzer
+        onSelectedPoints={setSelectedInputs}
+        featureData={featureData}
       />
-      <Table {...buildTableProps(featureData)} isColFiltrable isRowFiltrable />
+      <InputsAnalytics
+        featureData={featureData}
+        selectedInputs={selectedInputs}
+      />
     </div>
   );
 }
