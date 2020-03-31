@@ -1,10 +1,10 @@
 import { isEmpty } from 'lodash';
 import PropTypes, { object } from 'prop-types';
 import React, { useState } from 'react';
-import { buildFeatureKLTableProps } from '../../utils/data-managers/FeatureDataManager';
 // Components
 import Table from '../base-elements/Table';
 import FeatureAnalyzerViz from './FeatureAnalyzerViz';
+import { buildFeatureTableProps } from '../../utils/data-managers/TableDataManagers';
 
 // Utils
 const toggleSelectedFeature = (feature, selectedFeatures) =>
@@ -32,7 +32,11 @@ export default function FeatureAnalyzer(props) {
   return (
     <div className="feature-analyzer" style={{ padding: '30px' }}>
       <Table
-        {...buildFeatureKLTableProps(featureData.features)}
+        {...buildFeatureTableProps(featureData.features, [
+          'featureName',
+          'KLDivergence',
+        ])}
+        isRowFiltrable
         onRowClicked={handleRowClicked}
       />
       <div className="projection-graph-container">
