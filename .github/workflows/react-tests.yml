@@ -17,4 +17,4 @@ jobs:
       - name: Installing dependencies
         run: npm install
       - name: Running jest tests
-        run: npm react-scripts test
+        run: npm test
