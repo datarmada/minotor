@@ -1,6 +1,7 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
+// Utils
 const isColClickable = (col, onColClicked, notClickableCols, mainCol) =>
   col !== mainCol && onColClicked && !notClickableCols.has(col);
 
