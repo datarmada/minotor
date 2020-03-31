@@ -4,13 +4,13 @@ import { mapObjectItems, getPhaseKey } from '../utils';
 //
 
 // Transform statistics of a feature into a table row
-const singleFeature2TableRow = (featureName, featureStatistics) => ({
+export const singleFeature2TableRow = (featureName, featureStatistics) => ({
   featureName,
   ...featureStatistics.prediction,
 });
 
 // Build Table Data from the feature statistics
-const buildFeatureTableData = featureStatistics =>
+export const buildFeatureTableData = featureStatistics =>
   mapObjectItems(featureStatistics, singleFeature2TableRow);
 
 // Build Table props
@@ -28,7 +28,7 @@ export const buildFeatureTableProps = (
 // Functions to create an InputTable : Table with inputs as rows and features in column
 
 // Transform values of an input into a table row
-const singleInput2TableRow = (idx, featureStatistics, isTraining) =>
+export const singleInput2TableRow = (idx, featureStatistics, isTraining) =>
   Object.entries(featureStatistics).reduce(
     (newObj, [featureName, singleFeatureStatistics]) => ({
       [featureName]:
@@ -38,7 +38,7 @@ const singleInput2TableRow = (idx, featureStatistics, isTraining) =>
     {}
   );
 
-const buildPhaseData = (featureData, selectedIds, isTraining) =>
+export const buildPhaseData = (featureData, selectedIds, isTraining) =>
   Object.values(featureData.features)[0][getPhaseKey(isTraining)].values.reduce(
     (arr, _, idx) => {
       const id = featureData.valuesInfos[getPhaseKey(isTraining)].ids[idx];
@@ -56,7 +56,7 @@ const buildPhaseData = (featureData, selectedIds, isTraining) =>
     []
   );
 
-const buildTableData = (featureData, selectedInputs) =>
+export const buildTableData = (featureData, selectedInputs) =>
   mapObjectItems(selectedInputs, (phaseName, selectedIds) =>
     buildPhaseData(featureData, selectedIds, phaseName === 'Training')
   ).flat();
