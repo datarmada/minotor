@@ -1,6 +1,5 @@
-import { arrayOf, exact, number, shape, string } from 'prop-types';
+import { arrayOf, exact, instanceOf, number, shape, string } from 'prop-types';
 import React from 'react';
-
 // Data managers
 import { buildFeatureTableProps } from '../../utils/data-managers/TableDataManagers';
 
@@ -15,9 +14,18 @@ import Table from '../base-elements/Table';
 import { FULL_ORDERED_COLUMNS } from '../../utils/constants';
 
 export default function SingleFeatureAnalyzer(props) {
-  const { singleFeatureData, singleFeatureName, highlightedPoints } = props;
+  const {
+    singleFeatureData,
+    singleFeatureName,
+    highlightedIds,
+    valuesInfos,
+  } = props;
   const areaPlotData = buildHistProps(singleFeatureData);
-  const scatterPlotData = buildScatterWithOutliersProps(singleFeatureData);
+  const scatterPlotData = buildScatterWithOutliersProps(
+    singleFeatureData,
+    valuesInfos,
+    highlightedIds
+  );
   return (
     <div className="feature-multi-graph-container">
       <div className="area-plot">
@@ -66,16 +74,20 @@ SingleFeatureAnalyzer.propTypes = {
     predict: exact(BASE_FEATURE_PROPTYPES),
   }).isRequired,
   singleFeatureName: string,
-  highlightedPoints: shape({
-    train: arrayOf(string),
-    predict: arrayOf(string),
-  }),
+  highlightedIds: instanceOf(Set),
+  valuesInfos: shape({
+    training: shape({
+      ids: arrayOf(string),
+      dates: arrayOf(string),
+    }),
+    prediction: shape({
+      ids: arrayOf(string),
+      dates: arrayOf(string),
+    }),
+  }).isRequired,
 };
 
 SingleFeatureAnalyzer.defaultProps = {
   singleFeatureName: 'Feature',
-  highlightedPoints: {
-    train: [],
-    predict: [],
-  },
+  highlightedIds: new Set(),
 };

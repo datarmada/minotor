@@ -18,7 +18,13 @@ export default function FeatureAnalyzerViz(props) {
     const singleFeatureName = selectedFeatures[0];
     const singleFeatureData = featureData.features[singleFeatureName];
     return (
-      <SingleFeatureAnalyzer {...{ singleFeatureData, singleFeatureName }} />
+      <SingleFeatureAnalyzer
+        {...{
+          singleFeatureData,
+          singleFeatureName,
+          valuesInfos: featureData.valuesInfos,
+        }}
+      />
     );
   }
   return (

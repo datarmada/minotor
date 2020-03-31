@@ -2,7 +2,7 @@ import {
   mapObjectItems,
   hist2reactVisData,
   values2reactVisData,
-  splitOutliers,
+  partitionWithThresholds,
 } from '../utils';
 
 it('mapObjectItems takes an object and map (key,val) to a function', () => {
@@ -14,9 +14,9 @@ it('mapObjectItems takes an object and map (key,val) to a function', () => {
   ]);
 });
 
-it('SplitOutliers split the data between regular points and outliers (points above or below the thresholds', () => {
+it('partitionWithThresholds splits the data between regular points and outliers (points above or below the thresholds', () => {
   expect(
-    splitOutliers(
+    partitionWithThresholds(
       [
         { x: 0, y: 0 },
         { x: 0, y: 1 },
@@ -29,13 +29,13 @@ it('SplitOutliers split the data between regular points and outliers (points abo
     )
   ).toEqual([
     [
-      { x: 0, y: 0 },
-      { x: 0, y: 4 },
-    ],
-    [
       { x: 0, y: 1 },
       { x: 0, y: 2 },
       { x: 0, y: 3 },
+    ],
+    [
+      { x: 0, y: 0 },
+      { x: 0, y: 4 },
     ],
   ]);
 });

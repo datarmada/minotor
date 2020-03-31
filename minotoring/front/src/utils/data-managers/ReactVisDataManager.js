@@ -1,7 +1,8 @@
 import {
   hist2reactVisData,
   values2reactVisData,
-  splitOutliers,
+  partition,
+  partitionWithThresholds,
 } from '../utils';
 
 // Build props to represent histograms on an Area Plot
@@ -28,17 +29,32 @@ export const buildHistProps = singleFeatureStatistics => {
 };
 
 // Building props to represent values and outliers in a Scatter Graph
-// TODO: Generalize this graph to training data as well 
-export const buildScatterWithOutliersProps = singleFeatureStatistics => {
+// TODO: Generalize this graph to training data as well
+const isHighlighted = (idx, valuesInfos, highlightedIds) => {
+  return highlightedIds.has(valuesInfos.prediction.ids[idx]);
+};
+
+export const buildScatterWithOutliersProps = (
+  singleFeatureStatistics,
+  valuesInfos,
+  highlightedIds
+) => {
   const scatterPlotData = values2reactVisData(
     singleFeatureStatistics.prediction.values
   );
-  const [outliers, regularPoints] = splitOutliers(
+  const [highlightedPoints, notHightlightedPoints] = partition(
     scatterPlotData,
-    singleFeatureStatistics.prediction.percentile95,
-    singleFeatureStatistics.prediction.percentile05
+    (_, idx) => isHighlighted(idx, valuesInfos, highlightedIds)
+  );
+  const lowerThreshold = singleFeatureStatistics.prediction.percentile05;
+  const upperThreshold = singleFeatureStatistics.prediction.percentile95;
+  const [regularPoints, outliers] = partitionWithThresholds(
+    notHightlightedPoints,
+    upperThreshold,
+    lowerThreshold
   );
   return [
+    { data: highlightedPoints, name: 'Highlighted Points', color: 'green' },
     { data: regularPoints, name: 'Regular Points' },
     { data: outliers, name: 'Outliers', color: 'red' },
   ];

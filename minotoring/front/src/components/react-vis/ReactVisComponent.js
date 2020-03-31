@@ -8,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from 'react-vis';
+import { isEmpty } from 'lodash';
 import useCrosshair from './CrosshairHook';
 import useDraggable from './DraggableHook';
 
@@ -93,7 +94,11 @@ export default function ReactVisComponent({ children, ...props }) {
       <XAxis title={xTitle} style={axisStyle} />
       <YAxis title={yTitle} style={axisStyle} />
       <DiscreteColorLegend
-        items={data.map(({ name, color }) => ({ title: name, color }))}
+        items={data
+          .map(({ name, color, data: layerData }) =>
+            !isEmpty(layerData) ? { title: name, color } : null
+          )
+          .filter(val => val !== null)}
         style={legendStyle}
       />
       {additionalComponents}

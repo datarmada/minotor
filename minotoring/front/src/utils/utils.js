@@ -2,14 +2,23 @@
 export const mapObjectItems = (obj, func) =>
   Object.entries(obj).map(([key, value]) => func(key, value));
 
-// Keeping data between two thresholds
-export const splitOutliers = (data, upperTreshold, lowerTreshold) =>
-  data.reduce(
-    ([outliers, regularPoints], { x, y }) =>
-      y < lowerTreshold || y > upperTreshold
-        ? [[...outliers, { x, y }], regularPoints]
-        : [outliers, [...regularPoints, { x, y }]],
+export const partition = (array, isValid) =>
+  array.reduce(
+    ([pass, fail], elem, idx) =>
+      isValid(array[idx], idx)
+        ? [[...pass, elem], fail]
+        : [pass, [...fail, elem]],
     [[], []]
+  );
+
+export const partitionWithThresholds = (
+  array,
+  upperThreshold,
+  lowerThreshold
+) =>
+  partition(
+    array,
+    elem => elem.y <= upperThreshold && elem.y >= lowerThreshold
   );
 
 // Transform Python Hist format into ReactVis data
