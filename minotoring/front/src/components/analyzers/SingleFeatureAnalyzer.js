@@ -1,15 +1,21 @@
 import { arrayOf, exact, instanceOf, number, shape, string } from 'prop-types';
 import React from 'react';
-// Data managers
-import {
-  buildAreaPlotProps,
-  buildScatterPlotProps,
-  buildTableProps,
-} from '../../utils/data-managers/FeatureDataManager';
-import Table from '../base-elements/Table';
+
 // Components
 import AreaPlot from '../react-vis/AreaPlot';
 import ScatterPlot from '../react-vis/ScatterPlot';
+import Table from '../base-elements/Table';
+
+// Constants
+import { FULL_ORDERED_COLUMNS } from '../../utils/constants';
+
+// Data Managers
+import {
+  buildHistProps,
+  buildScatterWithOutliersProps,
+} from '../../utils/data-managers/ReactVisDataManager';
+import { buildFeatureTableProps } from '../../utils/data-managers/TableDataManagers';
+
 
 export default function SingleFeatureAnalyzer(props) {
   const {
@@ -18,8 +24,8 @@ export default function SingleFeatureAnalyzer(props) {
     highlightedIds,
     valuesInfos,
   } = props;
-  const areaPlotData = buildAreaPlotProps(singleFeatureData);
-  const scatterPlotData = buildScatterPlotProps(
+  const areaPlotData = buildHistProps(singleFeatureData);
+  const scatterPlotData = buildScatterWithOutliersProps(
     singleFeatureData,
     valuesInfos,
     highlightedIds
@@ -45,7 +51,10 @@ export default function SingleFeatureAnalyzer(props) {
       </div>
       <div className="table-container">
         <Table
-          {...buildTableProps({ [singleFeatureName]: singleFeatureData })}
+          {...buildFeatureTableProps(
+            { [singleFeatureName]: singleFeatureData },
+            FULL_ORDERED_COLUMNS
+          )}
         />
       </div>
     </div>
