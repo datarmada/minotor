@@ -1,9 +1,13 @@
-import { isEmpty } from 'lodash';
 import PropTypes, { object } from 'prop-types';
 import React, { useState } from 'react';
+
+import { isEmpty } from 'lodash';
+
 // Components
-import Table from '../base-elements/Table';
 import FeatureAnalyzerViz from './FeatureAnalyzerViz';
+import Table from '../base-elements/Table';
+
+// Data Managers
 import { buildFeatureTableProps } from '../../utils/data-managers/TableDataManagers';
 
 // Utils
