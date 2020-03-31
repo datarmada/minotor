@@ -1,10 +1,13 @@
 import PropTypes, { string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { VERBOSE_COLUMN_NAMES } from '../../utils/constants';
+
 // Components
 import TableControl from './TableControl';
 import Ths from './Ths';
 import Trs from './Trs';
+
+// Constants
+import { VERBOSE_COLUMN_NAMES } from '../../utils/constants';
 
 // Utils
 const onOptionSelected = (setter, selected) => key =>
