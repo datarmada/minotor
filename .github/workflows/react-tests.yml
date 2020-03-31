@@ -1,0 +1,24 @@
+name: React Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./minotoring/front
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 13.10.1
+      - name: Installing dependencies
+        run: npm install --production
+        working-directory: ${{ env.working-directory }}
+      - name: Running jest tests
+        run: npm test -- --watchAll=false
+        working-directory: ${{ env.working-directory }}
