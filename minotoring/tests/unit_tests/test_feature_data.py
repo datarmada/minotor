@@ -12,14 +12,14 @@ class TestProjectData(unittest.TestCase):
         self.assertDictEqual(project_data.get_dict(), {
             "features": {
             },
-            "valuesInfos":{
-                "training":{
-                    "dates":[],
-                    "ids":[]
+            "valuesInfos": {
+                "training": {
+                    "dates": [],
+                    "ids": []
                 },
-                "prediction":{
-                    "dates":[],
-                    "ids":[]
+                "prediction": {
+                    "dates": [],
+                    "ids": []
                 }
             }
         })
@@ -30,8 +30,8 @@ class TestProjectData(unittest.TestCase):
         self.assertDictEqual(project_data.get_dict()["features"], {
             "feature_test": {
                 "type": "int",
-                "train": {"values": []},
-                "predict": {"values": []}
+                "training": {"values": []},
+                "prediction": {"values": []}
             }
         })
 
