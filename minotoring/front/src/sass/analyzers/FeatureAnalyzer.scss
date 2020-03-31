@@ -9,6 +9,7 @@
   align-items: center;
   padding: 0 50px;
   flex-grow: 1;
+  min-width: 0;
 
   .no-feature-selected {
     display: flex;
@@ -28,6 +29,11 @@
   grid-template-rows: 3fr 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+
+  .area-plot,
+  .scatter-plot {
+    min-width: 0;
+  }
 }
 
 .area-plot {
