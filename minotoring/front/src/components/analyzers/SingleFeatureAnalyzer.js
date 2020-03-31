@@ -1,4 +1,4 @@
-import PropTypes, { arrayOf, exact, number, shape, string } from 'prop-types';
+import { arrayOf, exact, instanceOf, number, shape, string } from 'prop-types';
 import React from 'react';
 // Data managers
 import {
@@ -69,8 +69,8 @@ SingleFeatureAnalyzer.propTypes = {
     predict: exact(BASE_FEATURE_PROPTYPES),
   }).isRequired,
   singleFeatureName: string,
-  highlightedIds: PropTypes.instanceOf(Set),
-  valuesInfos: PropTypes.shape({
+  highlightedIds: instanceOf(Set),
+  valuesInfos: shape({
     training: shape({
       ids: arrayOf(string),
       dates: arrayOf(string),
