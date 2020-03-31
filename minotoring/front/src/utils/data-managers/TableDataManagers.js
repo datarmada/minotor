@@ -26,6 +26,7 @@ export const buildFeatureTableProps = (
 
 //
 // Functions to create an InputTable : Table with inputs as rows and features in column
+//
 
 // Transform values of an input into a table row
 export const singleInput2TableRow = (idx, featureStatistics, isTraining) =>
