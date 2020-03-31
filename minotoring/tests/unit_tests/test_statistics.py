@@ -41,4 +41,4 @@ class TestStatistics(unittest.TestCase):
         project_data.training_phase.add_values([1, 2])
         project_data.prediction_phase.add_values([1, 2])
         project_data.compute_crossed_statistics(crossed_statistic_library)
-        self.assertEqual(project_data.prediction_phase.statistics["kl_divergence"], 0)
+        self.assertEqual(project_data.prediction_phase.statistics["KLDivergence"], 0)

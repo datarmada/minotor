@@ -1,10 +1,13 @@
 import PropTypes, { string } from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Components
 import TableControl from './TableControl';
 import Ths from './Ths';
 import Trs from './Trs';
+
+// Constants
+import { VERBOSE_COLUMN_NAMES } from '../../utils/constants';
 
 // Utils
 const onOptionSelected = (setter, selected) => key =>
@@ -19,7 +22,7 @@ export default function Table(props) {
     data,
     isColFiltrable,
     isRowFiltrable,
-    mainCol,
+    mainCol: mainColProp,
     nbColDisplayed,
     nbRowDisplayed,
     onRowClicked,
@@ -29,6 +32,7 @@ export default function Table(props) {
     verboseColNames,
   } = props;
 
+  const mainCol = mainColProp || orderedColumns[0];
   // Init States
   const [selectedCols, setSelectedCols] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -37,7 +41,6 @@ export default function Table(props) {
   const rows = isRowFiltrable
     ? data.filter(d => selectedRows.includes(d[mainCol]))
     : data;
-
   const colRefs = columns.map(React.createRef);
 
   useEffect(() => {
@@ -76,6 +79,7 @@ export default function Table(props) {
         <thead>
           <Ths
             {...{
+              mainCol,
               columns,
               verboseColNames,
               onColClicked,
@@ -106,7 +110,7 @@ Table.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
   isColFiltrable: PropTypes.bool,
   isRowFiltrable: PropTypes.bool,
-  mainCol: PropTypes.string.isRequired,
+  mainCol: PropTypes.string,
   nbColDisplayed: PropTypes.number,
   nbRowDisplayed: PropTypes.number,
   onRowClicked: PropTypes.func,
@@ -122,8 +126,9 @@ Table.defaultProps = {
   isRowFiltrable: false,
   nbColDisplayed: 6,
   nbRowDisplayed: 10,
-  verboseColNames: {},
+  verboseColNames: VERBOSE_COLUMN_NAMES,
   onRowClicked: null,
   onCellClicked: null,
   onColClicked: null,
+  mainCol: null,
 };

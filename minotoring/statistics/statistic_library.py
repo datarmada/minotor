@@ -66,9 +66,9 @@ statistic_functions = {
     "mean": np.nanmean,
     "std": np.nanstd,
     "hist": _histogram,
-    "nan_percentage": _nan_percentage,
-    "percentile_95": percentile_factory(95),
-    "percentile_05": percentile_factory(5)
+    "nanPercentage": _nan_percentage,
+    "percentile95": percentile_factory(95),
+    "percentile05": percentile_factory(5)
 }
 statistic_library = StatisticLibrary()
 for name, func in statistic_functions.items():
@@ -76,4 +76,4 @@ for name, func in statistic_functions.items():
 
 # Statistic Library using predict and train
 crossed_statistic_library = StatisticLibrary()
-crossed_statistic_library.add_statistic(compute_kl_divergence, "kl_divergence")
+crossed_statistic_library.add_statistic(compute_kl_divergence, "KLDivergence")

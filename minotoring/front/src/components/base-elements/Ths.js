@@ -1,8 +1,10 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
-const isColClickable = (col, idx, onColClicked, notClickableCols) =>
-  idx > 0 && onColClicked && !notClickableCols.has(col);
+// Utils
+const isColClickable = (col, onColClicked, notClickableCols, mainCol) =>
+  col !== mainCol && onColClicked && !notClickableCols.has(col);
+
 export default function Ths(props) {
   const {
     columns,
@@ -10,18 +12,20 @@ export default function Ths(props) {
     onColClicked,
     colRefs,
     notClickableCols,
+    mainCol,
   } = props;
 
-  const isColClickableWrapped = (col, idx) =>
-    isColClickable(col, idx, onColClicked, notClickableCols);
+  const isColClickableWrapped = col =>
+    isColClickable(col, onColClicked, notClickableCols, mainCol);
+
   return (
     <tr>
       {columns.map((col, idx) => (
         <th
           key={col}
-          onClick={isColClickableWrapped(col, idx) ? onColClicked : null}
+          onClick={isColClickableWrapped(col) ? onColClicked : null}
           onMouseEnter={e => {
-            isColClickableWrapped(col, idx) &&
+            isColClickableWrapped(col) &&
               colRefs[idx].current.classList.add('hovered');
             isColClickableWrapped(col, idx) &&
               e.currentTarget.classList.add('hovered');
@@ -48,6 +52,7 @@ Ths.propTypes = {
     })
   ).isRequired,
   notClickableCols: PropTypes.instanceOf(Set),
+  mainCol: string.isRequired,
 };
 
 Ths.defaultProps = {

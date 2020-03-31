@@ -17,15 +17,15 @@ class SingleFeatureDataContainer:
     @staticmethod
     def from_json(data: Dict):
         return SingleFeatureDataContainer(data_type=DataType.type2value(data["type"]),
-                                          training_phase=FeatureTrainingPhaseContainer.from_json(data["train"]),
-                                          prediction_phase=FeaturePredictionPhaseContainer.from_json(data["predict"])
+                                          training_phase=FeatureTrainingPhaseContainer.from_json(data["training"]),
+                                          prediction_phase=FeaturePredictionPhaseContainer.from_json(data["prediction"])
                                           )
 
     def get_dict(self):
         return {
             "type": self.data_type.value,
-            "train": self.training_phase.get_dict(),
-            "predict": self.prediction_phase.get_dict()
+            "training": self.training_phase.get_dict(),
+            "prediction": self.prediction_phase.get_dict()
         }
 
     def update_feature(self, data: List, is_training: bool):
