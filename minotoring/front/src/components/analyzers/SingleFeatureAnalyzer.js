@@ -1,22 +1,29 @@
-import { arrayOf, exact, number, shape, string, array } from 'prop-types';
+import { arrayOf, exact, instanceOf, number, shape, string } from 'prop-types';
 import React from 'react';
-
 // Data managers
 import {
   buildAreaPlotProps,
   buildScatterPlotProps,
   buildTableProps,
 } from '../../utils/data-managers/FeatureDataManager';
-
+import Table from '../base-elements/Table';
 // Components
 import AreaPlot from '../react-vis/AreaPlot';
 import ScatterPlot from '../react-vis/ScatterPlot';
-import Table from '../base-elements/Table';
 
 export default function SingleFeatureAnalyzer(props) {
-  const { singleFeatureData, singleFeatureName, highlightedPoints } = props;
+  const {
+    singleFeatureData,
+    singleFeatureName,
+    highlightedIds,
+    valuesInfos,
+  } = props;
   const areaPlotData = buildAreaPlotProps(singleFeatureData);
-  const scatterPlotData = buildScatterPlotProps(singleFeatureData);
+  const scatterPlotData = buildScatterPlotProps(
+    singleFeatureData,
+    valuesInfos,
+    highlightedIds
+  );
   return (
     <div className="feature-multi-graph-container">
       <div className="area-plot">
@@ -62,16 +69,20 @@ SingleFeatureAnalyzer.propTypes = {
     predict: exact(BASE_FEATURE_PROPTYPES),
   }).isRequired,
   singleFeatureName: string,
-  highlightedPoints: shape({
-    train: arrayOf(string),
-    predict: arrayOf(string),
-  }),
+  highlightedIds: instanceOf(Set),
+  valuesInfos: shape({
+    training: shape({
+      ids: arrayOf(string),
+      dates: arrayOf(string),
+    }),
+    prediction: shape({
+      ids: arrayOf(string),
+      dates: arrayOf(string),
+    }),
+  }).isRequired,
 };
 
 SingleFeatureAnalyzer.defaultProps = {
   singleFeatureName: 'Feature',
-  highlightedPoints: {
-    train: [],
-    predict: [],
-  },
+  highlightedIds: new Set(),
 };
