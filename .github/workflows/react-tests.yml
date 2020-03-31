@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 13.10.1
       - name: Installing dependencies
-        run: npm install
+        run: npm install --production
         working-directory: ${{ env.working-directory }}
       - name: Running jest tests
         run: npm test -- --watchAll=false
