@@ -1,17 +1,21 @@
 import { arrayOf, exact, instanceOf, number, shape, string } from 'prop-types';
 import React from 'react';
-// Data managers
-import { buildFeatureTableProps } from '../../utils/data-managers/TableDataManagers';
 
-import {
-  buildScatterWithOutliersProps,
-  buildHistProps,
-} from '../../utils/data-managers/ReactVisDataManager';
 // Components
 import AreaPlot from '../react-vis/AreaPlot';
 import ScatterPlot from '../react-vis/ScatterPlot';
 import Table from '../base-elements/Table';
+
+// Data Managers
+import {
+  buildHistProps,
+  buildScatterWithOutliersProps,
+} from '../../utils/data-managers/ReactVisDataManager';
+import { buildFeatureTableProps } from '../../utils/data-managers/TableDataManagers';
+
+// Constants
 import { FULL_ORDERED_COLUMNS } from '../../utils/constants';
+
 
 export default function SingleFeatureAnalyzer(props) {
   const {
