@@ -1,5 +1,4 @@
-import { mapObjectItems } from '../utils';
-import { VERBOSE_COLUMN_NAMES } from '../constants';
+import { mapObjectItems, getPhaseKey } from '../utils';
 //
 // Functions to create a FeatureTable : Table with features as rows and statistics as columns
 //
@@ -23,33 +22,32 @@ export const buildFeatureTableProps = (
   data: buildFeatureTableData(featureStatistics),
   mainCol,
   orderedColumns,
-  verboseColNames: VERBOSE_COLUMN_NAMES,
 });
 
 //
 // Functions to create an InputTable : Table with inputs as rows and features in column
 
 // Transform values of an input into a table row
-const singleInput2TableRow = (idx, featureStatistics) =>
+const singleInput2TableRow = (idx, featureStatistics, isTraining) =>
   Object.entries(featureStatistics).reduce(
     (newObj, [featureName, singleFeatureStatistics]) => ({
-      // TODO: Change parametrize this prediction
-      [featureName]: singleFeatureStatistics.prediction.values[idx],
+      [featureName]:
+        singleFeatureStatistics[getPhaseKey(isTraining)].values[idx],
       ...newObj,
     }),
     {}
   );
 
-const buildPhaseData = (featureData, selectedIds, phaseName) =>
-  Object.values(featureData.features)[0][phaseName.toLowerCase()].values.reduce(
+const buildPhaseData = (featureData, selectedIds, isTraining) =>
+  Object.values(featureData.features)[0][getPhaseKey(isTraining)].values.reduce(
     (arr, _, idx) => {
-      const id = featureData.valuesInfos[phaseName.toLowerCase()].ids[idx];
+      const id = featureData.valuesInfos[getPhaseKey(isTraining)].ids[idx];
       return selectedIds.has(id)
         ? [
             {
               id,
-              phase: phaseName,
-              ...singleInput2TableRow(idx, featureData.features),
+              phase: getPhaseKey(isTraining),
+              ...singleInput2TableRow(idx, featureData.features, isTraining),
             },
             ...arr,
           ]
@@ -59,8 +57,8 @@ const buildPhaseData = (featureData, selectedIds, phaseName) =>
   );
 
 const buildTableData = (featureData, selectedInputs) =>
-  mapObjectItems(selectedInputs, (key, val) =>
-    buildPhaseData(featureData, val, key)
+  mapObjectItems(selectedInputs, (phaseName, selectedIds) =>
+    buildPhaseData(featureData, selectedIds, phaseName === 'Training')
   ).flat();
 
 export const buildInputTableProps = (featureData, selectedInputs) => {

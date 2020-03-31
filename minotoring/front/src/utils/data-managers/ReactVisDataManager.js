@@ -28,6 +28,7 @@ export const buildHistProps = singleFeatureStatistics => {
 };
 
 // Building props to represent values and outliers in a Scatter Graph
+// TODO: Generalize this graph to training data as well 
 export const buildScatterWithOutliersProps = singleFeatureStatistics => {
   const scatterPlotData = values2reactVisData(
     singleFeatureStatistics.prediction.values

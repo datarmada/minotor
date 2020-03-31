@@ -19,3 +19,6 @@ export const hist2reactVisData = ([Y, X]) =>
 // Transform values into ReactVis Data
 export const values2reactVisData = values =>
   values.map((value, idx) => ({ x: idx, y: value }));
+
+export const getPhaseKey = isTraining =>
+  isTraining ? 'training' : 'prediction';

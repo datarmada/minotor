@@ -5,6 +5,10 @@ import React, { useState, useEffect } from 'react';
 import TableControl from './TableControl';
 import Ths from './Ths';
 import Trs from './Trs';
+import {
+  FULL_ORDERED_COLUMNS,
+  VERBOSE_COLUMN_NAMES,
+} from '../../utils/constants';
 
 // Utils
 const onOptionSelected = (setter, selected) => key =>
@@ -122,7 +126,7 @@ Table.defaultProps = {
   isRowFiltrable: false,
   nbColDisplayed: 6,
   nbRowDisplayed: 10,
-  verboseColNames: {},
+  verboseColNames: VERBOSE_COLUMN_NAMES,
   onRowClicked: null,
   onCellClicked: null,
   onColClicked: null,
