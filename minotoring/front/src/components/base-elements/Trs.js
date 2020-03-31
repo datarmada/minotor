@@ -1,10 +1,12 @@
 import PropTypes, { string } from 'prop-types';
 import React from 'react';
 
+// Utils
 const isCellClickable = (col, onCellClicked, notClickableCols, mainCol) =>
   col !== mainCol && onCellClicked && !notClickableCols.has(col);
 
 const isRowClickable = (idx, onRowClicked) => idx === 0 && onRowClicked;
+
 
 export default function Trs(props) {
   const {
