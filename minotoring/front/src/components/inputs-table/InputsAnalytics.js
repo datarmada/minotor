@@ -1,9 +1,15 @@
-import { isEmpty } from 'lodash';
 import PropTypes, { object } from 'prop-types';
 import React, { useState } from 'react';
-import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
+
+import { isEmpty } from 'lodash';
+
+// Components
 import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
 import Table from '../base-elements/Table';
+
+// Data Managers
+import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
+
 
 export default function InputsAnalytics(props) {
   const { featureData, selectedInputs } = props;
