@@ -13,7 +13,7 @@ export default function NavBar() {
       <li>
         <h1>
           <Link to="/">
-            <Logo className="icon" />
+            <Logo className="icon large" />
           </Link>
         </h1>
       </li>
