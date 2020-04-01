@@ -1,4 +1,12 @@
-import PropTypes, { string } from 'prop-types';
+import {
+  arrayOf,
+  exact,
+  func,
+  instanceOf,
+  object,
+  objectOf,
+  string,
+} from 'prop-types';
 import React from 'react';
 
 // Utils
@@ -43,15 +51,15 @@ export default function Ths(props) {
 }
 
 Ths.propTypes = {
-  columns: PropTypes.arrayOf(string).isRequired,
-  verboseColNames: PropTypes.objectOf(string),
-  onColClicked: PropTypes.func,
-  colRefs: PropTypes.arrayOf(
-    PropTypes.exact({
-      current: PropTypes.object,
+  columns: arrayOf(string).isRequired,
+  verboseColNames: objectOf(string),
+  onColClicked: func,
+  colRefs: arrayOf(
+    exact({
+      current: object,
     })
   ).isRequired,
-  notClickableCols: PropTypes.instanceOf(Set),
+  notClickableCols: instanceOf(Set),
   mainCol: string.isRequired,
 };
 

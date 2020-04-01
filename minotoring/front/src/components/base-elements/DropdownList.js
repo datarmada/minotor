@@ -1,4 +1,4 @@
-import PropTypes, { string } from 'prop-types';
+import { arrayOf, func, string } from 'prop-types';
 import React from 'react';
 
 const buildDropdownEltClasses = (key, selected) => {
@@ -34,9 +34,9 @@ export default function DropdownList(props) {
 }
 
 DropdownList.propTypes = {
-  onOptionSelected: PropTypes.func,
-  options: PropTypes.arrayOf(string).isRequired,
-  selected: PropTypes.arrayOf(string).isRequired,
+  onOptionSelected: func,
+  options: arrayOf(string).isRequired,
+  selected: arrayOf(string).isRequired,
 };
 
 DropdownList.defaultProps = {

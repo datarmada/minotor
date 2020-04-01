@@ -1,4 +1,4 @@
-import PropTypes, { string } from 'prop-types';
+import { arrayOf, func, object, objectOf, string } from 'prop-types';
 import React from 'react';
 
 // Components
@@ -36,9 +36,9 @@ export default function FeatureAnalyzerViz(props) {
 }
 
 FeatureAnalyzerViz.propTypes = {
-  featureData: PropTypes.objectOf(Object).isRequired,
-  selectedFeatures: PropTypes.arrayOf(string),
-  onSelectedPoints: PropTypes.func.isRequired,
+  featureData: objectOf(object).isRequired,
+  selectedFeatures: arrayOf(string),
+  onSelectedPoints: func.isRequired,
 };
 
 FeatureAnalyzerViz.defaultProps = {

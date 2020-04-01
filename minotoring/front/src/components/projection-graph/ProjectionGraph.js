@@ -1,5 +1,5 @@
+import { arrayOf, func, string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import ScatterPlot from '../react-vis/ScatterPlot';
 import { buildPostFetcher } from '../../utils/data-managers/DataFetcher';
 
@@ -65,6 +65,6 @@ export default function ProjectionGraph(props) {
 }
 
 ProjectionGraph.propTypes = {
-  featureNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSelectedPoints: PropTypes.func.isRequired,
+  featureNames: arrayOf(string).isRequired,
+  onSelectedPoints: func.isRequired,
 };

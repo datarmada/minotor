@@ -1,4 +1,13 @@
-import PropTypes from 'prop-types';
+import {
+  arrayOf,
+  bool,
+  func,
+  object,
+  objectOf,
+  oneOfType,
+  number,
+  string,
+} from 'prop-types';
 import React from 'react';
 import {
   DiscreteColorLegend,
@@ -108,21 +117,17 @@ export default function ReactVisComponent({ children, ...props }) {
 }
 
 ReactVisComponent.propTypes = {
-  children: PropTypes.object.isRequired, // eslint-disable-line
-  data: PropTypes.arrayOf(Object).isRequired,
-  xTitle: PropTypes.string,
-  yTitle: PropTypes.string,
-  width: PropTypes.number, // eslint-disable-line
-  height: PropTypes.number, // eslint-disable-line
-  axisStyle: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number])
-  ),
-  legendStyle: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ),
-  isDraggable: PropTypes.bool,
-  isCrosshair: PropTypes.bool,
-  highlightedIdxCallback: PropTypes.func,
+  children: object.isRequired, // eslint-disable-line
+  data: arrayOf(object).isRequired,
+  xTitle: string,
+  yTitle: string,
+  width: number, // eslint-disable-line
+  height: number, // eslint-disable-line
+  axisStyle: objectOf(oneOfType([object, string, number])),
+  legendStyle: objectOf(oneOfType([string, number])),
+  isDraggable: bool,
+  isCrosshair: bool,
+  highlightedIdxCallback: func,
 };
 
 ReactVisComponent.defaultProps = {

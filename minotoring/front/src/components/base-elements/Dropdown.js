@@ -1,4 +1,4 @@
-import PropTypes, { string } from 'prop-types';
+import { arrayOf, func, string } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 
 // Components
@@ -76,10 +76,10 @@ export default function Dropdown(props) {
 }
 
 Dropdown.propTypes = {
-  name: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(string).isRequired,
-  onOptionSelected: PropTypes.func.isRequired,
-  selected: PropTypes.arrayOf(string),
+  name: string.isRequired,
+  options: arrayOf(string).isRequired,
+  onOptionSelected: func.isRequired,
+  selected: arrayOf(string),
 };
 
 Dropdown.defaultProps = {

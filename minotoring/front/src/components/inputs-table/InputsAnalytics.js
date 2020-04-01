@@ -1,4 +1,4 @@
-import PropTypes, { object } from 'prop-types';
+import { instanceOf, object, shape } from 'prop-types';
 import React, { useState } from 'react';
 
 import { isEmpty } from 'lodash';
@@ -9,7 +9,6 @@ import Table from '../base-elements/Table';
 
 // Data Managers
 import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
-
 
 export default function InputsAnalytics(props) {
   const { featureData, selectedInputs } = props;
@@ -51,12 +50,12 @@ export default function InputsAnalytics(props) {
 }
 
 InputsAnalytics.propTypes = {
-  featureData: PropTypes.shape({
+  featureData: shape({
     features: object,
     valuesInfos: object,
   }).isRequired,
-  selectedInputs: PropTypes.shape({
-    Training: PropTypes.instanceOf(Set),
-    Prediction: PropTypes.instanceOf(Set),
+  selectedInputs: shape({
+    Training: instanceOf(Set),
+    Prediction: instanceOf(Set),
   }).isRequired,
 };
