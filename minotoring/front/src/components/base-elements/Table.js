@@ -1,5 +1,5 @@
 import PropTypes, { string } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Component } from 'react';
 
 // Components
 import TableControl from './TableControl';
@@ -8,6 +8,7 @@ import Trs from './Trs';
 
 // Constants
 import { VERBOSE_COLUMN_NAMES } from '../../utils/constants';
+import PopUpTable from '../inputs-table/PopUpTable';
 
 // Utils
 const onOptionSelected = (setter, selected) => key =>
@@ -18,6 +19,7 @@ const onOptionSelected = (setter, selected) => key =>
 export default function Table(props) {
   // Props
   const {
+    additionalRow,
     notClickableCols,
     data,
     isColFiltrable,
@@ -97,6 +99,7 @@ export default function Table(props) {
               onCellClicked,
               rows,
               notClickableCols,
+              additionalRow,
             }}
           />
         </tbody>
@@ -106,6 +109,7 @@ export default function Table(props) {
 }
 
 Table.propTypes = {
+  additionalRow: PropTypes.element,
   notClickableCols: PropTypes.instanceOf(Set),
   data: PropTypes.arrayOf(Object).isRequired,
   isColFiltrable: PropTypes.bool,
@@ -121,6 +125,7 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
+  additionalRow: null,
   notClickableCols: new Set(),
   isColFiltrable: false,
   isRowFiltrable: false,

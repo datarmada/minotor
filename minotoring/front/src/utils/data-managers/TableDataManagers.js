@@ -1,3 +1,4 @@
+import { mapValues } from 'lodash';
 import { mapObjectItems, getPhaseKey } from '../utils';
 //
 // Functions to create a FeatureTable : Table with features as rows and statistics as columns
@@ -62,14 +63,48 @@ export const buildTableData = (featureData, selectedInputs) =>
     buildPhaseData(featureData, selectedIds, phaseName === 'Training')
   ).flat();
 
-export const buildInputTableProps = (featureData, selectedInputs) => {
+export const buildInputTableProps = (featureData, selectedInputs) => ({
+  data: buildTableData(featureData, selectedInputs),
+  mainCol: 'id',
+  orderedColumns: ['id', 'phase', ...Object.keys(featureData.features)],
+  verboseColNames: {
+    phase: 'Phase of collection',
+  },
+  notClickableCols: new Set(['phase']),
+});
+
+//
+// Functions to create a Statistics table : statistic as rows and feature in columns
+//
+
+export const statisticToRow = (featureStatistics, statisticName, isTraining) =>
+  mapValues(
+    featureStatistics,
+    singleFeatureStatistics =>
+      singleFeatureStatistics[getPhaseKey(isTraining)][statisticName]
+  );
+
+export const buildStatisticsTableData = (featureStatistics, params) =>
+  params.map(({ statisticName, isTraining }) => ({
+    id: statisticName,
+    phase: getPhaseKey(isTraining),
+    ...statisticToRow(featureStatistics, statisticName, isTraining),
+  }));
+
+export const buildStatisticsTableProps = featureData => {
+  const relevantStatistics = ['mean', 'std'];
+
+  const params = relevantStatistics.reduce(
+    (arr, val) => [
+      { statisticName: val, isTraining: true },
+      { statisticName: val, isTraining: false },
+      ...arr,
+    ],
+    []
+  );
   return {
-    data: buildTableData(featureData, selectedInputs),
+    rows: buildStatisticsTableData(featureData.features, params),
+    columns: ['id', 'phase', ...Object.keys(featureData.features)],
     mainCol: 'id',
-    orderedColumns: ['id', 'phase', ...Object.keys(featureData.features)],
-    verboseColNames: {
-      phase: 'Phase of collection',
-    },
-    notClickableCols: new Set(['phase']),
   };
 };

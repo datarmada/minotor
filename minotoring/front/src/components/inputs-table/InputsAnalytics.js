@@ -1,15 +1,17 @@
 import PropTypes, { object } from 'prop-types';
 import React, { useState } from 'react';
-
 import { isEmpty } from 'lodash';
 
 // Components
 import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
 import Table from '../base-elements/Table';
+import Trs from '../base-elements/Trs';
 
 // Data Managers
-import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
-
+import {
+  buildInputTableProps,
+  buildStatisticsTableProps,
+} from '../../utils/data-managers/TableDataManagers';
 
 export default function InputsAnalytics(props) {
   const { featureData, selectedInputs } = props;
@@ -31,12 +33,10 @@ export default function InputsAnalytics(props) {
           setHighlightedIds(new Set([e.target.getAttribute('idrow')]));
           setSelectedFeature(e.target.getAttribute('idcol'));
         }}
-        onRowClicked={() => {
-          console.log('row');
-        }}
         onColClicked={e => {
           setSelectedFeature(e.target.textContent);
         }}
+        additionalRow={<Trs {...buildStatisticsTableProps(featureData)} />}
       />
       {selectedFeature ? (
         <SingleFeatureAnalyzer
