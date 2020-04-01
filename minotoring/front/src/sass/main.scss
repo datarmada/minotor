@@ -14,6 +14,7 @@
 @import 'analyzers/FeatureAnalyzer';
 
 // Base Elements
+@import 'base-elements/cards';
 @import 'base-elements/Dropdown';
 @import 'base-elements/Table';
 @import 'base-elements/titles';
@@ -26,7 +27,12 @@
 
 // Very unusual stuff - create a file for this had no sense (at the time)
 #main-switch {
+  transition: margin-left $nav-transition-duration ease;
   margin-left: $nav-width;
+
+  &.wide {
+    margin-left: $nav-width-narrow;
+  }
 }
 
 body {

@@ -1,15 +1,30 @@
 .feature-analyzer {
   min-height: 600px;
   display: flex;
+  // flex-wrap: wrap;
+
+  .card.table {
+    flex-shrink: 0;
+  }
+
+  .projection-graph-container {
+    flex-shrink: 1;
+    min-width: 500px;
+  }
 }
 
 .projection-graph-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 50px;
+  // padding: 0 50px;
   flex-grow: 1;
   min-width: 0;
+
+  .card {
+    width: 100%;
+    height: 100%;
+  }
 
   .no-feature-selected {
     display: flex;

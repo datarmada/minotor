@@ -1,15 +1,36 @@
 #nav {
   position: fixed;
-  padding: 30px 50px;
-  width: $nav-width;
   display: flex;
   flex-direction: column;
+  transition: width 1s ease;
+  padding: 30px 50px;
+  width: $nav-width;
+
+  &.open {
+    .fade {
+      opacity: 1;
+    }
+  }
+
+  .fade {
+    opacity: 0;
+    transition: opacity $nav-transition-duration/2 ease;
+  }
 
   li {
+    cursor: pointer;
     font-size: 15px;
 
-    &:first-child {
+    &.menu {
+      margin-bottom: 40px;
+    }
+
+    &.logo {
       margin-bottom: 20px;
+    }
+
+    h2 {
+      line-height: $logo-height;
     }
 
     &:not(:first-child):hover {
@@ -21,14 +42,26 @@
       padding: 5px 0;
     }
 
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $logo-width;
+      margin-right: 10px;
+    }
+
     .icon {
       flex-shrink: 0;
       width: 20px;
-      margin-right: 10px;
 
       &.logo {
-        width: 35px;
-        margin-right: 10px;
+        width: $logo-width;
+        height: $logo-height;
+        margin-right: 15px;
+      }
+
+      &.menu {
+        width: 25px;
       }
     }
   }

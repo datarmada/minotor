@@ -34,16 +34,18 @@ export default function FeatureAnalyzer(props) {
   };
 
   return (
-    <div className="feature-analyzer" style={{ padding: '30px' }}>
-      <Table
-        {...buildFeatureTableProps(featureData.features, [
-          'featureName',
-          'KLDivergence',
-        ])}
-        isRowFiltrable
-        onRowClicked={handleRowClicked}
-      />
-      <div className="projection-graph-container">
+    <div className="feature-analyzer card-container">
+      <div className="card table">
+        <Table
+          {...buildFeatureTableProps(featureData.features, [
+            'featureName',
+            'KLDivergence',
+          ])}
+          isRowFiltrable
+          onRowClicked={handleRowClicked}
+        />
+      </div>
+      <div className="projection-graph-container card">
         <FeatureAnalyzerViz
           {...{
             featureData,

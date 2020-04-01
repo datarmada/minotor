@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -13,12 +13,14 @@ import PredictionAnalytics from './pages/PredictionsAnalytics';
 import './sass/main.scss';
 
 const App = () => {
+  const [isNavOpen, setIsNavOpen] = useState(true);
+
   return (
     <div className="App">
       <Router>
-        <NavBar />
+        <NavBar isOpen={isNavOpen} onToggleNav={setIsNavOpen} />
         <Suspense fallback={<div>Loading...</div>} />
-        <div id="main-switch">
+        <div id="main-switch" className={isNavOpen ? null : 'wide'}>
           <Switch>
             <Route exact path="/features" component={FeaturesAnalytics} />
             <Route exact path="/predictions" component={PredictionAnalytics} />
