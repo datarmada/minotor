@@ -1,8 +1,8 @@
 import {
-  mapObjectItems,
   hist2reactVisData,
-  values2reactVisData,
+  mapObjectItems,
   partitionWithThresholds,
+  values2reactVisData,
 } from '../utils';
 
 it('mapObjectItems takes an object and map (key,val) to a function', () => {

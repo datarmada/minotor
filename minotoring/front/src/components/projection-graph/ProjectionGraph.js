@@ -1,8 +1,13 @@
 import { arrayOf, func, string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
+
+// Components
 import ScatterPlot from '../react-vis/ScatterPlot';
+
+// Data Managers
 import { buildPostFetcher } from '../../utils/data-managers/DataFetcher';
 
+// Utils
 const handleFetchedData = async (
   response,
   setProjectedTrainingData,

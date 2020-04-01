@@ -8,6 +8,7 @@ import {
   string,
 } from 'prop-types';
 import React, { useState } from 'react';
+
 import {
   DiscreteColorLegend,
   Highlight,
@@ -19,6 +20,7 @@ import {
   YAxis,
 } from 'react-vis';
 
+// Utils
 const createLayerMaker = (highlightPoint, highlighting) => (
   layerData,
   name,

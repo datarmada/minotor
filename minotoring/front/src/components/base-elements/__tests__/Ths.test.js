@@ -1,8 +1,11 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+
+// Components
 import Ths from '../Ths';
 
+// Globals
 let container = null;
 
 beforeEach(() => {

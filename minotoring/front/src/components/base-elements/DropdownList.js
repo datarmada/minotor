@@ -1,6 +1,7 @@
 import { arrayOf, func, string } from 'prop-types';
 import React from 'react';
 
+// Utils
 const buildDropdownEltClasses = (key, selected) => {
   return selected.includes(key) ? 'dropdown-elt selected' : 'dropdown-elt';
 };

@@ -18,7 +18,7 @@ const orderOptions = (options, query = '') => {
   );
   return [...matched.sort(), ...others.sort()];
 };
-// className builders
+
 const buildDropdownClasses = active =>
   active ? 'dropdown active' : 'dropdown';
 

@@ -9,6 +9,7 @@ import {
   string,
 } from 'prop-types';
 import React from 'react';
+
 import {
   DiscreteColorLegend,
   FlexibleXYPlot,
@@ -18,9 +19,12 @@ import {
   YAxis,
 } from 'react-vis';
 import { isEmpty } from 'lodash';
+
+// Hooks
 import useCrosshair from './CrosshairHook';
 import useDraggable from './DraggableHook';
 
+// Utils
 const createLayerMaker = (children, props) => (
   data,
   name,
