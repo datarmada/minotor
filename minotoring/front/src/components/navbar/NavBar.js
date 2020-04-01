@@ -11,11 +11,10 @@ export default function NavBar() {
   return (
     <ul id="nav">
       <li>
-        <h1>
-          <Link to="/">
-            <Logo className="icon large" />
-          </Link>
-        </h1>
+        <Link to="/">
+          <Logo className="icon logo" />
+          <h2>Minotor AI</h2>
+        </Link>
       </li>
       <li>
         <Link to="/features">

@@ -1,12 +1,16 @@
 #nav {
   position: fixed;
   padding: 30px 50px;
-  width: 195px;
+  width: $nav-width;
   display: flex;
   flex-direction: column;
 
   li {
     font-size: 15px;
+
+    &:first-child {
+      margin-bottom: 20px;
+    }
 
     &:not(:first-child):hover {
       color: $grey-1000;
@@ -22,10 +26,9 @@
       width: 20px;
       margin-right: 10px;
 
-      &.large {
-        width: 40px;
-        margin-right: 0;
-        margin-bottom: 20px;
+      &.logo {
+        width: 35px;
+        margin-right: 10px;
       }
     }
   }
