@@ -16,7 +16,6 @@ import {
 } from '../../utils/data-managers/ReactVisDataManager';
 import { buildFeatureTableProps } from '../../utils/data-managers/TableDataManagers';
 
-
 export default function SingleFeatureAnalyzer(props) {
   const {
     singleFeatureData,

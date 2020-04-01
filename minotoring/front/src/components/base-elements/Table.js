@@ -1,4 +1,13 @@
-import PropTypes, { string } from 'prop-types';
+import {
+  arrayOf,
+  bool,
+  func,
+  instanceOf,
+  number,
+  object,
+  objectOf,
+  string,
+} from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 // Components
@@ -106,18 +115,18 @@ export default function Table(props) {
 }
 
 Table.propTypes = {
-  notClickableCols: PropTypes.instanceOf(Set),
-  data: PropTypes.arrayOf(Object).isRequired,
-  isColFiltrable: PropTypes.bool,
-  isRowFiltrable: PropTypes.bool,
-  mainCol: PropTypes.string,
-  nbColDisplayed: PropTypes.number,
-  nbRowDisplayed: PropTypes.number,
-  onRowClicked: PropTypes.func,
-  onColClicked: PropTypes.func,
-  onCellClicked: PropTypes.func,
-  orderedColumns: PropTypes.arrayOf(string).isRequired,
-  verboseColNames: PropTypes.objectOf(string),
+  notClickableCols: instanceOf(Set),
+  data: arrayOf(object).isRequired,
+  isColFiltrable: bool,
+  isRowFiltrable: bool,
+  mainCol: string,
+  nbColDisplayed: number,
+  nbRowDisplayed: number,
+  onRowClicked: func,
+  onColClicked: func,
+  onCellClicked: func,
+  orderedColumns: arrayOf(string).isRequired,
+  verboseColNames: objectOf(string),
 };
 
 Table.defaultProps = {

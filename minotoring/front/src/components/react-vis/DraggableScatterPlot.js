@@ -1,5 +1,14 @@
-import PropTypes, { arrayOf } from 'prop-types';
+import {
+  arrayOf,
+  object,
+  objectOf,
+  oneOfType,
+  number,
+  shape,
+  string,
+} from 'prop-types';
 import React, { useState } from 'react';
+
 import {
   DiscreteColorLegend,
   Highlight,
@@ -11,6 +20,7 @@ import {
   YAxis,
 } from 'react-vis';
 
+// Utils
 const createLayerMaker = (highlightPoint, highlighting) => (
   layerData,
   name,
@@ -84,23 +94,19 @@ export default function DraggableScatterPlot(props) {
 }
 
 DraggableScatterPlot.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      data: arrayOf(
-        PropTypes.shape({ x: PropTypes.number, y: PropTypes.number })
-      ).isRequired,
-      name: PropTypes.string.isRequired,
-      color: PropTypes.string,
+  data: arrayOf(
+    shape({
+      data: arrayOf(shape({ x: number, y: number })).isRequired,
+      name: string.isRequired,
+      color: string,
     })
   ).isRequired,
-  xTitle: PropTypes.string,
-  yTitle: PropTypes.string,
-  width: PropTypes.number, // eslint-disable-line
-  height: PropTypes.number, // eslint-disable-line
-  axisStyle: PropTypes.objectOf(Object),
-  legendStyle: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ),
+  xTitle: string,
+  yTitle: string,
+  width: number, // eslint-disable-line
+  height: number, // eslint-disable-line
+  axisStyle: objectOf(object),
+  legendStyle: objectOf(oneOfType([string, number])),
 };
 
 DraggableScatterPlot.defaultProps = {

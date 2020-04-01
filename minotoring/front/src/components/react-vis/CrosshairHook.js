@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+
 import { Crosshair } from 'react-vis';
 
+// Utils
 const createPropsBuilder = (data, setCrosshairValues) => isfirst => ({
   onNearestX: isfirst
     ? (value, { index }) => {

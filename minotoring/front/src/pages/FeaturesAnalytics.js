@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { buildGetFetcher } from '../utils/data-managers/DataFetcher';
+
+// Components
 import FeatureAnalyzer from '../components/analyzers/FeatureAnalyzer';
 import InputsAnalytics from '../components/inputs-table/InputsAnalytics';
 
+// Data Managers
+import { buildGetFetcher } from '../utils/data-managers/DataFetcher';
+
+// Utils
 const dataSetter = async (response, setFeatureData) => {
   const data = await response.json();
   setFeatureData(data);

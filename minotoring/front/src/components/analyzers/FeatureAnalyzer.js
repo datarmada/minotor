@@ -1,4 +1,4 @@
-import PropTypes, { object } from 'prop-types';
+import { object, shape, func } from 'prop-types';
 import React, { useState } from 'react';
 
 import { isEmpty } from 'lodash';
@@ -57,9 +57,9 @@ export default function FeatureAnalyzer(props) {
 }
 
 FeatureAnalyzer.propTypes = {
-  featureData: PropTypes.shape({
+  featureData: shape({
     features: object,
     values_infos: object,
   }).isRequired,
-  onSelectedPoints: PropTypes.func.isRequired,
+  onSelectedPoints: func.isRequired,
 };

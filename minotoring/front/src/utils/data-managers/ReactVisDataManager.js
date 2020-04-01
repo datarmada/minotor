@@ -1,8 +1,8 @@
 import {
   hist2reactVisData,
-  values2reactVisData,
   partition,
   partitionWithThresholds,
+  values2reactVisData,
 } from '../utils';
 
 // Build props to represent histograms on an Area Plot

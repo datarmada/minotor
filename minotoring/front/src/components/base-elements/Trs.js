@@ -1,4 +1,4 @@
-import PropTypes, { string } from 'prop-types';
+import { arrayOf, func, instanceOf, object, string } from 'prop-types';
 import React from 'react';
 
 // Utils
@@ -6,7 +6,6 @@ const isCellClickable = (col, onCellClicked, notClickableCols, mainCol) =>
   col !== mainCol && onCellClicked && !notClickableCols.has(col);
 
 const isRowClickable = (idx, onRowClicked) => idx === 0 && onRowClicked;
-
 
 export default function Trs(props) {
   const {
@@ -59,12 +58,12 @@ export default function Trs(props) {
 }
 
 Trs.propTypes = {
-  notClickableCols: PropTypes.instanceOf(Set),
-  columns: PropTypes.arrayOf(string).isRequired,
-  mainCol: PropTypes.string.isRequired,
-  onRowClicked: PropTypes.func,
-  rows: PropTypes.arrayOf(Object).isRequired,
-  onCellClicked: PropTypes.func,
+  notClickableCols: instanceOf(Set),
+  columns: arrayOf(string).isRequired,
+  mainCol: string.isRequired,
+  onRowClicked: func,
+  rows: arrayOf(object).isRequired,
+  onCellClicked: func,
 };
 
 Trs.defaultProps = {

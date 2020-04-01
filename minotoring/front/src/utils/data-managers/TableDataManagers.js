@@ -1,4 +1,4 @@
-import { mapObjectItems, getPhaseKey } from '../utils';
+import { getPhaseKey, mapObjectItems } from '../utils';
 //
 // Functions to create a FeatureTable : Table with features as rows and statistics as columns
 //

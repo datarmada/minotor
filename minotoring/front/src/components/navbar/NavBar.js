@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 // SVGs
-import { ReactComponent as Logo } from '../../img/logos/minotaur.svg';
 import { ReactComponent as Features } from '../../img/logos/features.svg';
+import { ReactComponent as Logo } from '../../img/logos/minotaur.svg';
 import { ReactComponent as Predictions } from '../../img/logos/prediction.svg';
 
 export default function NavBar() {

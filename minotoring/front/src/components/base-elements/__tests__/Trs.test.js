@@ -1,8 +1,11 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+
+// Components
 import Trs from '../Trs';
 
+// Globals
 let container = null;
 
 beforeEach(() => {
