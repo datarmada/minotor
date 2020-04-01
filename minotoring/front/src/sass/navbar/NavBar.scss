@@ -18,50 +18,53 @@
   }
 
   li {
-    cursor: pointer;
     font-size: 15px;
-
-    &.menu {
-      margin-bottom: 40px;
-    }
-
-    &.logo {
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      line-height: $logo-height;
-    }
 
     &:not(:first-child):hover {
       color: $grey-1000;
     }
 
+    .icon {
+      cursor: pointer;
+    }
+
     & > a {
       display: flex;
       padding: 5px 0;
+
+      .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $logo-width;
+        margin-right: 10px;
+
+        .icon {
+          flex-shrink: 0;
+          width: 20px;
+        }
+      }
     }
 
-    .icon-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: $logo-width;
-      margin-right: 10px;
+    &.menu {
+      margin-bottom: 40px;
+
+      .icon {
+        width: 25px;
+      }
     }
 
-    .icon {
-      flex-shrink: 0;
-      width: 20px;
+    &.logo {
+      margin-bottom: 20px;
 
-      &.logo {
+      .icon {
         width: $logo-width;
         height: $logo-height;
         margin-right: 15px;
       }
 
-      &.menu {
-        width: 25px;
+      h2 {
+        line-height: $logo-height;
       }
     }
   }

@@ -1,3 +1,4 @@
+import { bool, func } from 'prop-types';
 import React from 'react';
 
 import { Link } from 'react-router-dom';
@@ -13,11 +14,13 @@ export default function NavBar(props) {
 
   return (
     <ul id="nav" className={isOpen ? 'open' : null}>
-      <li className="menu">
-        <span className="icon-container">
-          <Menu className="icon menu" onClick={() => onToggleNav(!isOpen)} />
-        </span>
-      </li>
+      {onToggleNav && (
+        <li className="menu">
+          <span className="icon-container">
+            <Menu className="icon menu" onClick={() => onToggleNav(!isOpen)} />
+          </span>
+        </li>
+      )}
       <li className="logo">
         <Link to="/">
           <Logo className="icon logo" />
@@ -43,3 +46,13 @@ export default function NavBar(props) {
     </ul>
   );
 }
+
+NavBar.propTypes = {
+  isOpen: bool,
+  onToggleNav: func,
+};
+
+NavBar.defaultProps = {
+  isOpen: true,
+  onToggleNav: null,
+};
