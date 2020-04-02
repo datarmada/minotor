@@ -15,7 +15,7 @@ export default function DropdownList(props) {
   };
 
   return (
-    <ul className="dropdown-elt-container">
+    <ul className="dropdown-elt-container custom-scrollbar">
       {options.map(option => {
         return (
           <li

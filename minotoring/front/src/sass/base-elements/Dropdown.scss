@@ -26,26 +26,6 @@
     max-height: 195px;
     overflow-y: overlay;
 
-    &::-webkit-scrollbar {
-      width: 10px;
-      background-color: transparent;
-    }
-
-    &::-webkit-scrollbar-track {
-      border-radius: 10px;
-      background-color: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background-color: grey;
-    }
-
-    &::-webkit-scrollbar-corner {
-      background-color: transparent;
-      border-color: transparent;
-    }
-
     .dropdown-elt {
       background-color: white;
       border-radius: 0;

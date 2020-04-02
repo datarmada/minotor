@@ -48,7 +48,7 @@ export default function SingleFeatureAnalyzer(props) {
           isCrosshair
         />
       </div>
-      <div className="table-container">
+      <div className="table-container custom-scrollbar">
         <Table
           {...buildFeatureTableProps(
             { [singleFeatureName]: singleFeatureData },
