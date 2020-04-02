@@ -45,7 +45,7 @@ export default function FeatureAnalyzer(props) {
           onRowClicked={handleRowClicked}
         />
       </div>
-      <div className="feature-analyzer-viz-container card">
+      <div className="feature-analyzer-viz-container card-margin">
         <FeatureAnalyzerViz
           {...{
             featureData,

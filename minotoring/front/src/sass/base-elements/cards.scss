@@ -5,6 +5,14 @@
   border-radius: 0.375rem;
   background-color: white;
   overflow: hidden;
+
+  &.no-margin {
+    margin: 0;
+  }
+}
+
+.card-margin {
+  margin: $card-space-between / 2;
 }
 
 .card-container {

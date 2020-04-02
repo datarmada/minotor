@@ -42,14 +42,12 @@ export default function InputsAnalytics(props) {
           />
         </div>
         {selectedFeature ? (
-          <div className="card">
-            <SingleFeatureAnalyzer
-              singleFeatureData={featureData.features[selectedFeature]}
-              singleFeatureName={selectedFeature}
-              highlightedIds={highlightedIds}
-              valuesInfos={featureData.valuesInfos}
-            />
-          </div>
+          <SingleFeatureAnalyzer
+            singleFeatureData={featureData.features[selectedFeature]}
+            singleFeatureName={selectedFeature}
+            highlightedIds={highlightedIds}
+            valuesInfos={featureData.valuesInfos}
+          />
         ) : null}
       </div>
     </div>
