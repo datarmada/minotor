@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { isEmpty } from 'lodash';
-
 // Components
 import FeatureAnalyzer from '../components/analyzers/FeatureAnalyzer';
 import InputsAnalytics from '../components/inputs-table/InputsAnalytics';

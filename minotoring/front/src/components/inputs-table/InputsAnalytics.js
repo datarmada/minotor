@@ -15,6 +15,13 @@ export default function InputsAnalytics(props) {
   const { featureData, selectedInputs } = props;
   const [selectedFeature, setSelectedFeature] = useState();
   const [highlightedIds, setHighlightedIds] = useState(new Set());
+  if (
+    isEmpty(featureData) ||
+    isEmpty(selectedInputs) ||
+    (isEmpty(selectedInputs.Training) && isEmpty(selectedInputs.Prediction))
+  ) {
+    return null;
+  }
   return (
     <div className="card-container column">
       <div className="card">
