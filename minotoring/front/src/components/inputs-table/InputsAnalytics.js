@@ -9,6 +9,7 @@ import Table from '../base-elements/Table';
 
 // Data Managers
 import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
+import SingleInputAnalyzer from '../analyzers/SingleInputAnalyzer';
 
 export default function InputsAnalytics(props) {
   const { featureData, selectedInputs } = props;
@@ -38,6 +39,7 @@ export default function InputsAnalytics(props) {
           valuesInfos={featureData.valuesInfos}
         />
       ) : null}
+      <SingleInputAnalyzer featureData={featureData} />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { mapValues } from 'lodash';
+
 import { getPhaseKey, mapObjectItems } from '../utils';
 //
 // Functions to create a FeatureTable : Table with features as rows and statistics as columns
@@ -70,6 +72,43 @@ export const buildInputTableProps = (featureData, selectedInputs) => {
     verboseColNames: {
       phase: 'Phase of collection',
     },
+    notClickableCols: new Set(['phase']),
+  };
+};
+
+//
+// Functions to create a Statistics table : statistic as rows and feature in columns
+//
+
+export const statisticToRow = (featureStatistics, statisticName, isTraining) =>
+  mapValues(
+    featureStatistics,
+    singleFeatureStatistics =>
+      singleFeatureStatistics[getPhaseKey(isTraining)][statisticName]
+  );
+
+export const buildStatisticsTableData = (featureStatistics, params) =>
+  params.map(({ statisticName, isTraining }) => ({
+    id: statisticName,
+    phase: getPhaseKey(isTraining),
+    ...statisticToRow(featureStatistics, statisticName, isTraining),
+  }));
+
+export const buildStatisticsTableProps = featureData => {
+  const relevantStatistics = ['mean', 'std'];
+
+  const params = relevantStatistics.reduce(
+    (arr, val) => [
+      { statisticName: val, isTraining: true },
+      { statisticName: val, isTraining: false },
+      ...arr,
+    ],
+    []
+  );
+  return {
+    data: buildStatisticsTableData(featureData.features, params),
+    orderedColumns: ['id', 'phase', ...Object.keys(featureData.features)],
+    mainCol: 'id',
     notClickableCols: new Set(['phase']),
   };
 };

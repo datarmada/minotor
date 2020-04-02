@@ -6,7 +6,6 @@ import {
   partition,
   partitionWithThresholds,
   values2reactVisData,
-  getPhaseKey,
 } from '../utils';
 
 export const getHighlightedValuesPerPhase = (
