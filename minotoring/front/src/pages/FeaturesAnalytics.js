@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { isEmpty } from 'lodash';
-
 // Components
 import FeatureAnalyzer from '../components/analyzers/FeatureAnalyzer';
 import InputsAnalytics from '../components/inputs-table/InputsAnalytics';
@@ -33,16 +31,10 @@ export default function FeaturesAnalytics() {
         onSelectedPoints={setSelectedInputs}
         featureData={featureData}
       />
-      {!(
-        isEmpty(featureData) ||
-        isEmpty(selectedInputs) ||
-        (isEmpty(selectedInputs.Training) && isEmpty(selectedInputs.Prediction))
-      ) ? (
-        <InputsAnalytics
-          featureData={featureData}
-          selectedInputs={selectedInputs}
-        />
-      ) : null}
+      <InputsAnalytics
+        featureData={featureData}
+        selectedInputs={selectedInputs}
+      />
     </div>
   );
 }
