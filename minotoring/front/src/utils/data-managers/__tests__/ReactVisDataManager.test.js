@@ -19,8 +19,15 @@ it('should take a value and return the closest value in the histogram', () => {
       ],
     },
   };
-  expect(getClosestHistValue(singleFeatureStatistics, 2.1, false)).toEqual(20);
-  expect(getClosestHistValue(singleFeatureStatistics, 1.5, true)).toEqual(100);
+  expect(getClosestHistValue(singleFeatureStatistics, 2.1, false)).toBeCloseTo(
+    21
+  );
+  expect(getClosestHistValue(singleFeatureStatistics, 1.5, true)).toBeCloseTo(
+    150
+  );
+  expect(getClosestHistValue(singleFeatureStatistics, 2, true)).toBeCloseTo(
+    200
+  );
 });
 
 it('should take the highlighted ids and return the corresponding values', () => {

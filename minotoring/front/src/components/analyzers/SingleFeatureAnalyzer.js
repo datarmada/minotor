@@ -33,7 +33,6 @@ export default function SingleFeatureAnalyzer(props) {
     valuesInfos,
     highlightedIds
   );
-  console.log(areaPlotData);
   return (
     <div className="feature-multi-graph-container">
       <div className="area-plot">

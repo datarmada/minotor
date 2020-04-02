@@ -9,10 +9,21 @@ import {
   getClosestIndex,
 } from '../utils';
 
-export const getClosestHistValue = (singleFeatureStatistics, x, isTraining) =>
-  singleFeatureStatistics[getPhaseKey(isTraining)].hist[0][
-    getClosestIndex(singleFeatureStatistics[getPhaseKey(isTraining)].hist[1], x)
-  ];
+export const getClosestHistValue = (singleFeatureStatistics, x, isTraining) => {
+  const [
+    { lowestIdx, lowestDiff },
+    { lowestIdx: secondLowestIdx, lowestDiff: secondLowestDiff },
+  ] = getClosestIndex(
+    singleFeatureStatistics[getPhaseKey(isTraining)].hist[1],
+    x
+  );
+  return (
+    (secondLowestDiff / (lowestDiff + secondLowestDiff)) *
+      singleFeatureStatistics[getPhaseKey(isTraining)].hist[0][lowestIdx] +
+    (lowestDiff / (lowestDiff + secondLowestDiff)) *
+      singleFeatureStatistics[getPhaseKey(isTraining)].hist[0][secondLowestIdx]
+  );
+};
 
 export const getHighlightedValuesPerPhase = (
   singleFeatureStatistics,
