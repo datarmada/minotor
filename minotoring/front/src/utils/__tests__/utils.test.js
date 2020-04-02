@@ -1,9 +1,9 @@
 import {
+  getClosestIndex,
   hist2reactVisData,
   mapObjectItems,
   partitionWithThresholds,
   values2reactVisData,
-  getClosestIndex,
 } from '../utils';
 
 it('mapObjectItems takes an object and map (key,val) to a function', () => {
