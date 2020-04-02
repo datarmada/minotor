@@ -1,3 +1,5 @@
+$card-padding: 30px;
+
 .feature-analyzer {
   min-height: 600px;
   display: flex;
@@ -7,22 +9,24 @@
     flex-shrink: 0;
   }
 
-  .projection-graph-container {
+  .feature-analyzer-viz-container {
     flex-shrink: 1;
     min-width: 500px;
   }
+
+  .projection-graph-container {
+    width: 100%;
+    height: 100%;
+    padding: $card-padding;
+  }
 }
 
-.projection-graph-container {
+.feature-analyzer-viz-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
   min-width: 0;
-
-  &.card {
-    padding: 30px;
-  }
 
   .no-feature-selected {
     display: flex;
@@ -38,28 +42,29 @@
   }
 }
 
-.feature-multi-graph-container {
+.single-feature-analyzer {
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 3fr 1fr;
   grid-gap: 20px;
+  padding: $card-padding;
 
   .area-plot,
   .scatter-plot {
     min-width: 0;
   }
-}
 
-.area-plot {
-  grid-column-start: 1;
-}
+  .area-plot {
+    grid-column-start: 1;
+  }
 
-.scatter-plot {
-  grid-column-start: 0;
-}
+  .scatter-plot {
+    grid-column-start: 0;
+  }
 
-.table-container {
-  grid-column: 1 / span 2;
+  .table-container {
+    grid-column: 1 / span 2;
+  }
 }

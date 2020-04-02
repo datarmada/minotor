@@ -30,7 +30,7 @@ export default function SingleFeatureAnalyzer(props) {
     highlightedIds
   );
   return (
-    <div className="feature-multi-graph-container">
+    <div className="single-feature-analyzer">
       <div className="area-plot">
         <AreaPlot
           key="Title of area plot"

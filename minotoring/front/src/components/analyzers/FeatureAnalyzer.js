@@ -45,7 +45,7 @@ export default function FeatureAnalyzer(props) {
           onRowClicked={handleRowClicked}
         />
       </div>
-      <div className="projection-graph-container card">
+      <div className="feature-analyzer-viz-container card">
         <FeatureAnalyzerViz
           {...{
             featureData,

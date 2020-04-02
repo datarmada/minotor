@@ -28,10 +28,12 @@ export default function FeatureAnalyzerViz(props) {
     );
   }
   return (
-    <ProjectionGraph
-      featureNames={selectedFeatures}
-      onSelectedPoints={onSelectedPoints}
-    />
+    <div className="projection-graph-container">
+      <ProjectionGraph
+        featureNames={selectedFeatures}
+        onSelectedPoints={onSelectedPoints}
+      />
+    </div>
   );
 }
 
