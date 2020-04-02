@@ -16,5 +16,10 @@
 }
 
 .card-container {
+  display: flex;
   margin: -$card-space-between / 2;
+
+  &.column {
+    flex-direction: column;
+  }
 }

@@ -22,38 +22,33 @@ export default function InputsAnalytics(props) {
     return null;
   }
   return (
-    <div>
-      <h1>Inputs Analytics</h1>
-      <div className="card-container">
-        <div className="card">
-          <Table
-            className="card"
-            {...buildInputTableProps(featureData, selectedInputs)}
-            onCellClicked={e => {
-              setHighlightedIds(new Set([e.target.getAttribute('idrow')]));
-              setSelectedFeature(e.target.getAttribute('idcol'));
-            }}
-            onRowClicked={() => {
-              console.log('row');
-            }}
-            onColClicked={e => {
-              setSelectedFeature(e.target.textContent);
-            }}
+    <div className="card-container column">
+      <div className="card">
+        <Table
+          className="card"
+          {...buildInputTableProps(featureData, selectedInputs)}
+          onCellClicked={e => {
+            setHighlightedIds(new Set([e.target.getAttribute('idrow')]));
+            setSelectedFeature(e.target.getAttribute('idcol'));
+          }}
+          onRowClicked={() => {
+            console.log('row');
+          }}
+          onColClicked={e => {
+            setSelectedFeature(e.target.textContent);
+          }}
+        />
+      </div>
+      {selectedFeature ? (
+        <div className="card-margin">
+          <SingleFeatureAnalyzer
+            singleFeatureData={featureData.features[selectedFeature]}
+            singleFeatureName={selectedFeature}
+            highlightedIds={highlightedIds}
+            valuesInfos={featureData.valuesInfos}
           />
         </div>
-        {selectedFeature ? (
-          <div className="card-margin">
-            <div>
-              <SingleFeatureAnalyzer
-                singleFeatureData={featureData.features[selectedFeature]}
-                singleFeatureName={selectedFeature}
-                highlightedIds={highlightedIds}
-                valuesInfos={featureData.valuesInfos}
-              />
-            </div>
-          </div>
-        ) : null}
-      </div>
+      ) : null}
     </div>
   );
 }
