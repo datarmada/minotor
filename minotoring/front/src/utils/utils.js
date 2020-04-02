@@ -31,3 +31,9 @@ export const partitionWithThresholds = (
 // Transform values into ReactVis Data
 export const values2reactVisData = values =>
   values.map((value, idx) => ({ x: idx, y: value }));
+
+// Find index of a new element in a sorted array
+export const getIndexToInsert = (arr, element) => {
+  const diff = arr.map(val => Math.abs(val - element));
+  return diff.indexOf([...diff].sort()[0]);
+};

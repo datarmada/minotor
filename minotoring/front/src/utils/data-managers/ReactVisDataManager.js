@@ -1,12 +1,69 @@
+import { isEmpty, concat } from 'lodash';
+
 import {
   hist2reactVisData,
   partition,
   partitionWithThresholds,
   values2reactVisData,
+  getPhaseKey,
+  getIndexToInsert,
 } from '../utils';
 
+export const getClosestHistValue = (singleFeatureStatistics, x, isTraining) =>
+  singleFeatureStatistics[getPhaseKey(isTraining)].hist[0][
+    getIndexToInsert(
+      singleFeatureStatistics[getPhaseKey(isTraining)].hist[1],
+      x
+    )
+  ];
+
+export const getHighlightedValuesPerPhase = (
+  singleFeatureStatistics,
+  valuesInfos,
+  highlightedIds,
+  isTraining
+) =>
+  valuesInfos[getPhaseKey(isTraining)].ids.reduce(
+    (arr, id, idx) =>
+      highlightedIds.has(id)
+        ? [
+            {
+              x: singleFeatureStatistics[getPhaseKey(isTraining)].values[idx],
+              id,
+              isTraining,
+            },
+            ...arr,
+          ]
+        : arr,
+    []
+  );
+
+export const getHighlightedValues = (
+  singleFeatureStatistics,
+  valuesInfos,
+  highlightedIds
+) =>
+  concat(
+    ...[true, false].map(boolean =>
+      getHighlightedValuesPerPhase(
+        singleFeatureStatistics,
+        valuesInfos,
+        highlightedIds,
+        boolean
+      )
+    )
+  ).map(({ x, isTraining }) => ({
+    x,
+    isTraining,
+    y: getClosestHistValue(singleFeatureStatistics, x, isTraining),
+  }));
+
 // Build props to represent histograms on an Area Plot
-export const buildHistProps = singleFeatureStatistics => {
+export const buildHistProps = (
+  singleFeatureStatistics,
+  valuesInfos,
+  highlightedIds
+) => {
   const {
     training: { hist: tHist },
     prediction: { hist: pHist },
@@ -14,6 +71,10 @@ export const buildHistProps = singleFeatureStatistics => {
   const layers = [];
   const visTrain = tHist ? hist2reactVisData(tHist) : null;
   const visPredict = pHist ? hist2reactVisData(pHist) : null;
+  const visHighlighted = !isEmpty(highlightedIds)
+    ? getHighlightedValues(singleFeatureStatistics, valuesInfos, highlightedIds)
+    : null;
+
   visTrain &&
     layers.push({
       data: visTrain,
@@ -24,6 +85,12 @@ export const buildHistProps = singleFeatureStatistics => {
     layers.push({
       data: visPredict,
       name: 'Prediction Data',
+    });
+  visHighlighted &&
+    layers.push({
+      data: visHighlighted,
+      name: 'Highlighted Data',
+      color: 'green',
     });
   return layers;
 };
@@ -53,9 +120,17 @@ export const buildScatterWithOutliersProps = (
     upperThreshold,
     lowerThreshold
   );
-  return [
-    { data: highlightedPoints, name: 'Highlighted Points', color: 'green' },
-    { data: regularPoints, name: 'Regular Points' },
-    { data: outliers, name: 'Outliers', color: 'red' },
-  ];
+  const layers = [];
+
+  !isEmpty(regularPoints) &&
+    layers.push({ data: regularPoints, name: 'Regular Points' });
+  !isEmpty(outliers) &&
+    layers.push({ data: outliers, name: 'Outliers', color: 'red' });
+  !isEmpty(highlightedPoints) &&
+    layers.push({
+      data: highlightedPoints,
+      name: 'Highlighted Points',
+      color: 'green',
+    });
+  return layers;
 };
