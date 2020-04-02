@@ -1,11 +1,11 @@
 import { isEmpty, concat } from 'lodash';
 
 import {
+  getPhaseKey,
   hist2reactVisData,
   partition,
   partitionWithThresholds,
   values2reactVisData,
-  getPhaseKey,
 } from '../utils';
 
 export const getHighlightedValuesPerPhase = (
