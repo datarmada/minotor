@@ -31,10 +31,12 @@ export default function FeaturesAnalytics() {
         onSelectedPoints={setSelectedInputs}
         featureData={featureData}
       />
-      <InputsAnalytics
-        featureData={featureData}
-        selectedInputs={selectedInputs}
-      />
+      <div className="section">
+        <InputsAnalytics
+          featureData={featureData}
+          selectedInputs={selectedInputs}
+        />
+      </div>
     </div>
   );
 }

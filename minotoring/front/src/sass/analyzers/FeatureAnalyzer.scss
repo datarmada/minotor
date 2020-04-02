@@ -36,10 +36,6 @@ $card-padding: 30px;
     height: 100%;
     background-color: $dark-soft;
   }
-
-  .table-container {
-    overflow-x: auto;
-  }
 }
 
 .single-feature-analyzer {
@@ -65,6 +61,7 @@ $card-padding: 30px;
   }
 
   .table-container {
+    overflow-x: auto;
     grid-column: 1 / span 2;
   }
 }
