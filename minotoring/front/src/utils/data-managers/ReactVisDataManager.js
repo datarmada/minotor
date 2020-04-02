@@ -6,24 +6,7 @@ import {
   partitionWithThresholds,
   values2reactVisData,
   getPhaseKey,
-  getClosestIndex,
 } from '../utils';
-
-export const getClosestHistValue = (singleFeatureStatistics, x, isTraining) => {
-  const [
-    { lowestIdx, lowestDiff },
-    { lowestIdx: secondLowestIdx, lowestDiff: secondLowestDiff },
-  ] = getClosestIndex(
-    singleFeatureStatistics[getPhaseKey(isTraining)].hist[1],
-    x
-  );
-  return (
-    (secondLowestDiff / (lowestDiff + secondLowestDiff)) *
-      singleFeatureStatistics[getPhaseKey(isTraining)].hist[0][lowestIdx] +
-    (lowestDiff / (lowestDiff + secondLowestDiff)) *
-      singleFeatureStatistics[getPhaseKey(isTraining)].hist[0][secondLowestIdx]
-  );
-};
 
 export const getHighlightedValuesPerPhase = (
   singleFeatureStatistics,
@@ -50,8 +33,12 @@ export const getHighlightedValues = (
   singleFeatureStatistics,
   valuesInfos,
   highlightedIds = new Set()
-) =>
-  concat(
+) => {
+  const maxValues = Math.max(
+    ...singleFeatureStatistics.prediction.hist[0],
+    ...singleFeatureStatistics.training.hist[0]
+  );
+  return concat(
     ...[true, false].map(boolean =>
       getHighlightedValuesPerPhase(
         singleFeatureStatistics,
@@ -63,8 +50,9 @@ export const getHighlightedValues = (
   ).map(({ x, isTraining }) => ({
     x,
     isTraining,
-    y: getClosestHistValue(singleFeatureStatistics, x, isTraining),
+    y: maxValues,
   }));
+};
 
 // Build props to represent histograms on an Area Plot
 export const buildHistProps = (
@@ -131,7 +119,7 @@ export const buildScatterWithOutliersProps = (
   const layers = [];
 
   !isEmpty(regularPoints) &&
-    layers.push({ data: regularPoints, name: 'Regular Points' });
+    layers.push({ data: regularPoints, name: 'Prediction features' });
   !isEmpty(outliers) &&
     layers.push({ data: outliers, name: 'Outliers', color: 'red' });
   !isEmpty(highlightedPoints) &&

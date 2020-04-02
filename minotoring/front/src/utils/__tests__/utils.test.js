@@ -61,11 +61,3 @@ it('values2reactVisData takes feature values attribute and returns legit react-v
     { x: 2, y: 44 },
   ]);
 });
-
-it('should find the index of the 2 closest value in the array', () => {
-  const arr = [1, 2, 3, 4];
-  expect(getClosestIndex(arr, 3.6)[0].lowestDiff).toBeCloseTo(0.4);
-  expect(getClosestIndex(arr, 3.6)[1].lowestDiff).toBeCloseTo(0.6);
-  expect(getClosestIndex(arr, 3.6)[0].lowestIdx).toEqual(3);
-  expect(getClosestIndex(arr, 3.6)[1].lowestIdx).toEqual(2);
-});

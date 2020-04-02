@@ -31,22 +31,3 @@ export const partitionWithThresholds = (
 // Transform values into ReactVis Data
 export const values2reactVisData = values =>
   values.map((value, idx) => ({ x: idx, y: value }));
-
-// Find index of the closest element in an array
-export const getClosestIndex = (arr, element) => {
-  if (arr.length === 1) {
-    return [
-      { lowestIdx: 0, lowestDiff: Math.abs(arr[0] - element) },
-      { lowestIdx: 0, lowestDiff: 0 },
-    ];
-  }
-  const diff = arr.map(val => Math.abs(val - element));
-  const diffSorted = [...diff].sort();
-  return [
-    { lowestIdx: diff.indexOf(diffSorted[0]), lowestDiff: diffSorted[0] },
-    {
-      lowestIdx: diff.slice(1).indexOf(diffSorted[1]) + 1,
-      lowestDiff: diffSorted[1],
-    },
-  ];
-};

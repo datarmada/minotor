@@ -1,34 +1,7 @@
 import {
   buildHistProps,
-  getClosestHistValue,
   getHighlightedValuesPerPhase,
 } from '../ReactVisDataManager';
-
-it('should take a value and return the closest value in the histogram', () => {
-  const singleFeatureStatistics = {
-    prediction: {
-      hist: [
-        [10, 20, 30],
-        [1, 2, 3],
-      ],
-    },
-    training: {
-      hist: [
-        [100, 200, 300],
-        [1, 2, 3],
-      ],
-    },
-  };
-  expect(getClosestHistValue(singleFeatureStatistics, 2.1, false)).toBeCloseTo(
-    21
-  );
-  expect(getClosestHistValue(singleFeatureStatistics, 1.5, true)).toBeCloseTo(
-    150
-  );
-  expect(getClosestHistValue(singleFeatureStatistics, 2, true)).toBeCloseTo(
-    200
-  );
-});
 
 it('should take the highlighted ids and return the corresponding values', () => {
   const singleFeatureStatistics = {
