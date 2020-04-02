@@ -1,4 +1,5 @@
 import {
+  getClosestIndex,
   hist2reactVisData,
   mapObjectItems,
   partitionWithThresholds,
