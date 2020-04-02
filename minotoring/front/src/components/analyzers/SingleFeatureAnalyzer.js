@@ -30,7 +30,7 @@ export default function SingleFeatureAnalyzer(props) {
     highlightedIds
   );
   return (
-    <div className="single-feature-analyzer card-container">
+    <div className="single-feature-analyzer">
       <div className="area-plot card no-margin">
         <AreaPlot
           key="Title of area plot"

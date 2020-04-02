@@ -32,7 +32,7 @@ export default function FeatureAnalyzerViz(props) {
     );
   }
   return (
-    <div className="projection-graph-container card">
+    <div className="projection-graph-container card no-margin">
       <div className="clearfix">
         <ProjectionGraph
           featureNames={selectedFeatures}

@@ -42,12 +42,16 @@ export default function InputsAnalytics(props) {
           />
         </div>
         {selectedFeature ? (
-          <SingleFeatureAnalyzer
-            singleFeatureData={featureData.features[selectedFeature]}
-            singleFeatureName={selectedFeature}
-            highlightedIds={highlightedIds}
-            valuesInfos={featureData.valuesInfos}
-          />
+          <div className="card-margin">
+            <div>
+              <SingleFeatureAnalyzer
+                singleFeatureData={featureData.features[selectedFeature]}
+                singleFeatureName={selectedFeature}
+                highlightedIds={highlightedIds}
+                valuesInfos={featureData.valuesInfos}
+              />
+            </div>
+          </div>
         ) : null}
       </div>
     </div>
