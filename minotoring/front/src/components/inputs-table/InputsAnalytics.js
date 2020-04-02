@@ -16,28 +16,32 @@ export default function InputsAnalytics(props) {
   const [selectedFeature, setSelectedFeature] = useState();
   const [highlightedIds, setHighlightedIds] = useState(new Set());
   return (
-    <div className="page">
-      <h1>Inputs Analytics</h1>
-      <Table
-        {...buildInputTableProps(featureData, selectedInputs)}
-        onCellClicked={e => {
-          setHighlightedIds(new Set([e.target.getAttribute('idrow')]));
-          setSelectedFeature(e.target.getAttribute('idcol'));
-        }}
-        onRowClicked={() => {
-          console.log('row');
-        }}
-        onColClicked={e => {
-          setSelectedFeature(e.target.textContent);
-        }}
-      />
-      {selectedFeature ? (
-        <SingleFeatureAnalyzer
-          singleFeatureData={featureData.features[selectedFeature]}
-          singleFeatureName={selectedFeature}
-          highlightedIds={highlightedIds}
-          valuesInfos={featureData.valuesInfos}
+    <div className="card-container column">
+      <div className="card">
+        <Table
+          className="card"
+          {...buildInputTableProps(featureData, selectedInputs)}
+          onCellClicked={e => {
+            setHighlightedIds(new Set([e.target.getAttribute('idrow')]));
+            setSelectedFeature(e.target.getAttribute('idcol'));
+          }}
+          onRowClicked={() => {
+            console.log('row');
+          }}
+          onColClicked={e => {
+            setSelectedFeature(e.target.textContent);
+          }}
         />
+      </div>
+      {selectedFeature ? (
+        <div className="card-margin">
+          <SingleFeatureAnalyzer
+            singleFeatureData={featureData.features[selectedFeature]}
+            singleFeatureName={selectedFeature}
+            highlightedIds={highlightedIds}
+            valuesInfos={featureData.valuesInfos}
+          />
+        </div>
       ) : null}
       <SingleInputAnalyzer featureData={featureData} />
     </div>

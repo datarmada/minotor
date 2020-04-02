@@ -9,8 +9,12 @@ export default function FeatureAnalyzerViz(props) {
   const { featureData, onSelectedPoints, selectedFeatures } = props;
   if (selectedFeatures.length === 0) {
     return (
-      <div className="no-feature-selected">
-        <p>Select one or several features to analyze them</p>
+      <div className="no-feature">
+        <div className="card-container">
+          <div className="no-feature-selected card">
+            <p>Select one or several features to analyze them</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -28,10 +32,14 @@ export default function FeatureAnalyzerViz(props) {
     );
   }
   return (
-    <ProjectionGraph
-      featureNames={selectedFeatures}
-      onSelectedPoints={onSelectedPoints}
-    />
+    <div className="projection-graph-container card no-margin">
+      <div className="clearfix">
+        <ProjectionGraph
+          featureNames={selectedFeatures}
+          onSelectedPoints={onSelectedPoints}
+        />
+      </div>
+    </div>
   );
 }
 

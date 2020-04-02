@@ -103,8 +103,6 @@ export default function ReactVisComponent({ children, ...props }) {
     <FlexibleXYPlot {...props} {...XYprops}>
       <VerticalGridLines />
       <HorizontalGridLines />
-      <XAxis title={xTitle} style={axisStyle} />
-      <YAxis title={yTitle} style={axisStyle} />
       <DiscreteColorLegend
         items={data.map(({ name, color }) => ({
           title: name,
@@ -114,6 +112,8 @@ export default function ReactVisComponent({ children, ...props }) {
       />
       {additionalComponents}
       {renderedLayers}
+      <XAxis title={xTitle} style={axisStyle} />
+      <YAxis title={yTitle} style={axisStyle} />
     </FlexibleXYPlot>
   );
 }

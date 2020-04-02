@@ -1,0 +1,25 @@
+.card {
+  margin: $card-space-between / 2;
+  box-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  border-radius: 0.375rem;
+  background-color: white;
+  overflow: hidden;
+
+  &.no-margin {
+    margin: 0;
+  }
+}
+
+.card-margin {
+  margin: $card-space-between / 2;
+}
+
+.card-container {
+  display: flex;
+  margin: -$card-space-between / 2;
+
+  &.column {
+    flex-direction: column;
+  }
+}
