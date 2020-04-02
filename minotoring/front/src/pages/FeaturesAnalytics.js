@@ -27,14 +27,20 @@ export default function FeaturesAnalytics() {
   return (
     <div className="page">
       <h1>Features Analytics</h1>
-      <FeatureAnalyzer
-        onSelectedPoints={setSelectedInputs}
-        featureData={featureData}
-      />
-      <InputsAnalytics
-        featureData={featureData}
-        selectedInputs={selectedInputs}
-      />
+      <div className="card-container column">
+        <div className="card-margin">
+          <FeatureAnalyzer
+            onSelectedPoints={setSelectedInputs}
+            featureData={featureData}
+          />
+        </div>
+        <div className="card-margin">
+          <InputsAnalytics
+            featureData={featureData}
+            selectedInputs={selectedInputs}
+          />
+        </div>
+      </div>
     </div>
   );
 }

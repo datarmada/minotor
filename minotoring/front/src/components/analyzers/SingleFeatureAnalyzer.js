@@ -34,8 +34,8 @@ export default function SingleFeatureAnalyzer(props) {
     highlightedIds
   );
   return (
-    <div className="feature-multi-graph-container">
-      <div className="area-plot">
+    <div className="single-feature-analyzer">
+      <div className="area-plot card no-margin">
         <AreaPlot
           key="Title of area plot"
           xTitle={singleFeatureName}
@@ -43,7 +43,7 @@ export default function SingleFeatureAnalyzer(props) {
           data={areaPlotData}
         />
       </div>
-      <div className="scatter-plot">
+      <div className="scatter-plot card no-margin">
         <ScatterPlot
           key="Title of scatter plot"
           xTitle="Order of appearance"
@@ -52,7 +52,7 @@ export default function SingleFeatureAnalyzer(props) {
           isCrosshair
         />
       </div>
-      <div className="table-container">
+      <div className="table-container card no-margin custom-scrollbar">
         <Table
           {...buildFeatureTableProps(
             { [singleFeatureName]: singleFeatureData },

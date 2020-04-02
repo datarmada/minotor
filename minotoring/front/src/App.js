@@ -19,6 +19,7 @@ const dataSetter = async (response, setFeatureData, setSelectedInputs) => {
 };
 
 const App = () => {
+  const [isNavOpen, setIsNavOpen] = useState(true);
   const [featureData, setFeatureData] = useState({});
   const [selectedInputs, setSelectedInputs] = useState({});
 
@@ -33,9 +34,9 @@ const App = () => {
   return (
     <div className="App">
       <Router>
-        <NavBar />
+        <NavBar isOpen={isNavOpen} onToggleNav={setIsNavOpen} />
         <Suspense fallback={<div>Loading...</div>} />
-        <div id="main-switch">
+        <div id="main-switch" className={isNavOpen ? null : 'wide'}>
           <Switch>
             <Route exact path="/features" component={FeaturesAnalytics} />
             <Route exact path="/predictions" component={PredictionAnalytics} />

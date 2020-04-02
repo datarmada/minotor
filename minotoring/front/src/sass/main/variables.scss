@@ -1,7 +1,42 @@
 //
 // Color
 //
-$light-grey: lighten(grey, 45%);
+// Themes
+$primary: #2c7be5;
+$secondary: #748194;
+$sucess: #00d27a;
+$info: #27bcfd;
+$warning: #f5803e;
+$danger: #e63757;
+$light: #f9fafd;
+$dark: #0b1727;
+// Soft
+$primary-soft: #e6effc;
+$secondary-soft: #eef0f2;
+$sucess-soft: #e0faef;
+$info-soft: #e5f7ff;
+$warning-soft: #fef0e8;
+$danger-soft: #fce7eb;
+$light-soft: #fefeff;
+$dark-soft: #e2e3e5;
+// Grey Shades
+$black: #000000;
+$grey-1100: #0b1727;
+$grey-1000: #232e3c;
+$grey-900: #344050;
+$grey-800: #4d5969;
+$grey-700: #5e6e82;
+$grey-600: #748194;
+$grey-500: #9da9bb;
+$grey-400: #b6c1d2;
+$grey-300: #d8e2ef;
+$grey-200: #edf2f9;
+$grey-100: #f9fafd;
+$white: #ffffff;
+
+// Specials
+$body-background-color: #edf2f9;
+
 //
 // Pages
 //
@@ -13,6 +48,8 @@ $feature-analytics: $default-padding-page;
 // Components
 //
 // base-elements
+// Card
+$card-space-between: 25px;
 // Dropdown
 $dropdown-border: solid 1px black;
 $dropdown-padding: 10px 15px;
@@ -21,6 +58,9 @@ $dropdown-radius: 3px;
 $table-box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
 $table-box-shadow-hover: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
   0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-
 // Navbar
-$nav-width: 120px;
+$logo-height: 40px;
+$logo-width: 40px;
+$nav-width: 280px;
+$nav-width-narrow: 90px; // unused by the Navbar, but used to tweak margin-left of pages
+$nav-transition-duration: 300ms;
