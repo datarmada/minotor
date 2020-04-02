@@ -6,15 +6,12 @@ import {
   partitionWithThresholds,
   values2reactVisData,
   getPhaseKey,
-  getIndexToInsert,
+  getClosestIndex,
 } from '../utils';
 
 export const getClosestHistValue = (singleFeatureStatistics, x, isTraining) =>
   singleFeatureStatistics[getPhaseKey(isTraining)].hist[0][
-    getIndexToInsert(
-      singleFeatureStatistics[getPhaseKey(isTraining)].hist[1],
-      x
-    )
+    getClosestIndex(singleFeatureStatistics[getPhaseKey(isTraining)].hist[1], x)
   ];
 
 export const getHighlightedValuesPerPhase = (
@@ -27,12 +24,12 @@ export const getHighlightedValuesPerPhase = (
     (arr, id, idx) =>
       highlightedIds.has(id)
         ? [
+            ...arr,
             {
               x: singleFeatureStatistics[getPhaseKey(isTraining)].values[idx],
               id,
               isTraining,
             },
-            ...arr,
           ]
         : arr,
     []
@@ -41,7 +38,7 @@ export const getHighlightedValuesPerPhase = (
 export const getHighlightedValues = (
   singleFeatureStatistics,
   valuesInfos,
-  highlightedIds
+  highlightedIds = new Set()
 ) =>
   concat(
     ...[true, false].map(boolean =>
@@ -104,7 +101,7 @@ const isHighlighted = (idx, valuesInfos, highlightedIds) => {
 export const buildScatterWithOutliersProps = (
   singleFeatureStatistics,
   valuesInfos,
-  highlightedIds
+  highlightedIds = new Set()
 ) => {
   const scatterPlotData = values2reactVisData(
     singleFeatureStatistics.prediction.values

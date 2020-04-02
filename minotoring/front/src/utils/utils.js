@@ -32,8 +32,14 @@ export const partitionWithThresholds = (
 export const values2reactVisData = values =>
   values.map((value, idx) => ({ x: idx, y: value }));
 
-// Find index of a new element in a sorted array
-export const getIndexToInsert = (arr, element) => {
-  const diff = arr.map(val => Math.abs(val - element));
-  return diff.indexOf([...diff].sort()[0]);
-};
+// Find index of the closest element in an array
+export const getClosestIndex = (arr, element) =>
+  arr
+    .map(val => Math.abs(val - element))
+    .reduce(
+      ({ lowest, lowestIdx }, next, idx) =>
+        next < lowest
+          ? { lowest: next, lowestIdx: idx }
+          : { lowest, lowestIdx },
+      { lowest: Number.POSITIVE_INFINITY, lowestIdx: -1 }
+    ).lowestIdx;

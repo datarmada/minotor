@@ -18,7 +18,6 @@ import {
   XAxis,
   YAxis,
 } from 'react-vis';
-import { isEmpty } from 'lodash';
 
 // Hooks
 import useCrosshair from './CrosshairHook';

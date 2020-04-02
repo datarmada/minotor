@@ -3,6 +3,7 @@ import {
   mapObjectItems,
   partitionWithThresholds,
   values2reactVisData,
+  getClosestIndex,
 } from '../utils';
 
 it('mapObjectItems takes an object and map (key,val) to a function', () => {
@@ -59,4 +60,11 @@ it('values2reactVisData takes feature values attribute and returns legit react-v
     { x: 1, y: 43 },
     { x: 2, y: 44 },
   ]);
+});
+
+it('should find the index of the closest value in the array', () => {
+  const arr = [1, 2, 3, 4];
+  expect(getClosestIndex(arr, 3.6)).toEqual(3);
+  expect(getClosestIndex(arr, 3.5)).toEqual(2);
+  expect(getClosestIndex(arr, 1)).toEqual(0);
 });
