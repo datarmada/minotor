@@ -23,7 +23,11 @@ export default function SingleFeatureAnalyzer(props) {
     highlightedIds,
     valuesInfos,
   } = props;
-  const areaPlotData = buildHistProps(singleFeatureData);
+  const areaPlotData = buildHistProps(
+    singleFeatureData,
+    valuesInfos,
+    highlightedIds
+  );
   const scatterPlotData = buildScatterWithOutliersProps(
     singleFeatureData,
     valuesInfos,
