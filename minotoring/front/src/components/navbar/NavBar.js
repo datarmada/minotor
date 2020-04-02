@@ -13,7 +13,11 @@ export default function NavBar(props) {
   const { isOpen, onToggleNav } = props;
 
   return (
-    <ul id="nav" className={isOpen ? 'open' : null}>
+    <ul
+      id="nav"
+      className={isOpen ? 'open' : null}
+      onTransitionEnd={() => window.dispatchEvent(new Event('resize'))}
+    >
       {onToggleNav && (
         <li className="menu">
           <span className="icon-container">
