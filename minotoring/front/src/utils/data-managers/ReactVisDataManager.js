@@ -75,19 +75,19 @@ export const buildHistProps = (
     layers.push({
       data: visTrain,
       name: 'Training Data',
-      color: '#b6c1d2', // $grey-400
+      color: '#bdc7e0', // $primary-greyish
     });
   visPredict &&
     layers.push({
       data: visPredict,
       name: 'Prediction Data',
-      color: '#5672b1', // $primary-medium
+      color: '#3F51B5', // $primary
     });
   visHighlighted &&
     layers.push({
       data: visHighlighted,
       name: 'Highlighted Data',
-      color: 'green',
+      color: '#b6c991', // $sage
     });
   return layers;
 };
@@ -123,15 +123,15 @@ export const buildScatterWithOutliersProps = (
     layers.push({
       data: regularPoints,
       name: 'Prediction features',
-      color: '#5672b1',
-    }); // color is $primary-medium
+      color: '#3F51B5',
+    }); // color is $primary
   !isEmpty(outliers) &&
-    layers.push({ data: outliers, name: 'Outliers', color: '#e63757' }); // color is $danger
+    layers.push({ data: outliers, name: 'Outliers', color: '#e24b46' }); // color is $danger
   !isEmpty(highlightedPoints) &&
     layers.push({
       data: highlightedPoints,
       name: 'Highlighted Points',
-      color: 'green',
+      color: '#b6c991', // $sage
     });
   return layers;
 };

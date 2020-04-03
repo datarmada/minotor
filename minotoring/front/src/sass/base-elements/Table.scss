@@ -13,7 +13,7 @@ table.table {
     position: relative;
 
     &.selected {
-      background-color: $warning-soft;
+      background-color: $secondary-soft;
     }
 
     td,
@@ -26,14 +26,14 @@ table.table {
     }
 
     th {
-      background-color: $warning;
+      background-color: $secondary;
     }
   }
 
   .hovered {
     cursor: pointer;
     box-shadow: $table-box-shadow-hover;
-    background-color: $warning-soft;
+    background-color: $secondary-soft;
   }
 }
 div.table-control {

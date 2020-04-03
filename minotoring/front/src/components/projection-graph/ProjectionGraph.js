@@ -54,11 +54,11 @@ export default function ProjectionGraph(props) {
   return (
     <ScatterPlot
       data={[
-        { data: projectedTrainingData, name: 'Training' },
+        { data: projectedTrainingData, name: 'Training', color: '#bdc7e0' }, // color is $primary-greyish
         {
           data: projectedPredictionData,
           name: 'Prediction',
-          color: 'red',
+          color: '#3F51B5', // $primary
         },
       ]}
       isDraggable

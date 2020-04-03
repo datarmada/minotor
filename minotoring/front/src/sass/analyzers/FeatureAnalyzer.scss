@@ -14,6 +14,11 @@ $card-padding: 20px;
     min-width: 500px;
   }
 
+  .table-container {
+    background-color: $grey-100;
+    white-space: nowrap;
+  }
+
   .projection-graph-container {
     width: 100%;
     height: 100%;

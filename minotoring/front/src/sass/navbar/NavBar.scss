@@ -59,6 +59,10 @@
       margin-bottom: 20px;
       color: $primary;
 
+      &:hover {
+        color: $primary-darker;
+      }
+
       .icon {
         width: $logo-width;
         height: $logo-height;
