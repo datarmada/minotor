@@ -13,9 +13,7 @@ import { buildGetFetcher } from './utils/data-managers/DataFetcher';
 const dataSetter = async (response, setFeatureData, setSelectedInputs) => {
   const data = await response.json();
   setFeatureData(data);
-  setSelectedInputs({
-    Training: new Set(data.valuesInfos.training.ids.slice(0, 5)),
-  });
+  setSelectedInputs(new Set(data.valuesInfos.training.ids.slice(0, 5)));
 };
 
 const App = () => {
@@ -44,10 +42,16 @@ const App = () => {
               exact
               path="/inputs"
               render={() => (
-                <InputsAnalytics
-                  featureData={featureData}
-                  selectedInputs={selectedInputs}
-                />
+                <div className="page">
+                  <div className="card-container column">
+                    <div className="card-margin">
+                      <InputsAnalytics
+                        featureData={featureData}
+                        selectedInputs={selectedInputs}
+                      />
+                    </div>
+                  </div>
+                </div>
               )}
             />
           </Switch>

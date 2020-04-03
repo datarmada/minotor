@@ -1,7 +1,6 @@
 import { isEmpty, concat } from 'lodash';
 
 import {
-  getPhaseKey,
   hist2reactVisData,
   partition,
   partitionWithThresholds,
@@ -11,23 +10,12 @@ import {
 export const getHighlightedValuesPerPhase = (
   singleFeatureStatistics,
   valuesInfos,
-  highlightedIds,
-  isTraining
+  highlightedIds
 ) =>
-  valuesInfos[getPhaseKey(isTraining)].ids.reduce(
-    (arr, id, idx) =>
-      highlightedIds.has(id)
-        ? [
-            ...arr,
-            {
-              x: singleFeatureStatistics[getPhaseKey(isTraining)].values[idx],
-              id,
-              isTraining,
-            },
-          ]
-        : arr,
-    []
-  );
+  [...highlightedIds].map(id => ({
+    x: singleFeatureStatistics[valuesInfos.id2phase[id]].values[id],
+    id,
+  }));
 
 export const getHighlightedValues = (
   singleFeatureStatistics,
@@ -47,9 +35,8 @@ export const getHighlightedValues = (
         boolean
       )
     )
-  ).map(({ x, isTraining }) => ({
+  ).map(({ x }) => ({
     x,
-    isTraining,
     y: maxValues,
   }));
 };
