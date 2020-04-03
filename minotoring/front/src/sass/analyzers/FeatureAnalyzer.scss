@@ -6,6 +6,7 @@ $card-padding: 20px;
 
   .card.table {
     flex-shrink: 0;
+    background: $grey-100;
   }
 
   .feature-analyzer-viz-container {
@@ -49,7 +50,7 @@ $card-padding: 20px;
         align-items: center;
         width: 100%;
         height: 100%;
-        background-color: $dark-soft;
+        background-color: $primary-soft;
       }
     }
   }

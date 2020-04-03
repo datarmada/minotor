@@ -75,12 +75,13 @@ export const buildHistProps = (
     layers.push({
       data: visTrain,
       name: 'Training Data',
-      color: 'grey',
+      color: '#b6c1d2', // $grey-400
     });
   visPredict &&
     layers.push({
       data: visPredict,
       name: 'Prediction Data',
+      color: '#5672b1', // $primary-medium
     });
   visHighlighted &&
     layers.push({
@@ -119,9 +120,13 @@ export const buildScatterWithOutliersProps = (
   const layers = [];
 
   !isEmpty(regularPoints) &&
-    layers.push({ data: regularPoints, name: 'Prediction features' });
+    layers.push({
+      data: regularPoints,
+      name: 'Prediction features',
+      color: '#5672b1',
+    }); // color is $primary-medium
   !isEmpty(outliers) &&
-    layers.push({ data: outliers, name: 'Outliers', color: 'red' });
+    layers.push({ data: outliers, name: 'Outliers', color: '#e63757' }); // color is $danger
   !isEmpty(highlightedPoints) &&
     layers.push({
       data: highlightedPoints,

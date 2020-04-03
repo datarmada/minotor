@@ -13,7 +13,7 @@ table.table {
     position: relative;
 
     &.selected {
-      background-color: rgb(121, 199, 227);
+      background-color: $primary-soft;
     }
 
     td,
@@ -24,22 +24,40 @@ table.table {
         font-weight: bold;
       }
     }
+
+    th {
+      background-color: $warning;
+    }
   }
 
   .hovered {
     cursor: pointer;
     box-shadow: $table-box-shadow-hover;
-    background-color: rgba(242, 245, 245, 0.8);
+    background-color: $primary-soft;
   }
 }
 div.table-control {
   display: flex;
-  flex-direction: row-reverse;
-  background-color: $dark-soft;
-  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
   box-shadow: $table-box-shadow;
 
-  & > div {
-    margin: 0 15px;
+  .dropdown {
+    width: 100%;
+    .dropdown-name {
+      font-size: 16px;
+      border-radius: 0;
+      width: 100%;
+      border: none;
+      padding: 10px 20px;
+      &::placeholder {
+        font-size: 16px;
+      }
+    }
+    .dropdown-elt-container {
+      border-radius: 0;
+      border: none;
+    }
   }
 }
