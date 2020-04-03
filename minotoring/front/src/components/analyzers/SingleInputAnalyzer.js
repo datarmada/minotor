@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, object, instanceOf, string } from 'prop-types';
+import { shape, object, string } from 'prop-types';
 import { isEmpty } from 'lodash';
 import Table from '../base-elements/Table';
 import { buildStatisticsTableProps } from '../../utils/data-managers/TableDataManagers';

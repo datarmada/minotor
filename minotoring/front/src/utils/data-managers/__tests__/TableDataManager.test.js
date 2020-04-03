@@ -1,6 +1,5 @@
 import {
   buildFeatureTableData,
-  buildPhaseData,
   singleFeature2TableRow,
   singleInput2TableRow,
 } from '../TableDataManagers';
@@ -53,41 +52,4 @@ it('singleInput2Row should take raw data, the idx of the input and its collectio
     feature1: 2,
     feature2: 2,
   });
-});
-
-it('buildPhaseData should take raw data, the collection phase and the input Id we want and return the rows for the table', () => {
-  const featureData = {
-    features: {
-      feature1: {
-        prediction: {
-          values: [1, 2],
-        },
-        training: {
-          values: [3, 4],
-        },
-      },
-      feature2: {
-        prediction: {
-          values: [1, 2],
-        },
-        training: {
-          values: [3, 4],
-        },
-      },
-    },
-    valuesInfos: {
-      prediction: {
-        ids: ['id1', 'id2'],
-      },
-      training: {
-        ids: ['tid1', 'tid2'],
-      },
-    },
-  };
-  expect(buildPhaseData(featureData, new Set(['id1']), false)).toEqual([
-    { id: 'id1', phase: 'prediction', feature1: 1, feature2: 1 },
-  ]);
-  expect(buildPhaseData(featureData, new Set(['tid1']), true)).toEqual([
-    { id: 'tid1', phase: 'training', feature1: 3, feature2: 3 },
-  ]);
 });
