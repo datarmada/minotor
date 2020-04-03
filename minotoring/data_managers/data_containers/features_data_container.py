@@ -28,7 +28,7 @@ class FeaturesDataContainer:
                 "valuesInfos": self.values_infos.get_dict()
                 }
 
-    def update_feature(self, feature_name, data: List, data_type: DataType, is_training: bool):
+    def update_feature(self, feature_name, data: Dict, data_type: DataType, is_training: bool):
         if feature_name not in self.features:
             self._add_feature(feature_name, data_type)
         self.features[feature_name].update_feature(data, is_training)
@@ -43,7 +43,7 @@ class FeaturesDataContainer:
     def get_dataframes(self, feature_names: List[str] = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
         if not feature_names:
             feature_names = self.features.keys()
-        return pd.DataFrame({name: self.features[name].training_phase.values for name in feature_names},
+        return pd.DataFrame({name: self.features[name].training_phase.list_values for name in feature_names},
                             index=self.values_infos.training.ids), \
-               pd.DataFrame({name: self.features[name].prediction_phase.values for name in feature_names},
+               pd.DataFrame({name: self.features[name].prediction_phase.list_values for name in feature_names},
                             index=self.values_infos.prediction.ids)

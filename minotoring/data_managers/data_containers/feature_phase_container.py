@@ -7,24 +7,28 @@ from minotoring.statistics.statistic_library import StatisticLibrary
 
 @dataclass
 class FeaturePhaseContainerABC(ABC):
-    values: List = field(default_factory=list)
+    values: Dict = field(default_factory=dict)
     statistics: Dict = field(default_factory=dict)
 
     def get_dict(self):
         return dict({"values": self.values}, **self.statistics)
 
+    @property
+    def list_values(self) -> List:
+        return list(self.values.values())
+
     @abstractmethod
-    def add_values(self, data: List):
+    def add_values(self, data: Dict):
         pass
 
     def compute_statistics(self, statistic_library: StatisticLibrary):
-        for statistic_name, result in statistic_library.compute_all_statistics(self.values):
+        for statistic_name, result in statistic_library.compute_all_statistics(self.list_values):
             self.statistics[statistic_name] = result
 
 
 @dataclass
 class FeatureTrainingPhaseContainer(FeaturePhaseContainerABC):
-    def add_values(self, data: List):
+    def add_values(self, data: Dict):
         self.values = data
 
     @staticmethod
@@ -36,8 +40,8 @@ class FeatureTrainingPhaseContainer(FeaturePhaseContainerABC):
 
 @dataclass
 class FeaturePredictionPhaseContainer(FeaturePhaseContainerABC):
-    def add_values(self, data: List):
-        self.values += data
+    def add_values(self, data: Dict):
+        self.values = {**data, **self.values}
 
     @staticmethod
     def from_json(data: Dict):
