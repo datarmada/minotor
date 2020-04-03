@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, object, string } from 'prop-types';
+import { shape, object, instanceOf, string } from 'prop-types';
 import { isEmpty } from 'lodash';
 import Table from '../base-elements/Table';
 import { buildStatisticsTableProps } from '../../utils/data-managers/TableDataManagers';
@@ -13,12 +13,11 @@ export default function SingleInputAnalyzer(props) {
   }
   return (
     <div className="single-input-analyzer">
-      <div className="table-container no-margin custom-scrollbar card">
+      <div className="no-margin custom-scrollbar card table-container">
         <Table {...buildStatisticsTableProps(featureData, selectedId)} />
       </div>
-      {Object.keys(featureData.features)
-        .slice(0, 2)
-        .map(singleFeatureName => {
+      <div className="graphs-grid">
+        {Object.keys(featureData.features).map(singleFeatureName => {
           return (
             <div key={singleFeatureName} className="area-plot card no-margin">
               <AreaPlot
@@ -33,6 +32,7 @@ export default function SingleInputAnalyzer(props) {
             </div>
           );
         })}
+      </div>
     </div>
   );
 }

@@ -48,7 +48,7 @@ export const buildInputTableData = (featureData, selectedInputs) =>
     ...singleInput2TableRow(
       id,
       featureData.features,
-      featureData.valuesInfos.id2phase[id]
+      featureData.valuesInfos.id2phase[id] === 'training'
     ),
   }));
 

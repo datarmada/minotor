@@ -32,9 +32,11 @@ export default function InputsAnalytics(props) {
           onRowClicked={e => {
             setSelectedRowId(e.target.textContent);
             setSelectedFeature(null);
+            setHighlightedIds(new Set());
           }}
           onColClicked={e => {
             setSelectedFeature(e.target.textContent);
+            setHighlightedIds(new Set());
             setSelectedRowId(null);
           }}
         />

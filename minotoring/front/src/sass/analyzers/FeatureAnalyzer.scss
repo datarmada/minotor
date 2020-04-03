@@ -82,21 +82,3 @@ $card-padding: 20px;
     grid-column: 1 / span 2;
   }
 }
-.single-input-analyzer {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 3fr 1fr;
-  grid-gap: $card-space-between;
-
-  .area-plot,
-  .scatter-plot {
-    min-width: 0;
-    padding: $card-padding;
-  }
-  .table-container {
-    overflow-x: auto;
-    grid-column: 1 / span 2;
-  }
-}
