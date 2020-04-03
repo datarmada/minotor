@@ -52,12 +52,12 @@ $icon-search-height: 20px;
       border-radius: 0;
 
       &:first-child {
-        background-color: $dark-soft;
+        background-color: $grey-100;
       }
 
       &:hover {
         cursor: pointer;
-        background-color: $dark-soft;
+        background-color: $grey-100;
       }
 
       &.selected {
