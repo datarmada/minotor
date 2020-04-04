@@ -8,7 +8,7 @@ Minotor has been built to be easy to handle. Download our Python package, plug y
 
 --- 
 - **I'm new to Minotor** 😄 [Get started with Minotor](#getting-started-with-minotor)
-- **I'd like to read the detailed docs** 🤓 [Read the docs]()
+- **I want to learn how to use Minotor** 🤓 [Tutorial]()
 - **I'm ready to install Minotor** 🚀 [Installation]()
 - **I have a question** ❓ [Send us an email]()
 - **I would like to contribute** 🤗 [How to contribute]()
@@ -17,7 +17,7 @@ Minotor has been built to be easy to handle. Download our Python package, plug y
 
 To monitor your first project, copy the three commands in the cell below and run them in your terminal.
 
-The first command install Minotor Open Source onto your system.
+The first command install Minotor onto your system.
 
 The second command `minotor init` then creates a sample project, using the famous [iris dataset](https://scikit-learn.org/stable/auto_examples/datasets/plot_iris_dataset.html) 
 
@@ -28,3 +28,16 @@ pip install minotor
 minotor init
 minotor run
 ```
+You can now go to http://localhost:3000 in your favorite browser and play with Minotor !
+
+#### After completing installation, learn how to monitor you own project:
+
+[Head to the Minotor tutorial >>]()
+
+#### Having trouble installing Minotor?
+
+[Step-by-step installation guide >>]()
+
+--- 
+## Licence
+Licensed under the Apacha License, Version 2.0. [Copy of the license](LICENSE.txt)
