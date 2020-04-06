@@ -62,18 +62,29 @@ export const buildHistProps = (
     layers.push({
       data: visTrain,
       name: 'Training Data',
-      color: 'grey',
+      color: 'var(--charts-flat-color)',
+      style: {
+        stroke: 'var(--charts-flat-color)',
+        strokeWidth: 2,
+        fillOpacity: 0.2,
+      },
     });
   visPredict &&
     layers.push({
       data: visPredict,
       name: 'Prediction Data',
+      color: 'var(--charts-main-bright-color)',
+      style: {
+        stroke: 'var(--charts-main-bright-color)',
+        strokeWidth: 2,
+        fillOpacity: 0.2,
+      },
     });
   visHighlighted &&
     layers.push({
       data: visHighlighted,
       name: 'Highlighted Data',
-      color: 'green',
+      color: 'var(--charts-highlighting-bright-color)',
     });
   return layers;
 };
@@ -106,14 +117,25 @@ export const buildScatterWithOutliersProps = (
   const layers = [];
 
   !isEmpty(regularPoints) &&
-    layers.push({ data: regularPoints, name: 'Prediction features' });
+    layers.push({
+      color: 'var(--charts-main-bright-color)',
+      data: regularPoints,
+      name: 'Prediction features',
+      opacity: 0.8,
+    });
   !isEmpty(outliers) &&
-    layers.push({ data: outliers, name: 'Outliers', color: 'red' });
+    layers.push({
+      color: 'var(--charts-outliers-color)',
+      data: outliers,
+      name: 'Outliers',
+      opacity: 0.8,
+    });
   !isEmpty(highlightedPoints) &&
     layers.push({
+      color: 'var(--charts-highlighting-bright-color)',
       data: highlightedPoints,
       name: 'Highlighted Points',
-      color: 'green',
+      opacity: 1,
     });
   return layers;
 };
