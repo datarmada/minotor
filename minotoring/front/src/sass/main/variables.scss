@@ -2,8 +2,9 @@
 // Color
 //
 // Themes
-$primary: #3f51b5;
-$secondary: #fdf18d;
+// $primary: #3f51b5;
+$primary: #4285f4;
+$secondary: #4285f4;
 $sucess: #4aa866;
 $info: #27bcfd;
 $warning: #e24b46;
@@ -11,8 +12,10 @@ $danger: #a3333d;
 $light: #f9fafd;
 $dark: #0b1727;
 // Soft
-$primary-soft: #d6dbf5;
-$secondary-soft: #fefce6;
+// $primary-soft: #d6dbf5;
+$primary-soft: lighten($primary, 33%);
+// $secondary-soft: #fefce6;
+$secondary-soft: lighten($secondary, 33%);
 $sucess-soft: #e0faef;
 $info-soft: #e5f7ff;
 $warning-soft: #fae1e0;
@@ -33,7 +36,6 @@ $grey-300: #d8e2ef;
 $grey-200: #edf2f9;
 $grey-100: #f9fafd;
 $white: #ffffff;
-
 // Specials
 // $primary-medium: #5672b1;
 $primary-darker: #0e3590;
@@ -41,6 +43,13 @@ $primary-light-greyish: #bdc7e0;
 $primary-medium: #6369d1;
 $sage: #b6c991;
 $body-background-color: white;
+// CSS Variables
+:root {
+  --charts-main-bright-color: #{$primary};
+  --charts-secondary-bright-color: #{$sage};
+  --charts-flat-color: #{$primary-light-greyish};
+  --charts-outliers-color: #{$danger};
+}
 
 //
 // Pages
