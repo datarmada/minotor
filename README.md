@@ -11,7 +11,7 @@ Minotor has been built to be easy to handle. Download our Python package, plug y
 - **I want to learn how to use Minotor** 🤓 [Tutorial](docs/Tutorial.md)
 - **I'm ready to install Minotor** 🚀 [Installation](docs/Installation.md)
 - **I have a question** ❓ [Send us an email](mailto:contact@datarmada.com)
-- **I would like to contribute** 🤗 [How to contribute]()
+- **I would like to contribute** 🤗 [How to contribute](docs/Contribute.md)
 --- 
 ## Getting started with Minotor
 
