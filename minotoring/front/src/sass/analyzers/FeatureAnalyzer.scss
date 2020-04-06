@@ -6,11 +6,17 @@ $card-padding: 20px;
 
   .card.table {
     flex-shrink: 0;
+    background: $grey-100;
   }
 
   .feature-analyzer-viz-container {
     flex-shrink: 1;
     min-width: 500px;
+  }
+
+  .table-container {
+    background-color: $grey-100;
+    white-space: nowrap;
   }
 
   .projection-graph-container {
@@ -49,7 +55,8 @@ $card-padding: 20px;
         align-items: center;
         width: 100%;
         height: 100%;
-        background-color: $dark-soft;
+        font-weight: 200;
+        background-color: $grey-100;
       }
     }
   }
