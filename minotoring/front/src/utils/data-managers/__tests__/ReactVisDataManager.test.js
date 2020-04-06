@@ -55,7 +55,12 @@ it('buildHistProps should take statistics of a feature and return props for an a
         { x: 1, y: 1 },
       ],
       name: 'Training Data',
-      color: '#bdc7e0',
+      color: 'var(--charts-flat-color)',
+      style: {
+        stroke: 'var(--charts-flat-color)',
+        strokeWidth: 2,
+        fillOpacity: 0.2,
+      },
     },
   ]);
 });
