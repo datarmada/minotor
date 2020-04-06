@@ -36,7 +36,7 @@ You can now go to http://localhost:3000 in your favorite browser and play with M
 
 #### Having trouble installing Minotor?
 
-[Step-by-step installation guide >>]()
+[Step-by-step installation guide >>](docs/Installation.md)
 
 --- 
 ## License
