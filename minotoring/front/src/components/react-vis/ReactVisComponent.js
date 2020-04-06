@@ -39,7 +39,7 @@ const createLayerMaker = (children, props) => (
     opacity={opacity}
     data={data}
     color={color}
-    style={style}
+    style={{ ...style, ...props[idx].style }}
   />
 );
 const buildAdditionalFeatures = (isDraggable, isCrosshair, data, props) => {
