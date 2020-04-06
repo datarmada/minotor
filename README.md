@@ -8,8 +8,8 @@ Minotor has been built to be easy to handle. Download our Python package, plug y
 
 --- 
 - **I'm new to Minotor** 😄 [Get started with Minotor](#getting-started-with-minotor)
-- **I want to learn how to use Minotor** 🤓 [Tutorial]()
-- **I'm ready to install Minotor** 🚀 [Installation]()
+- **I want to learn how to use Minotor** 🤓 [Tutorial](docs/Tutorial.md)
+- **I'm ready to install Minotor** 🚀 [Installation](docs/Installation.md)
 - **I have a question** ❓ [Send us an email]()
 - **I would like to contribute** 🤗 [How to contribute]()
 --- 
