@@ -22,7 +22,7 @@ To monitor your first project, copy the three commands in the cell below and run
 
 ```
 pip install minotor
-minotor init
+minotor iris-example
 minotor run
 ```
 
