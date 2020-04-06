@@ -32,7 +32,7 @@ You can now go to http://localhost:3000 in your favorite browser and play with M
 
 #### After completing installation, learn how to monitor you own project:
 
-[Head to the Minotor tutorial >>]()
+[Head to the Minotor tutorial >>](docs/Tutorial.md)
 
 #### Having trouble installing Minotor?
 
