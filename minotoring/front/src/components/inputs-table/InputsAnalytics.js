@@ -8,8 +8,8 @@ import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
 import Table from '../base-elements/Table';
 
 // Data Managers
-import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
 import SingleInputAnalyzer from '../analyzers/SingleInputAnalyzer';
+import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
 
 export default function InputsAnalytics(props) {
   const { featureData, selectedInputs: selectedIds } = props;
