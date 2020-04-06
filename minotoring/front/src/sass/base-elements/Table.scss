@@ -27,6 +27,23 @@ table.table {
 
     th {
       background-color: $secondary;
+      .th-content{
+        display: flex;
+        .help-container{
+          position: relative;
+          .help-popup{
+            position: absolute;
+            font-size: 10px;
+            color: white; 
+            border-radius: 5px;
+            background-color: $grey-700;
+            padding: 5px 10px;
+            z-index: 1;
+            top: 0px;
+            left: 0px
+          }
+        }
+      }
     }
   }
 
