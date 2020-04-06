@@ -10,7 +10,7 @@ Minotor has been built to be easy to handle. Download our Python package, plug y
 - **I'm new to Minotor** 😄 [Get started with Minotor](#getting-started-with-minotor)
 - **I want to learn how to use Minotor** 🤓 [Tutorial](docs/Tutorial.md)
 - **I'm ready to install Minotor** 🚀 [Installation](docs/Installation.md)
-- **I have a question** ❓ [Send us an email]()
+- **I have a question** ❓ [Send us an email](mailto:contact@datarmada.com)
 - **I would like to contribute** 🤗 [How to contribute]()
 --- 
 ## Getting started with Minotor
@@ -19,7 +19,7 @@ To monitor your first project, copy the three commands in the cell below and run
 
 The first command install Minotor onto your system.
 
-The second command `minotor init` then creates a sample project, using the famous [iris dataset](https://scikit-learn.org/stable/auto_examples/datasets/plot_iris_dataset.html) 
+The second command `minotor init` then creates a sample project, using the famous [iris dataset](https://scikit-learn.org/stable/auto_examples/datasets/plot_iris_dataset.html). 
 
 The third command launches the Minotoring Dashboard, where you can monitor your data and inspect differences between train and prod. 
 
