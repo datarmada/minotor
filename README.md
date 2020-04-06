@@ -39,5 +39,5 @@ You can now go to http://localhost:3000 in your favorite browser and play with M
 [Step-by-step installation guide >>]()
 
 --- 
-## Licence
-Licensed under the Apacha License, Version 2.0. [Copy of the license](LICENSE.txt)
+## License
+Licensed under the Apache License, Version 2.0. [Copy of the license](LICENSE.txt)
