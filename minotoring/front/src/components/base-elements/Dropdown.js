@@ -4,6 +4,9 @@ import React, { useEffect, useRef, useState } from 'react';
 // Components
 import DropdownList from './DropdownList';
 
+// SVGs
+import { ReactComponent as Search } from '../../img/search.svg';
+
 // Utils
 const orderOptions = (options, query = '') => {
   if (query === '') {
@@ -63,13 +66,16 @@ export default function Dropdown(props) {
 
   return (
     <div ref={mainDiv} className={buildDropdownClasses(active)}>
-      <input
-        className="dropdown-name"
-        onClick={unwrap}
-        onKeyPress={handleKeyPress}
-        onChange={handleQueryChange}
-        placeholder={name}
-      />
+      <div className="input-container">
+        <input
+          className="dropdown-name"
+          onClick={unwrap}
+          onKeyPress={handleKeyPress}
+          onChange={handleQueryChange}
+          placeholder={name}
+        />
+        <Search className="icon-search" />
+      </div>
       <DropdownList {...{ onOptionSelected, options, selected }} />
     </div>
   );

@@ -8,7 +8,6 @@
 // Main
 @import 'main/fonts';
 @import 'main/reset';
-@import 'main/scrollbar';
 @import 'main/variables';
 
 // Analyzers
@@ -18,6 +17,7 @@
 // Base Elements
 @import 'base-elements/cards';
 @import 'base-elements/Dropdown';
+@import 'base-elements/scrollbar';
 @import 'base-elements/Table';
 @import 'base-elements/titles';
 

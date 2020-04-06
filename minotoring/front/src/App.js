@@ -38,22 +38,6 @@ const App = () => {
           <Switch>
             <Route exact path="/features" component={FeaturesAnalytics} />
             <Route exact path="/predictions" component={PredictionAnalytics} />
-            <Route
-              exact
-              path="/inputs"
-              render={() => (
-                <div className="page">
-                  <div className="card-container column">
-                    <div className="card-margin">
-                      <InputsAnalytics
-                        featureData={featureData}
-                        selectedInputs={selectedInputs}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-            />
           </Switch>
         </div>
       </Router>
