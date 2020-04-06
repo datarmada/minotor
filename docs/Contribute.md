@@ -10,6 +10,8 @@ To contribute via pull request, follow these steps:
 
 Your pull request will be reviewed by a maintainer, who will get back to you about any necessary changes or questions. You will also be asked to sign a [Contributor License Agreement](https://cla-assistant.io/).
 
+Check the [contribution guidelines](docs/ContributionGuidelines.md) to get more details about how to contribute.
+
 # Development Internals
 
 The project is divided in two parts: a Python backend handling the data and a ReactJS frontend to build the dashboard. Both can be managed with Docker, but you can also run them separately.
