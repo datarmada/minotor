@@ -21,9 +21,9 @@ Minotor has been built to be easy to handle. Download our Python package, plug y
 To monitor your first project, copy the three commands in the cell below and run them in your terminal.
 
 ```
-pip install minotor
-minotor iris-example
-minotor run
+$ pip install minotor
+$ minotor iris-example
+$ minotor run
 ```
 
 `pip install minotor` installs Minotor onto your system.

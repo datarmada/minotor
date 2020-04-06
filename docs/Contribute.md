@@ -23,7 +23,7 @@ The project is divided in two parts: a Python backend handling the data and a Re
 Simply install [Docker](https://docs.docker.com/install/) and [docker-compose](https://docs.docker.com/compose/install/) and you are good to go with the command:
 
 ```bash
-docker-compose up -d
+$ docker-compose up -d
 ```
 
 ### Running the tests
@@ -33,13 +33,13 @@ If you use Docker, you probably want to run the tests inside the running contain
 We are using unittest to test the Python code.
 
 ```bash
-sudo docker-compose exec app python -m unittest discover minotoring/tests
+$ sudo docker-compose exec app python -m unittest discover minotoring/tests
 ```
 
 We are using jest to run our ReactJS tests.
 
 ```bash
-sudo docker-compose exec npm npm run test
+$ sudo docker-compose exec npm npm run test
 ```
 
 _Note: in both cases if you installed docker-compose so that it runs without sudo, of course remove sudo from the commands above._
@@ -57,7 +57,7 @@ Minotor uses [Poetry](https://python-poetry.org/) for dependency management. If 
 Run the following code line to install dependencies
 
 ```bash
-poetry install
+$ poetry install
 ```
 
 ### Formatting
@@ -80,7 +80,7 @@ the `autopep8` path in the settings if it is not in your system's path.
 We are using unittest to test the Python code. Run the tests at the source of the project:
 
 ```bash
-python -m unittest discover minotoring/tests
+$ python -m unittest discover minotoring/tests
 ```
 
 ## ReactJS
@@ -92,13 +92,13 @@ The frontend project is located at `/minotoring/front`.
 At the root of the project, install the dependencies with npm:
 
 ```bash
-npm install
+$ npm install
 ```
 
 You can as well use yarn as package manager:
 
 ```bash
-yarn install
+$ yarn install
 ```
 
 ### Formatting
@@ -131,5 +131,5 @@ We are using jest to run our ReactJS tests.
 Run the test with npm:
 
 ```bash
-npm run test
+$ npm run test
 ```
