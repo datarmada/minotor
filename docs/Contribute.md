@@ -26,6 +26,8 @@ docker-compose up -d
 
 ### Running the tests
 
+If you use Docker, you probably want to run the tests inside the running containers. Here is how.
+
 We are using unittest to test the Python code.
 
 ```bash
