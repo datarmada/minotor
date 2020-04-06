@@ -1,0 +1,22 @@
+.single-input-analyzer {
+  .table-container {
+    margin-bottom: $card-space-between !important;
+
+    tbody {
+      tr:first-child {
+        background-color: $primary-soft;
+      }
+    }
+  }
+  .graphs-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: $card-space-between;
+    .area-plot {
+      height: 400px;
+      padding: $card-padding;
+    }
+  }
+}
