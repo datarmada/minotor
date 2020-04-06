@@ -33,7 +33,6 @@ const createLayerMaker = (highlightPoint, highlighting) => (
     getColor={d => {
       return highlightPoint(d) ? '#EF5D28' : color;
     }}
-    opacity={0.8}
     data={layerData}
   />
 );
