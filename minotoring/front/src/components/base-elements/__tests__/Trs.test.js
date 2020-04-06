@@ -34,8 +34,8 @@ it('Rendering non clickable rows', () => {
     );
   });
   const tds = document.querySelectorAll('td');
-  expect(tds[0].textContent).toBe('1');
-  expect(tds[1].textContent).toBe('2');
+  expect(tds[0].textContent).toBe('1.00');
+  expect(tds[1].textContent).toBe('2.00');
 });
 
 it('Rendering clickable rows', () => {
