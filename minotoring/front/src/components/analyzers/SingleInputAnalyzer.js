@@ -1,10 +1,15 @@
-import React from 'react';
 import { shape, object, instanceOf, string } from 'prop-types';
+import React from 'react';
+
 import { isEmpty } from 'lodash';
-import Table from '../base-elements/Table';
-import { buildStatisticsTableProps } from '../../utils/data-managers/TableDataManagers';
+
+// Components
 import AreaPlot from '../react-vis/AreaPlot';
+import Table from '../base-elements/Table';
+
+// Data Managers
 import { buildHistProps } from '../../utils/data-managers/ReactVisDataManager';
+import { buildStatisticsTableProps } from '../../utils/data-managers/TableDataManagers';
 
 export default function SingleInputAnalyzer(props) {
   const { featureData, selectedId } = props;
