@@ -25,21 +25,23 @@ import useDraggable from './DraggableHook';
 
 // Utils
 const createLayerMaker = (children, props) => (
+  color = '#79C7E3',
   data,
   name,
-  color = '#79C7E3',
+  opacity,
+  style,
   idx
 ) => (
   <children.type
-    key={name}
-    opacity={0.8}
-    data={data}
-    color={color}
     {...props[idx]}
     {...children.props}
+    key={name}
+    opacity={opacity}
+    data={data}
+    color={color}
+    style={{ ...style, ...props[idx].style }}
   />
 );
-
 const buildAdditionalFeatures = (isDraggable, isCrosshair, data, props) => {
   const additionalComponents = [];
   const additionalProps = [];
@@ -92,8 +94,9 @@ export default function ReactVisComponent({ children, ...props }) {
   } = buildAdditionalFeatures(isDraggable, isCrosshair, data, props);
 
   const makeLayer = createLayerMaker(children, customProps);
-  const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
-    makeLayer(layerData, name, color, idx)
+  const renderedLayers = data.map(
+    ({ color, data: layerData, name, opacity, style }, idx) =>
+      makeLayer(color, layerData, name, opacity, style, idx)
   );
   // If no data at all, return null component
   if (!data) {

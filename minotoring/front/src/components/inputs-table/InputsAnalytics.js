@@ -8,34 +8,36 @@ import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
 import Table from '../base-elements/Table';
 
 // Data Managers
+import SingleInputAnalyzer from '../analyzers/SingleInputAnalyzer';
 import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
 
 export default function InputsAnalytics(props) {
-  const { featureData, selectedInputs } = props;
+  const { featureData, selectedInputs: selectedIds } = props;
   const [selectedFeature, setSelectedFeature] = useState();
   const [highlightedIds, setHighlightedIds] = useState(new Set());
-  if (
-    isEmpty(featureData) ||
-    isEmpty(selectedInputs) ||
-    (isEmpty(selectedInputs.Training) && isEmpty(selectedInputs.Prediction))
-  ) {
+  const [selectedRowId, setSelectedRowId] = useState();
+  if (isEmpty(featureData) || isEmpty(selectedIds)) {
     return null;
   }
   return (
     <div className="card-container column">
       <div className="card">
         <Table
-          className="card"
-          {...buildInputTableProps(featureData, selectedInputs)}
+          {...buildInputTableProps(featureData, selectedIds)}
           onCellClicked={e => {
             setHighlightedIds(new Set([e.target.getAttribute('idrow')]));
             setSelectedFeature(e.target.getAttribute('idcol'));
+            setSelectedRowId(null);
           }}
-          onRowClicked={() => {
-            console.log('row');
+          onRowClicked={e => {
+            setSelectedRowId(e.target.textContent);
+            setSelectedFeature(null);
+            setHighlightedIds(new Set());
           }}
           onColClicked={e => {
             setSelectedFeature(e.target.textContent);
+            setHighlightedIds(new Set());
+            setSelectedRowId(null);
           }}
         />
       </div>
@@ -49,6 +51,12 @@ export default function InputsAnalytics(props) {
           />
         </div>
       ) : null}
+      <div className="card-margin">
+        <SingleInputAnalyzer
+          featureData={featureData}
+          selectedId={selectedRowId}
+        />
+      </div>
     </div>
   );
 }

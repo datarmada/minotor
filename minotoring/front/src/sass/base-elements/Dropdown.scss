@@ -1,6 +1,27 @@
+// Variables
+$icon-search-height: 20px;
+
 .dropdown {
   display: inline-block;
   position: relative;
+
+  .input-container {
+    position: relative;
+
+    .dropdown-name {
+      height: 50px;
+    }
+
+    .icon-search {
+      cursor: pointer;
+      pointer-events: none;
+      position: absolute;
+      top: calc(50% - #{$icon-search-height} / 2);
+      right: 15px;
+      height: $icon-search-height;
+      width: $icon-search-height;
+    }
+  }
 
   .dropdown-name,
   .dropdown-elt {
@@ -31,20 +52,22 @@
       border-radius: 0;
 
       &:first-child {
-        background-color: $dark-soft;
+        background-color: $grey-100;
       }
 
       &:hover {
         cursor: pointer;
-        background-color: $dark-soft;
+        background-color: $grey-100;
       }
 
       &.selected {
         & > span {
           color: white;
           padding: 3px 5px;
+          font-weight: 200;
           border-radius: $dropdown-radius;
-          background-color: black;
+          background-color: $primary;
+          letter-spacing: 1.2px;
         }
       }
     }

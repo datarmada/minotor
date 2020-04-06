@@ -13,7 +13,7 @@ class StatisticLibrary:
             name = statistic.__name__
         self.statistics[name] = statistic
 
-    def compute_all_statistics(self, values: List) -> Generator[Any, None, None]:
+    def compute_all_statistics(self, values: List[List]) -> Generator[Any, None, None]:
         for statistic_name in self.statistics:
             yield statistic_name, self._compute_statistic(values, statistic_name)
 

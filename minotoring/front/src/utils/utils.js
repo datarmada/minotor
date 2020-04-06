@@ -7,7 +7,7 @@ export const hist2reactVisData = ([Y, X]) =>
 
 // Mapping (key, value) of an object with a function
 export const mapObjectItems = (obj, func) =>
-  Object.entries(obj).map(([key, value]) => func(key, value));
+  Object.entries(obj).map(([key, value], idx) => func(key, value, idx));
 
 export const partition = (array, isValid) =>
   array.reduce(
@@ -30,4 +30,4 @@ export const partitionWithThresholds = (
 
 // Transform values into ReactVis Data
 export const values2reactVisData = values =>
-  values.map((value, idx) => ({ x: idx, y: value }));
+  mapObjectItems(values, (id, val, idx) => ({ x: idx, y: val, id }));

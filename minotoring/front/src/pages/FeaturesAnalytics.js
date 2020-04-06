@@ -15,7 +15,7 @@ const dataSetter = async (response, setFeatureData) => {
 
 export default function FeaturesAnalytics() {
   const [featureData, setFeatureData] = useState({});
-  const [selectedInputs, setSelectedInputs] = useState({});
+  const [selectedInputs, setSelectedInputs] = useState(new Set());
 
   useEffect(() => {
     const { fetchData, abortController } = buildGetFetcher('data', dataSetter);

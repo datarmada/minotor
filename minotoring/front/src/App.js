@@ -13,9 +13,7 @@ import { buildGetFetcher } from './utils/data-managers/DataFetcher';
 const dataSetter = async (response, setFeatureData, setSelectedInputs) => {
   const data = await response.json();
   setFeatureData(data);
-  setSelectedInputs({
-    Training: new Set(data.valuesInfos.training.ids.slice(0, 5)),
-  });
+  setSelectedInputs(new Set(data.valuesInfos.training.ids.slice(0, 5)));
 };
 
 const App = () => {
@@ -40,16 +38,6 @@ const App = () => {
           <Switch>
             <Route exact path="/features" component={FeaturesAnalytics} />
             <Route exact path="/predictions" component={PredictionAnalytics} />
-            <Route
-              exact
-              path="/inputs"
-              render={() => (
-                <InputsAnalytics
-                  featureData={featureData}
-                  selectedInputs={selectedInputs}
-                />
-              )}
-            />
           </Switch>
         </div>
       </Router>

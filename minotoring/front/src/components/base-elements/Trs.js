@@ -50,7 +50,7 @@ export default function Trs(props) {
           }}
           role="presentation"
         >
-          {row[col]}
+          {typeof row[col] === 'number' ? row[col].toFixed(2) : row[col]}
         </td>
       ))}
     </tr>
