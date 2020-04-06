@@ -8,6 +8,9 @@ To contribute via pull request, follow these steps:
 2. Write your code, tests and documentation, and format them with ESlint
 3. Create a pull request describing your changes
 
+For more detailed instructions on how to contribute code, check out these code [contributor guidelines](ContributionGuidelines.md).
+
+
 Your pull request will be reviewed by a maintainer, who will get back to you about any necessary changes or questions. You will also be asked to sign a [Contributor License Agreement](https://cla-assistant.io/).
 
 # Development Internals
