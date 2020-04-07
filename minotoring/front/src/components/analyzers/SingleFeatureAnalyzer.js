@@ -41,7 +41,7 @@ export default function SingleFeatureAnalyzer(props) {
           xTitle={singleFeatureName}
           yTitle="Occurence"
           data={areaPlotData}
-          title="Distribution of the data for this feature"
+          title={`Distribution of values for ${singleFeatureName}`}
         />
       </div>
       <div className="card no-margin">
@@ -51,7 +51,7 @@ export default function SingleFeatureAnalyzer(props) {
           yTitle={singleFeatureName}
           data={scatterPlotData}
           isCrosshair
-          title="Data points for this feature"
+          title="Data points"
         />
       </div>
       <div className="table-container card no-margin custom-scrollbar">

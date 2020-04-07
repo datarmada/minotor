@@ -24,6 +24,8 @@ import useCrosshair from './CrosshairHook';
 import useDraggable from './DraggableHook';
 
 // Utils
+const legendHeight = 60;
+
 const createLayerMaker = (children, props) => (
   color = '#79C7E3',
   data,
@@ -94,15 +96,14 @@ export default function ReactVisComponent({ children, ...props }) {
   const [titleMarginTop, setTitleMarginTop] = useState('0px');
 
   const titleRef = useRef();
-
   useLayoutEffect(() => {
-    titleRef.current && setTitleHeight(titleRef.current.offsetHeight);
     titleRef.current &&
-      setTitleMarginBottom(getComputedStyle(titleRef.current).marginBottom) &&
-      titleRef.current &&
-      setTitleMarginTop(getComputedStyle(titleRef.current).marginTop);
+      (setTitleHeight(titleRef.current.offsetHeight) ||
+        setTitleMarginBottom(getComputedStyle(titleRef.current).marginBottom) ||
+        setTitleMarginTop(getComputedStyle(titleRef.current).marginTop));
   }, []);
 
+  console.log(legendStyle);
   const {
     customProps,
     additionalComponents,
@@ -127,25 +128,27 @@ export default function ReactVisComponent({ children, ...props }) {
       <div
         className="plot"
         style={{
-          height: `calc(100% - ${titleHeight}px - ${titleMarginBottom} - ${titleMarginTop})`,
+          height: `calc(100% - (${titleHeight}px + ${titleMarginBottom} + ${titleMarginTop} + ${legendHeight}px))`,
         }}
       >
         <FlexibleXYPlot {...props} {...XYprops}>
           <VerticalGridLines />
           <HorizontalGridLines />
-          <DiscreteColorLegend
-            items={data.map(({ name, color }) => ({
-              title: name,
-              color,
-            }))}
-            style={legendStyle}
-          />
           {additionalComponents}
           {renderedLayers}
           <XAxis title={xTitle} style={axisStyle} />
           <YAxis title={yTitle} style={axisStyle} />
         </FlexibleXYPlot>
       </div>
+      <DiscreteColorLegend
+        items={data.map(({ name, color }) => ({
+          title: name,
+          color,
+        }))}
+        height={legendHeight}
+        orientation="horizontal"
+        // style={legendStyle}
+      />
     </div>
   );
 }
@@ -179,7 +182,7 @@ ReactVisComponent.defaultProps = {
   legendStyle: {
     position: 'absolute',
     top: 0,
-    right: 0,
+    right: -50,
   },
   isDraggable: false,
   isCrosshair: false,
