@@ -70,22 +70,7 @@ $card-padding: 20px;
   grid-template-rows: 3fr 1fr;
   grid-gap: $card-space-between;
 
-  .area-plot,
-  .scatter-plot {
-    min-width: 0;
-    padding: $card-padding;
-  }
-
-  .area-plot {
-    grid-column-start: 1;
-  }
-
-  .scatter-plot {
-    grid-column-start: 0;
-  }
-
   .table-container {
-    overflow-x: auto;
     grid-column: 1 / span 2;
   }
 }

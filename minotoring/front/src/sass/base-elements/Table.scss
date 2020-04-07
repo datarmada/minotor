@@ -1,5 +1,4 @@
 table.table {
-  overflow: hidden;
   width: 100%;
   border-spacing: 0;
   padding: 0;
@@ -27,6 +26,32 @@ table.table {
 
     th {
       background-color: $secondary;
+
+      .th-content {
+        display: flex;
+
+        .help-container {
+          display: flex;
+          align-items: center;
+          margin-left: 10px;
+
+          .help-popup {
+            position: absolute;
+            font-weight: normal;
+            font-size: 13px;
+            color: white;
+            border-radius: 5px;
+            background-color: $grey-700;
+            padding: 10px 15px;
+            z-index: 1;
+            width: 240px;
+            right: 15px;
+            top: 100%;
+            white-space: normal;
+            letter-spacing: 0.8px;
+          }
+        }
+      }
     }
   }
 

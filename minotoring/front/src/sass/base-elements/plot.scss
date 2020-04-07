@@ -1,0 +1,46 @@
+.plot-container {
+  width: 100%;
+  height: 100%;
+  padding: $card-padding;
+
+  .plot-title-container {
+    margin-bottom: 10px;
+  }
+
+  .plot {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// .area-plot, .scatter-plot and .projection-graph-container below are used as workaround to counter weird
+// space around svg plots.
+.area-plot {
+  .plot-title-container {
+    margin-left: 12px;
+  }
+
+  .rv-discrete-color-legend.horizontal {
+    margin-left: 10px;
+  }
+}
+
+.scatter-plot {
+  .plot-title-container {
+    margin-left: 20px;
+  }
+
+  .rv-discrete-color-legend.horizontal {
+    margin-left: 12px;
+  }
+}
+
+.projection-graph-container {
+  .plot-title-container {
+    margin-left: 15px;
+  }
+
+  .rv-discrete-color-legend.horizontal {
+    margin-left: 5px;
+  }
+}

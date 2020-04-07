@@ -43,6 +43,7 @@ export default function FeatureAnalyzer(props) {
           ])}
           isRowFiltrable
           onRowClicked={handleRowClicked}
+          rowDropdownName="Select features"
         />
       </div>
       <div className="feature-analyzer-viz-container card-margin">
