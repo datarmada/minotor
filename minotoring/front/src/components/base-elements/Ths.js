@@ -8,7 +8,12 @@ import {
   string,
 } from 'prop-types';
 import React from 'react';
+
+// Components
 import HelpPopUp from './HelpPopUp';
+
+// SVGs
+import { ReactComponent as ArrowDown } from '../../img/arrow-down.svg';
 
 // Utils
 const isColClickable = (col, onColClicked, notClickableCols, mainCol) =>
@@ -46,12 +51,18 @@ export default function Ths(props) {
           }}
         >
           <div className="th-content">
+            {/* col content */}
             {verboseColNames && verboseColNames[col]
               ? verboseColNames[col]
               : col}
+
+            {/* HelpPopUp */}
             {colHints && colHints[col] ? (
               <HelpPopUp hint={colHints[col]} />
             ) : null}
+
+            {/* Arrow to show col is clickable */}
+            {isColClickableWrapped(col) ? <ArrowDown /> : null}
           </div>
         </th>
       ))}

@@ -29,11 +29,25 @@ table.table {
 
       .th-content {
         display: flex;
+        align-items: center;
+
+        svg {
+          pointer-events: none;
+          margin-left: 5px;
+          width: 25px;
+          height: 25px;
+        }
 
         .help-container {
           display: flex;
           align-items: center;
-          margin-left: 10px;
+          margin-left: 7px;
+
+          svg {
+            width: 20px;
+            height: 20px;
+            margin-left: 0;
+          }
 
           .help-popup {
             position: absolute;
