@@ -32,7 +32,7 @@ $ minotor run
 
 `minotor run` launches the Minotor dashboard, where you can monitor your data and inspect differences between train and prod.
 
-You can now go to http://localhost:3000 in your favorite browser and play with Minotor !
+You can now go to http://localhost:8888 in your favorite browser and play with Minotor !
 
 #### After completing installation, learn how to monitor you own project:
 
