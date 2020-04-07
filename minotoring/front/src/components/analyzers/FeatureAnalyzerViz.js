@@ -12,7 +12,7 @@ export default function FeatureAnalyzerViz(props) {
       <div className="no-feature">
         <div className="card-container">
           <div className="no-feature-selected card">
-            <p>Select one or several features to analyze them</p>
+            <p>Click on one or several features to analyze them</p>
           </div>
         </div>
       </div>

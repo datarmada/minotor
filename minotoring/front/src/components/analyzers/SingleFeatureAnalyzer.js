@@ -35,21 +35,23 @@ export default function SingleFeatureAnalyzer(props) {
   );
   return (
     <div className="single-feature-analyzer">
-      <div className="area-plot card no-margin">
+      <div className="card no-margin area-plot">
         <AreaPlot
           key="Title of area plot"
           xTitle={singleFeatureName}
           yTitle="Occurence"
           data={areaPlotData}
+          title={`Distribution of values for ${singleFeatureName}`}
         />
       </div>
-      <div className="scatter-plot card no-margin">
+      <div className="card no-margin scatter-plot">
         <ScatterPlot
           key="Title of scatter plot"
           xTitle="Order of appearance"
           yTitle={singleFeatureName}
           data={scatterPlotData}
           isCrosshair
+          title="Data points"
         />
       </div>
       <div className="table-container card no-margin custom-scrollbar">
