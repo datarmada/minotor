@@ -81,8 +81,12 @@ table.table {
 
   .hovered {
     cursor: pointer;
-    box-shadow: $table-box-shadow-hover;
-    background-color: $primary-soft;
+    background-color: $grey-400;
+    &:not(th) {
+      box-shadow: $table-box-shadow-hover;
+      color: inherit;
+      background-color: $primary-soft;
+    }
   }
 }
 div.table-control {
