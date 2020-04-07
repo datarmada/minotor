@@ -71,6 +71,8 @@ export default function ProjectionGraph(props) {
       isCrosshair={false}
       {...props}
       onHighlightedPoints={onSelectedPoints}
+      title="Features projected with T-SNE"
+      description="Select points for individual analysis"
     />
   );
 }

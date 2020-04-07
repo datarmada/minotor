@@ -79,6 +79,7 @@ const buildAdditionalFeatures = (isDraggable, isCrosshair, data, props) => {
 export default function ReactVisComponent({ children, ...props }) {
   const {
     data,
+    description,
     xTitle,
     yTitle,
     axisStyle,
@@ -88,12 +89,18 @@ export default function ReactVisComponent({ children, ...props }) {
     title,
   } = props;
 
-  const [titleHeight, setTitleHeight] = useState();
+  const [titleHeight, setTitleHeight] = useState(0);
+  const [titleMarginBottom, setTitleMarginBottom] = useState('0px');
+  const [titleMarginTop, setTitleMarginTop] = useState('0px');
 
   const titleRef = useRef();
 
   useLayoutEffect(() => {
     titleRef.current && setTitleHeight(titleRef.current.offsetHeight);
+    titleRef.current &&
+      setTitleMarginBottom(getComputedStyle(titleRef.current).marginBottom) &&
+      titleRef.current &&
+      setTitleMarginTop(getComputedStyle(titleRef.current).marginTop);
   }, []);
 
   const {
@@ -113,8 +120,16 @@ export default function ReactVisComponent({ children, ...props }) {
   }
   return (
     <div className="plot-container">
-      <h3 ref={titleRef}>{title}</h3>
-      <div className="plot" style={{ height: `calc(100% - ${titleHeight}px)` }}>
+      <div ref={titleRef} className="plot-title-container">
+        <h3 className="plot-title">{title}</h3>
+        <p>{description}</p>
+      </div>
+      <div
+        className="plot"
+        style={{
+          height: `calc(100% - ${titleHeight}px - ${titleMarginBottom} - ${titleMarginTop})`,
+        }}
+      >
         <FlexibleXYPlot {...props} {...XYprops}>
           <VerticalGridLines />
           <HorizontalGridLines />
@@ -138,6 +153,7 @@ export default function ReactVisComponent({ children, ...props }) {
 ReactVisComponent.propTypes = {
   children: object.isRequired, // eslint-disable-line
   data: arrayOf(object).isRequired,
+  description: string,
   xTitle: string,
   yTitle: string,
   width: number, // eslint-disable-line
@@ -153,6 +169,7 @@ ReactVisComponent.propTypes = {
 ReactVisComponent.defaultProps = {
   xTitle: '',
   yTitle: '',
+  description: '',
   axisStyle: {
     title: {
       fontWeight: 900,
