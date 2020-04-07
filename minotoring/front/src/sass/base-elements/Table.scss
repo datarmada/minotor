@@ -1,6 +1,4 @@
 table.table {
-  overflow-x: hidden;
-  overflow-y: visible;
   width: 100%;
   border-spacing: 0;
   padding: 0;
@@ -49,7 +47,6 @@ table.table {
             width: 240px;
             right: 15px;
             top: 100%;
-            text-align: left;
             white-space: normal;
             letter-spacing: 0.8px;
           }
