@@ -1,4 +1,4 @@
-import { shape, object, instanceOf, string } from 'prop-types';
+import { shape, object, string } from 'prop-types';
 import React from 'react';
 
 import { isEmpty } from 'lodash';
@@ -18,7 +18,7 @@ export default function SingleInputAnalyzer(props) {
   }
   return (
     <div className="single-input-analyzer">
-      <div className="no-margin custom-scrollbar card table-container">
+      <div className="no-margin card table-container">
         <Table {...buildStatisticsTableProps(featureData, selectedId)} />
       </div>
       <div className="graphs-grid">

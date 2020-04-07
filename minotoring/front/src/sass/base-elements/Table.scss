@@ -19,8 +19,18 @@ table.table {
     th {
       padding: 10px 20px;
       position: relative;
-      &:first-child {
+
+      &:first-child > span {
+        display: flex;
+        align-items: center;
         font-weight: bold;
+        white-space: nowrap;
+
+        svg {
+          margin-left: 5px;
+          width: 25px;
+          height: 25px;
+        }
       }
     }
 
