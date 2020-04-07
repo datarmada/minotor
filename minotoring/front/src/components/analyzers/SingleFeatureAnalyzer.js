@@ -35,7 +35,7 @@ export default function SingleFeatureAnalyzer(props) {
   );
   return (
     <div className="single-feature-analyzer">
-      <div className="card no-margin">
+      <div className="card no-margin area-plot">
         <AreaPlot
           key="Title of area plot"
           xTitle={singleFeatureName}
@@ -44,7 +44,7 @@ export default function SingleFeatureAnalyzer(props) {
           title={`Distribution of values for ${singleFeatureName}`}
         />
       </div>
-      <div className="card no-margin">
+      <div className="card no-margin scatter-plot">
         <ScatterPlot
           key="Title of scatter plot"
           xTitle="Order of appearance"

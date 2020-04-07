@@ -85,7 +85,6 @@ export default function ReactVisComponent({ children, ...props }) {
     xTitle,
     yTitle,
     axisStyle,
-    legendStyle,
     isDraggable,
     isCrosshair,
     title,
@@ -103,7 +102,6 @@ export default function ReactVisComponent({ children, ...props }) {
         setTitleMarginTop(getComputedStyle(titleRef.current).marginTop));
   }, []);
 
-  console.log(legendStyle);
   const {
     customProps,
     additionalComponents,
@@ -147,7 +145,6 @@ export default function ReactVisComponent({ children, ...props }) {
         }))}
         height={legendHeight}
         orientation="horizontal"
-        // style={legendStyle}
       />
     </div>
   );
@@ -162,7 +159,6 @@ ReactVisComponent.propTypes = {
   width: number, // eslint-disable-line
   height: number, // eslint-disable-line
   axisStyle: objectOf(oneOfType([object, string, number])),
-  legendStyle: objectOf(oneOfType([string, number])),
   isDraggable: bool,
   isCrosshair: bool,
   highlightedIdxCallback: func,
@@ -178,11 +174,6 @@ ReactVisComponent.defaultProps = {
       fontWeight: 900,
       fontSize: '16px',
     },
-  },
-  legendStyle: {
-    position: 'absolute',
-    top: 0,
-    right: -50,
   },
   isDraggable: false,
   isCrosshair: false,

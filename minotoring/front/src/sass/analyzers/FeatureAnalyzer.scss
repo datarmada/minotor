@@ -71,7 +71,6 @@ $card-padding: 20px;
   grid-gap: $card-space-between;
 
   .table-container {
-    overflow-x: auto;
     grid-column: 1 / span 2;
   }
 }
