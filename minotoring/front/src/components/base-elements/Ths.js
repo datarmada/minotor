@@ -52,9 +52,11 @@ export default function Ths(props) {
         >
           <div className="th-content">
             {/* col content */}
-            {verboseColNames && verboseColNames[col]
-              ? verboseColNames[col]
-              : col}
+            <span>
+              {verboseColNames && verboseColNames[col]
+                ? verboseColNames[col]
+                : col}
+            </span>
 
             {/* HelpPopUp */}
             {colHints && colHints[col] ? (
