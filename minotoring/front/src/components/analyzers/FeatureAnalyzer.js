@@ -41,10 +41,6 @@ export default function FeatureAnalyzer(props) {
             'featureName',
             'KLDivergence',
           ])}
-          colHints={{
-            KLDivergence:
-              'Kullback-Leibner divergence between prediction and training data. It measures how much the prediction data differs from the training.',
-          }}
           isRowFiltrable
           onRowClicked={handleRowClicked}
           rowDropdownName="Select features"

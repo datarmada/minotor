@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { string } from 'prop-types';
 import { ReactComponent as Help } from '../../img/help.svg';
 
 export default function HelpPopUp(props) {
@@ -18,10 +19,14 @@ export default function HelpPopUp(props) {
     >
       <Help />
       {displayHint ? (
-        <div style={{ display: displayHint }} className="help-popup">
+        <p style={{ display: displayHint }} className="help-popup">
           {hint}
-        </div>
+        </p>
       ) : null}
     </div>
   );
 }
+
+HelpPopUp.propTypes = {
+  hint: string.isRequired,
+};

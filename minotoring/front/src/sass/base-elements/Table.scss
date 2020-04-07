@@ -1,5 +1,5 @@
 table.table {
-  overflow: hidden;
+  overflow-x: hidden;
   width: 100%;
   border-spacing: 0;
   padding: 0;
@@ -29,8 +29,11 @@ table.table {
       background-color: $secondary;
       .th-content{
         display: flex;
-        .help-container{
-          position: relative;
+        align-items: center;
+        .help-container{      
+          display: flex;
+          align-items: center; 
+          margin-left: 5px;   
           .help-popup{
             position: absolute;
             font-size: 10px;
@@ -39,8 +42,11 @@ table.table {
             background-color: $grey-700;
             padding: 5px 10px;
             z-index: 1;
-            top: 0px;
-            left: 0px
+            width: 200px;
+            left: -50px;
+            top: 35px;
+            text-align: center;
+            white-space: normal;
           }
         }
       }

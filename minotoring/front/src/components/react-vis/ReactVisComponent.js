@@ -8,7 +8,7 @@ import {
   number,
   string,
 } from 'prop-types';
-import React from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 
 import {
   DiscreteColorLegend,
@@ -85,7 +85,16 @@ export default function ReactVisComponent({ children, ...props }) {
     legendStyle,
     isDraggable,
     isCrosshair,
+    title,
   } = props;
+
+  const [titleHeight, setTitleHeight] = useState();
+
+  const titleRef = useRef();
+
+  useLayoutEffect(() => {
+    titleRef.current && setTitleHeight(titleRef.current.offsetHeight);
+  }, []);
 
   const {
     customProps,
@@ -103,21 +112,26 @@ export default function ReactVisComponent({ children, ...props }) {
     return null;
   }
   return (
-    <FlexibleXYPlot {...props} {...XYprops}>
-      <VerticalGridLines />
-      <HorizontalGridLines />
-      <DiscreteColorLegend
-        items={data.map(({ name, color }) => ({
-          title: name,
-          color,
-        }))}
-        style={legendStyle}
-      />
-      {additionalComponents}
-      {renderedLayers}
-      <XAxis title={xTitle} style={axisStyle} />
-      <YAxis title={yTitle} style={axisStyle} />
-    </FlexibleXYPlot>
+    <div className="plot-container">
+      <h3 ref={titleRef}>{title}</h3>
+      <div className="plot" style={{ height: `calc(100% - ${titleHeight}px)` }}>
+        <FlexibleXYPlot {...props} {...XYprops}>
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          <DiscreteColorLegend
+            items={data.map(({ name, color }) => ({
+              title: name,
+              color,
+            }))}
+            style={legendStyle}
+          />
+          {additionalComponents}
+          {renderedLayers}
+          <XAxis title={xTitle} style={axisStyle} />
+          <YAxis title={yTitle} style={axisStyle} />
+        </FlexibleXYPlot>
+      </div>
+    </div>
   );
 }
 
@@ -133,6 +147,7 @@ ReactVisComponent.propTypes = {
   isDraggable: bool,
   isCrosshair: bool,
   highlightedIdxCallback: func,
+  title: string,
 };
 
 ReactVisComponent.defaultProps = {
@@ -152,4 +167,5 @@ ReactVisComponent.defaultProps = {
   isDraggable: false,
   isCrosshair: false,
   highlightedIdxCallback: null,
+  title: '',
 };

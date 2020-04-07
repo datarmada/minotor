@@ -16,7 +16,7 @@ import Ths from './Ths';
 import Trs from './Trs';
 
 // Constants
-import { VERBOSE_COLUMN_NAMES } from '../../utils/constants';
+import { VERBOSE_COLUMN_NAMES, COLUMN_HINTS } from '../../utils/constants';
 
 // Utils
 const onOptionSelected = (setter, selected) => key =>
@@ -138,7 +138,7 @@ Table.propTypes = {
 
 Table.defaultProps = {
   colDropdownName: 'Select columns',
-  colHints: null,
+  colHints: COLUMN_HINTS,
   isColFiltrable: false,
   isRowFiltrable: false,
   nbColDisplayed: 6,
