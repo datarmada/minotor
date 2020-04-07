@@ -13,7 +13,7 @@
   }
 }
 
-// .area-plot and .scatter-plot below are used as workaround to counter weird
+// .area-plot, .scatter-plot and .projection-graph-container below are used as workaround to counter weird
 // space around svg plots.
 .area-plot {
   .plot-title-container {
@@ -32,5 +32,15 @@
 
   .rv-discrete-color-legend.horizontal {
     margin-left: 12px;
+  }
+}
+
+.projection-graph-container {
+  .plot-title-container {
+    margin-left: 15px;
+  }
+
+  .rv-discrete-color-legend.horizontal {
+    margin-left: 5px;
   }
 }
