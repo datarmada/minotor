@@ -19,23 +19,25 @@ export default function InputsAnalytics(props) {
   if (isEmpty(featureData) || isEmpty(selectedIds)) {
     return null;
   }
+  console.log(highlightedIds);
+  console.log(selectedFeature);
   return (
     <div className="card-container column">
       <div className="card">
         <Table
           {...buildInputTableProps(featureData, selectedIds)}
           onCellClicked={e => {
-            setHighlightedIds(new Set([e.target.getAttribute('idrow')]));
-            setSelectedFeature(e.target.getAttribute('idcol'));
+            setHighlightedIds(new Set([e.currentTarget.getAttribute('idrow')]));
+            setSelectedFeature(e.currentTarget.getAttribute('idcol'));
             setSelectedRowId(null);
           }}
           onRowClicked={e => {
-            setSelectedRowId(e.target.textContent);
+            setSelectedRowId(e.currentTarget.textContent);
             setSelectedFeature(null);
             setHighlightedIds(new Set());
           }}
           onColClicked={e => {
-            setSelectedFeature(e.target.textContent);
+            setSelectedFeature(e.currentTarget.textContent);
             setHighlightedIds(new Set());
             setSelectedRowId(null);
           }}
