@@ -133,7 +133,7 @@ export const buildScatterWithOutliersProps = (
   !isEmpty(highlightedPoints) &&
     layers.push({
       color: 'var(--charts-highlighting-bright-color)',
-      data: highlightedPoints.map(props => ({ props, size: 10 })),
+      data: highlightedPoints.map(props => ({ ...props, size: 10 })),
       name: 'Highlighted Points',
       opacity: 1,
     });
