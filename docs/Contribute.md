@@ -73,9 +73,9 @@ For now, we follow [pep8](https://www.python.org/dev/peps/pep-0008/) recommandat
 Feel free to use any tool you want to help you do that, even if it is not mentioned in the
 list below.
 
-#### VScode
+#### PyCharm
 
-**@Julien please fill this part**
+PyCharm already has the autopep85 formatter implemented. See your preferences for the related shortcut.
 
 #### Atom
 
