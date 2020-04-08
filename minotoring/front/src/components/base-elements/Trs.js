@@ -1,6 +1,9 @@
 import { arrayOf, func, instanceOf, object, string } from 'prop-types';
 import React from 'react';
 
+// SVGs
+import { ReactComponent as ArrowRight } from '../../img/arrow-right.svg';
+
 // Utils
 const isCellClickable = (col, onCellClicked, notClickableCols, mainCol) =>
   col !== mainCol && onCellClicked && !notClickableCols.has(col);
@@ -50,7 +53,10 @@ export default function Trs(props) {
           }}
           role="presentation"
         >
-          {typeof row[col] === 'number' ? row[col].toFixed(2) : row[col]}
+          <span>
+            {typeof row[col] === 'number' ? row[col].toFixed(2) : row[col]}
+            {isRowClickableWrapped(idxCol) ? <ArrowRight /> : null}
+          </span>
         </td>
       ))}
     </tr>

@@ -29,5 +29,10 @@ export const partitionWithThresholds = (
   );
 
 // Transform values into ReactVis Data
-export const values2reactVisData = values =>
-  mapObjectItems(values, (id, val, idx) => ({ x: idx, y: val, id }));
+export const values2reactVisData = (values, markSize = 4) =>
+  mapObjectItems(values, (id, val, idx) => ({
+    x: idx,
+    y: val,
+    id,
+    size: markSize,
+  }));
