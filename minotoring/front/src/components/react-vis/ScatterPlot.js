@@ -8,7 +8,7 @@ import ReactVisComponent from './ReactVisComponent';
 export default function ScatterPlot(props) {
   return (
     <ReactVisComponent {...props}>
-      <MarkSeries />
+      <MarkSeries sizeType="literal" />
     </ReactVisComponent>
   );
 }
