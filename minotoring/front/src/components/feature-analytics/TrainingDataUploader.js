@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { func } from 'prop-types';
 import { buildFilePostFetcher } from '../../utils/data-managers/DataFetcher';
 
 const errorCallback = (setError, updateTrainingData) => response => {
@@ -46,3 +47,7 @@ export default function TrainingDataUploader(props) {
     </div>
   );
 }
+
+TrainingDataUploader.propTypes = {
+  updateTrainingData: func.isRequired,
+};
