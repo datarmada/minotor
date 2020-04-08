@@ -75,7 +75,7 @@ list below.
 
 #### PyCharm
 
-PyCharm already has the autopep85 formatter implemented. See your preferences for the related shortcut.
+PyCharm already has the autopep8 formatter implemented. See your preferences for the related shortcut.
 
 #### Atom
 
