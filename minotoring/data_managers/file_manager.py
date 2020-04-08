@@ -32,7 +32,7 @@ class FileManager:
 
     def write_prediction_data(self, project_data: PredictionData):
         with self.prediction_json_path.open('w') as f:
-            json.dump(project_data.data, f)
+            json.dump(project_data.data, f, cls=ExtendedJSONEncoder)
 
 
 def _load_json(path: Path):

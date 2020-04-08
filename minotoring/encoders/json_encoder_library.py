@@ -1,5 +1,7 @@
 import itertools
+
 import numpy as np
+import pandas as pd
 
 NUMPY_ENCODINGS = [
     (np.integer, int),
@@ -7,4 +9,8 @@ NUMPY_ENCODINGS = [
     (np.ndarray, lambda obj: obj.tolist()),
 ]
 
-ENCODERS = NUMPY_ENCODINGS
+PANDAS_ENCODINGS = [
+    (pd.core.indexes.base.Index, lambda obj: obj.tolist())
+]
+
+ENCODERS = NUMPY_ENCODINGS + PANDAS_ENCODINGS
