@@ -75,18 +75,19 @@ $card-padding: 20px;
   }
 }
 
-.training-data-uploader{
-  p{
+.training-data-uploader {
+  margin-bottom: 40px;
+  p {
     margin-bottom: 20px;
   }
-  .input-label{
+  .input-label {
     background-color: $grey-700;
-    color:white;
+    color: white;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
   }
-  #input-file{	
+  #input-file {
     margin-bottom: 20px;
     width: 0.1px;
     height: 0.1px;
@@ -95,8 +96,8 @@ $card-padding: 20px;
     position: absolute;
     z-index: -1;
   }
-  .error-text{
-    margin-top:20px;
+  .error-text {
+    margin-top: 20px;
     color: red;
   }
 }
