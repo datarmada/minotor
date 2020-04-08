@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
 import { func } from 'prop-types';
+import React, { useState } from 'react';
+
+// Data Managers
 import { buildFilePostFetcher } from '../../utils/data-managers/DataFetcher';
 
+// Utils
 const errorCallback = (setError, updateTrainingData) => response => {
   if (response.status === 400) {
     setError(response.statusText);
