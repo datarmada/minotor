@@ -19,8 +19,18 @@ table.table {
     th {
       padding: 10px 20px;
       position: relative;
-      &:first-child {
+
+      &:first-child > span {
+        display: flex;
+        align-items: center;
         font-weight: bold;
+        white-space: nowrap;
+
+        svg {
+          margin-left: 5px;
+          width: 25px;
+          height: 25px;
+        }
       }
     }
 
@@ -29,11 +39,25 @@ table.table {
 
       .th-content {
         display: flex;
+        align-items: center;
+
+        svg {
+          pointer-events: none;
+          margin-left: 5px;
+          width: 25px;
+          height: 25px;
+        }
 
         .help-container {
           display: flex;
           align-items: center;
-          margin-left: 10px;
+          margin-left: 7px;
+
+          svg {
+            width: 20px;
+            height: 20px;
+            margin-left: 0;
+          }
 
           .help-popup {
             position: absolute;
@@ -57,8 +81,12 @@ table.table {
 
   .hovered {
     cursor: pointer;
-    box-shadow: $table-box-shadow-hover;
-    background-color: $primary-soft;
+    background-color: $grey-400;
+    &:not(th) {
+      box-shadow: $table-box-shadow-hover;
+      color: inherit;
+      background-color: $primary-soft;
+    }
   }
 }
 div.table-control {

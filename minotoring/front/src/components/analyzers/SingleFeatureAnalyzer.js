@@ -54,7 +54,7 @@ export default function SingleFeatureAnalyzer(props) {
           title="Data points"
         />
       </div>
-      <div className="table-container card no-margin custom-scrollbar">
+      <div className="table-container card no-margin">
         <Table
           {...buildFeatureTableProps(
             { [singleFeatureName]: singleFeatureData },

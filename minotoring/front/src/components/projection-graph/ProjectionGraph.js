@@ -55,13 +55,13 @@ export default function ProjectionGraph(props) {
     <ScatterPlot
       data={[
         {
-          data: projectedTrainingData,
+          data: projectedTrainingData.map(dot => ({ ...dot, size: 4 })),
           name: 'Training',
           color: 'var(--charts-flat-color)',
           opacity: 0.8,
         },
         {
-          data: projectedPredictionData,
+          data: projectedPredictionData.map(dot => ({ ...dot, size: 4 })),
           name: 'Prediction',
           color: 'var(--charts-main-bright-color)',
           opacity: 0.8,
