@@ -5,6 +5,7 @@ from typing import Dict
 from minotoring.constants import DATA_DIR
 from minotoring.data_managers.data_containers.features_data_container import FeaturesDataContainer
 from minotoring.data_managers.prediction_data import PredictionData
+from minotoring.encoders.json_encoder import ExtendedJSONEncoder
 
 
 class FileManager:
@@ -22,7 +23,7 @@ class FileManager:
 
     def write_features_data(self, project_data: FeaturesDataContainer):
         with self.feature_json_path.open('w') as f:
-            json.dump(project_data.get_dict(), f)
+            json.dump(project_data.get_dict(), f, cls=ExtendedJSONEncoder)
 
     def get_prediction_data(self) -> PredictionData:
         return PredictionData(
