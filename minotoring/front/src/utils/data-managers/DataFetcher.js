@@ -28,14 +28,13 @@ export const buildJsonPostFetcher = (route, callback, body) => {
   };
 };
 
-export const buildFilePostFetcher = (route, callback, file) => {
+export const buildFilePostFetcher = (route, callback, body) => {
   const abortController = new AbortController();
   return {
     fetchData: buildBasicFetcher(
       {
         method: 'POST',
-        headers: { 'Content-Type': 'multipart/form-data' },
-        file,
+        body,
         signal: abortController.signal,
       },
       route,

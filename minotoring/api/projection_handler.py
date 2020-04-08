@@ -15,6 +15,8 @@ class ProjectionHandler(BaseRouteHandler):
             training_ids, prediction_ids, training_projection, prediction_projection = tsne_projector.project(
                 training_df, prediction_df)
             self.set_header('Content-Type', 'application/json')
+            print(training_projection)
+            print(prediction_projection)
             self.write({"training": {"values": training_projection, "ids": training_ids},
                         "prediction": {"values": prediction_projection, "ids": prediction_ids}})
             self.set_status(200)
