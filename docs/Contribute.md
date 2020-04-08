@@ -18,6 +18,13 @@ The project is divided in two parts: a Python backend handling the data and a Re
 
 ## Docker & docker-compose
 
+> #### **:warning: Warning :warning:**
+>
+> For now, this section has been tested for Ubuntu only. It seems that some problems
+> can occur on macOS, and maybe on Windows. But if you want to contribute it's not a big deal,
+> just scroll down a little bit more to the [Python](#Python) and [ReactJS](#ReactJS)
+> sections to learn how to manage them separately.
+
 ### Installing
 
 Simply install [Docker](https://docs.docker.com/install/) and [docker-compose](https://docs.docker.com/compose/install/) and you are good to go with the command:
