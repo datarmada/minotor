@@ -55,26 +55,28 @@ $card-padding: 20px;
   }
 }
 
-.no-feature, .other-feature {
+.no-feature,
+.other-feature {
   width: 100%;
   height: 100%;
 
   .card-container {
     width: 100%;
     height: 100%;
+  }
 
-    .no-feature-selected, .other-feature-selected {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      font-weight: 200;
-      background-color: $grey-100;
-      padding: 40px;
-      p{
-        text-align: center;
-      }
+  .no-feature-selected,
+  .other-feature-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-weight: 200;
+    background-color: $grey-100;
+    padding: 40px;
+    p {
+      text-align: center;
     }
   }
 }
