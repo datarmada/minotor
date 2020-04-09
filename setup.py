@@ -13,10 +13,18 @@ setuptools.setup(
     ],
     python_requires='>=3.7',
     install_requires=[
+        "requests==2.23.0",
+        "numpy==1.18.1",
+        "pandas==1.0.1",
         "tornado==6.0.4",
+        "scikit-learn==0.22.2",
+        "scipy==1.4.1",
     ],
     include_package_data=True,
     entry_points={
-        'console_scripts': ['minotoring=minotoring.run:runserver'],
+        'console_scripts': [
+            'minotoring-run=minotoring.run:runserver',
+            'minotoring-iris-example=minotoring.seeds.iris_seed:run'
+        ],
     },
 )

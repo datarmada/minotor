@@ -16,7 +16,7 @@ def predict(data):
     return data
 
 
-if __name__ == '__main__':
+def run():
     FILE_PATH = DATA_DIR / "feature_data.json"
     if os.path.exists(FILE_PATH):
         os.remove(FILE_PATH)
@@ -32,3 +32,7 @@ if __name__ == '__main__':
         lambda x: x*uniform(0.8, 1))
 
     predict(df)
+
+
+if __name__ == '__main__':
+    run()
