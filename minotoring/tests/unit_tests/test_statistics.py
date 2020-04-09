@@ -11,7 +11,7 @@ from minotoring.statistics.statistic_library import StatisticLibrary, crossed_st
 class TestStatistics(unittest.TestCase):
     def test_compute_statistic(self):
         project_data = FeatureTrainingPhaseContainer()
-        project_data.add_values([1, 2])
+        project_data.add_values({1: 1, 2: 2})
         statistic_library = StatisticLibrary()
         statistic_library.add_statistic(lambda x: x.tolist(), "identity")
         statistic_library.add_statistic(lambda x: sum(x), "sum")
@@ -21,7 +21,7 @@ class TestStatistics(unittest.TestCase):
 
     def test_compute_statistic_with_None(self):
         project_data = FeatureTrainingPhaseContainer()
-        project_data.add_values([1, None])
+        project_data.add_values({1: 1, 2: None})
         statistic_library = StatisticLibrary()
         statistic_library.add_statistic(np.nanmean, "mean")
         project_data.compute_statistics(statistic_library)
@@ -29,7 +29,7 @@ class TestStatistics(unittest.TestCase):
 
     def test_compute_statistic_with_str(self):
         project_data = FeatureTrainingPhaseContainer()
-        project_data.add_values(["test"])
+        project_data.add_values({1: "test"})
         statistic_library = StatisticLibrary()
         statistic_library.add_statistic(np.nanmean, "mean")
 
@@ -38,7 +38,7 @@ class TestStatistics(unittest.TestCase):
 
     def test_compute_crossed_statistic(self):
         project_data = SingleFeatureDataContainer(data_type=DataType.INT)
-        project_data.training_phase.add_values([1, 2])
-        project_data.prediction_phase.add_values([1, 2])
+        project_data.training_phase.add_values({1: 1, 2: 2})
+        project_data.prediction_phase.add_values({1: 1, 2: 2})
         project_data.compute_crossed_statistics(crossed_statistic_library)
         self.assertEqual(project_data.prediction_phase.statistics["KLDivergence"], 0)

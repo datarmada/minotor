@@ -1,12 +1,14 @@
-import PropTypes, { string } from 'prop-types';
+import { arrayOf, func, instanceOf, object, string } from 'prop-types';
 import React from 'react';
+
+// SVGs
+import { ReactComponent as ArrowRight } from '../../img/arrow-right.svg';
 
 // Utils
 const isCellClickable = (col, onCellClicked, notClickableCols, mainCol) =>
   col !== mainCol && onCellClicked && !notClickableCols.has(col);
 
 const isRowClickable = (idx, onRowClicked) => idx === 0 && onRowClicked;
-
 
 export default function Trs(props) {
   const {
@@ -44,6 +46,10 @@ export default function Trs(props) {
               e.currentTarget.classList.add('hovered');
             isRowClickableWrapped(idxCol) &&
               trsRef[idxRow].current.classList.add('hovered');
+            onRowClicked &&
+              !onCellClicked &&
+              !isRowClickableWrapped(idxCol) &&
+              trsRef[idxRow].current.classList.add('hovered');
           }}
           onMouseLeave={e => {
             e.currentTarget.classList.remove('hovered');
@@ -51,7 +57,10 @@ export default function Trs(props) {
           }}
           role="presentation"
         >
-          {row[col]}
+          <span>
+            {typeof row[col] === 'number' ? row[col].toFixed(2) : row[col]}
+            {isRowClickableWrapped(idxCol) ? <ArrowRight /> : null}
+          </span>
         </td>
       ))}
     </tr>
@@ -59,12 +68,12 @@ export default function Trs(props) {
 }
 
 Trs.propTypes = {
-  notClickableCols: PropTypes.instanceOf(Set),
-  columns: PropTypes.arrayOf(string).isRequired,
-  mainCol: PropTypes.string.isRequired,
-  onRowClicked: PropTypes.func,
-  rows: PropTypes.arrayOf(Object).isRequired,
-  onCellClicked: PropTypes.func,
+  notClickableCols: instanceOf(Set),
+  columns: arrayOf(string).isRequired,
+  mainCol: string.isRequired,
+  onRowClicked: func,
+  rows: arrayOf(object).isRequired,
+  onCellClicked: func,
 };
 
 Trs.defaultProps = {

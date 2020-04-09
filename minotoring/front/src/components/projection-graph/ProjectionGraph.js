@@ -1,8 +1,13 @@
+import { arrayOf, func, string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+
+// Components
 import ScatterPlot from '../react-vis/ScatterPlot';
+
+// Data Managers
 import { buildPostFetcher } from '../../utils/data-managers/DataFetcher';
 
+// Utils
 const handleFetchedData = async (
   response,
   setProjectedTrainingData,
@@ -49,22 +54,30 @@ export default function ProjectionGraph(props) {
   return (
     <ScatterPlot
       data={[
-        { data: projectedTrainingData, name: 'Training' },
         {
-          data: projectedPredictionData,
+          data: projectedTrainingData.map(dot => ({ ...dot, size: 4 })),
+          name: 'Training',
+          color: 'var(--charts-flat-color)',
+          opacity: 0.8,
+        },
+        {
+          data: projectedPredictionData.map(dot => ({ ...dot, size: 4 })),
           name: 'Prediction',
-          color: 'red',
+          color: 'var(--charts-main-bright-color)',
+          opacity: 0.8,
         },
       ]}
       isDraggable
       isCrosshair={false}
       {...props}
       onHighlightedPoints={onSelectedPoints}
+      title="Features projected with T-SNE algorithm"
+      description="Select points for a detailed analysis"
     />
   );
 }
 
 ProjectionGraph.propTypes = {
-  featureNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSelectedPoints: PropTypes.func.isRequired,
+  featureNames: arrayOf(string).isRequired,
+  onSelectedPoints: func.isRequired,
 };

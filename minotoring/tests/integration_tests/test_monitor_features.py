@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 from minotoring.decorators.feature_monitoring import monitor_training_features, monitor_prediction_features
-
+import os
 
 class TestMonitorFeatures(unittest.TestCase):
     def test_monitor_training_features(self):

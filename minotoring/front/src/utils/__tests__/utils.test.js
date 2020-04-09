@@ -1,8 +1,8 @@
 import {
-  mapObjectItems,
   hist2reactVisData,
-  values2reactVisData,
+  mapObjectItems,
   partitionWithThresholds,
+  values2reactVisData,
 } from '../utils';
 
 it('mapObjectItems takes an object and map (key,val) to a function', () => {
@@ -53,10 +53,10 @@ it('hist2reactVisData takes feature hist attribute and returns legit react-vis d
 });
 
 it('values2reactVisData takes feature values attribute and returns legit react-vis data', () => {
-  const values = [42, 43, 44];
+  const values = { 1: 42, 2: 43, 3: 44 };
   expect(values2reactVisData(values)).toEqual([
-    { x: 0, y: 42 },
-    { x: 1, y: 43 },
-    { x: 2, y: 44 },
+    { x: 0, y: 42, id: '1', size: 4 },
+    { x: 1, y: 43, id: '2', size: 4 },
+    { x: 2, y: 44, id: '3', size: 4 },
   ]);
 });

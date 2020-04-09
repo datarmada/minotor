@@ -6,17 +6,20 @@
 @import '../../node_modules/react-vis/dist/style.css';
 
 // Main
+@import 'main/variables'; // has to be first to be used in other files
 @import 'main/fonts';
 @import 'main/reset';
-@import 'main/variables';
 
 // Analyzers
 @import 'analyzers/FeatureAnalyzer';
+@import 'analyzers/InputAnalyzer';
 
 // Base Elements
+@import 'base-elements/cards';
 @import 'base-elements/Dropdown';
 @import 'base-elements/Table';
 @import 'base-elements/titles';
+@import 'base-elements/plot.scss';
 
 // Pages
 @import 'pages/default';
@@ -26,5 +29,15 @@
 
 // Very unusual stuff - create a file for this had no sense (at the time)
 #main-switch {
+  transition: margin-left $nav-transition-duration ease;
   margin-left: $nav-width;
+
+  &.wide {
+    margin-left: $nav-width-narrow;
+  }
+}
+
+body {
+  color: $grey-700;
+  background-color: $body-background-color;
 }

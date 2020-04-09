@@ -1,4 +1,4 @@
-import PropTypes, { string } from 'prop-types';
+import { arrayOf, func, shape, string } from 'prop-types';
 import React from 'react';
 
 // Components
@@ -21,15 +21,15 @@ export default function TableControl(props) {
 }
 
 const DROPDOWN_SHAPE = {
-  name: PropTypes.string,
-  onOptionSelected: PropTypes.func,
-  options: PropTypes.arrayOf(string),
-  selected: PropTypes.arrayOf(string),
+  name: string,
+  onOptionSelected: func,
+  options: arrayOf(string),
+  selected: arrayOf(string),
 };
 
 TableControl.propTypes = {
-  colDropdown: PropTypes.shape(DROPDOWN_SHAPE),
-  rowDropdown: PropTypes.shape(DROPDOWN_SHAPE),
+  colDropdown: shape(DROPDOWN_SHAPE),
+  rowDropdown: shape(DROPDOWN_SHAPE),
 };
 
 TableControl.defaultProps = {

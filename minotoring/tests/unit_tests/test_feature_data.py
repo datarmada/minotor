@@ -20,7 +20,8 @@ class TestProjectData(unittest.TestCase):
                 "prediction": {
                     "dates": [],
                     "ids": []
-                }
+                },
+                "id2phase": {}
             }
         })
 
@@ -30,23 +31,23 @@ class TestProjectData(unittest.TestCase):
         self.assertDictEqual(project_data.get_dict()["features"], {
             "feature_test": {
                 "type": "int",
-                "training": {"values": []},
-                "prediction": {"values": []}
+                "training": {"values": {}},
+                "prediction": {"values": {}}
             }
         })
 
     def test_add_feature_values_predict(self):
         project_data = FeaturePredictionPhaseContainer()
 
-        project_data.add_values([1, 2])
-        self.assertListEqual(project_data.values, [1, 2])
-        project_data.add_values([1, 2])
-        self.assertListEqual(project_data.values, [1, 2, 1, 2])
+        project_data.add_values({1: 1, 2: 2})
+        self.assertDictEqual(project_data.values, {1: 1, 2: 2})
+        project_data.add_values({3: 1, 4: 2})
+        self.assertDictEqual(project_data.values, {1: 1, 2: 2, 3: 1, 4: 2})
 
     def test_add_feature_values_train(self):
         project_data = FeatureTrainingPhaseContainer()
 
-        project_data.add_values([1, 2])
-        self.assertListEqual(project_data.values, [1, 2])
-        project_data.add_values([1, 2])
-        self.assertListEqual(project_data.values, [1, 2])
+        project_data.add_values({1: 1, 2: 2})
+        self.assertDictEqual(project_data.values, {1: 1, 2: 2})
+        project_data.add_values({1: 1, 2: 2})
+        self.assertDictEqual(project_data.values, {1: 1, 2: 2})

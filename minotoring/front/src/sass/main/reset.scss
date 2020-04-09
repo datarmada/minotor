@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Roboto;
+  font-family: Poppins;
 }
 
 a,
@@ -14,5 +14,28 @@ a:visited {
 ul {
   li {
     list-style-type: none;
+  }
+}
+
+body * {
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: $primary-light-greyish;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border-color: transparent;
   }
 }

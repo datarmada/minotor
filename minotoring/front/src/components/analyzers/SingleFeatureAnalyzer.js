@@ -16,7 +16,6 @@ import {
 } from '../../utils/data-managers/ReactVisDataManager';
 import { buildFeatureTableProps } from '../../utils/data-managers/TableDataManagers';
 
-
 export default function SingleFeatureAnalyzer(props) {
   const {
     singleFeatureData,
@@ -24,32 +23,38 @@ export default function SingleFeatureAnalyzer(props) {
     highlightedIds,
     valuesInfos,
   } = props;
-  const areaPlotData = buildHistProps(singleFeatureData);
+  const areaPlotData = buildHistProps(
+    singleFeatureData,
+    valuesInfos,
+    highlightedIds
+  );
   const scatterPlotData = buildScatterWithOutliersProps(
     singleFeatureData,
     valuesInfos,
     highlightedIds
   );
   return (
-    <div className="feature-multi-graph-container">
-      <div className="area-plot">
+    <div className="single-feature-analyzer">
+      <div className="card no-margin area-plot">
         <AreaPlot
           key="Title of area plot"
           xTitle={singleFeatureName}
           yTitle="Occurence"
           data={areaPlotData}
+          title={`Distribution of values for ${singleFeatureName}`}
         />
       </div>
-      <div className="scatter-plot">
+      <div className="card no-margin scatter-plot">
         <ScatterPlot
           key="Title of scatter plot"
           xTitle="Order of appearance"
           yTitle={singleFeatureName}
           data={scatterPlotData}
           isCrosshair
+          title="Data points"
         />
       </div>
-      <div className="table-container">
+      <div className="table-container card no-margin">
         <Table
           {...buildFeatureTableProps(
             { [singleFeatureName]: singleFeatureData },

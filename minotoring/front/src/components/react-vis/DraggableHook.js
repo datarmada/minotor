@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+
 import { Highlight } from 'react-vis';
 
+// Utils
 const createPropsBuilder = (highlightPoint, highlighting) => (
   color = '#79C7E3'
 ) => ({
@@ -19,21 +21,10 @@ const createPointHighlighter = filter => d => {
 };
 
 const getHighlightedIds = (highlightPoint, data) =>
-  data.reduce(
-    (obj, { data: layerData, name }) => ({
-      [name]: new Set(
-        layerData.reduce(
-          (highlightedPointIds, value) =>
-            highlightPoint(value)
-              ? [value.id, ...highlightedPointIds]
-              : highlightedPointIds,
-          []
-        )
-      ),
-      ...obj,
-    }),
-    {}
-  );
+  data.reduce((set, { data: layerData }) => {
+    layerData.map(value => highlightPoint(value) && set.add(value.id));
+    return set;
+  }, new Set());
 
 export default function useDraggable(props) {
   const { data, onHighlightedPoints: highlightedIdsCallback } = props;

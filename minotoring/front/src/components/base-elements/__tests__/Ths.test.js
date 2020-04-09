@@ -1,8 +1,11 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+
+// Components
 import Ths from '../Ths';
 
+// Globals
 let container = null;
 
 beforeEach(() => {
@@ -39,12 +42,16 @@ it('Rendering clickable Ths', () => {
     cols[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
   expect(counter).toEqual(0);
-  expect(cols[0].textContent).toBe('col1');
+  expect(cols[0].querySelectorAll('.th-content span')[0].textContent).toBe(
+    'col1'
+  );
   act(() => {
     cols[1].dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
   expect(counter).toEqual(1);
-  expect(cols[1].textContent).toBe('col2');
+  expect(cols[1].querySelectorAll('.th-content span')[0].textContent).toBe(
+    'col2'
+  );
 });
 
 it('Rendering some clickable cols', () => {

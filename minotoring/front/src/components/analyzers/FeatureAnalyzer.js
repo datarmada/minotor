@@ -1,4 +1,4 @@
-import PropTypes, { object } from 'prop-types';
+import { object, shape, func } from 'prop-types';
 import React, { useState } from 'react';
 
 import { isEmpty } from 'lodash';
@@ -34,16 +34,19 @@ export default function FeatureAnalyzer(props) {
   };
 
   return (
-    <div className="feature-analyzer" style={{ padding: '30px' }}>
-      <Table
-        {...buildFeatureTableProps(featureData.features, [
-          'featureName',
-          'KLDivergence',
-        ])}
-        isRowFiltrable
-        onRowClicked={handleRowClicked}
-      />
-      <div className="projection-graph-container">
+    <div className="feature-analyzer card-container">
+      <div className="card table">
+        <Table
+          {...buildFeatureTableProps(featureData.features, [
+            'featureName',
+            'KLDivergence',
+          ])}
+          isRowFiltrable
+          onRowClicked={handleRowClicked}
+          rowDropdownName="Select features"
+        />
+      </div>
+      <div className="feature-analyzer-viz-container card-margin">
         <FeatureAnalyzerViz
           {...{
             featureData,
@@ -57,9 +60,9 @@ export default function FeatureAnalyzer(props) {
 }
 
 FeatureAnalyzer.propTypes = {
-  featureData: PropTypes.shape({
+  featureData: shape({
     features: object,
     values_infos: object,
   }).isRequired,
-  onSelectedPoints: PropTypes.func.isRequired,
+  onSelectedPoints: func.isRequired,
 };

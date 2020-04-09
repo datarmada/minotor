@@ -34,8 +34,15 @@ class ValuesInformations:
                                   prediction=ValuesInformationsPerPhase.from_json(data["prediction"]))
 
     def get_dict(self):
-        return {"training": self.training.get_dict(), "prediction": self.prediction.get_dict()}
-
+        return {
+            "training": self.training.get_dict(),
+            "prediction": self.prediction.get_dict(),
+            "id2phase": {
+                **{id: "training" for id in self.training.ids},
+                **{id: "prediction" for id in self.prediction.ids}
+            }
+        }
+    
     def add_ids(self, values_ids: List, is_training: bool):
         if is_training:
             self.training.ids.extend(values_ids)

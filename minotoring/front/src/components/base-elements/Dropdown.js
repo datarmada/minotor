@@ -1,8 +1,11 @@
-import PropTypes, { string } from 'prop-types';
+import { arrayOf, func, string } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 
 // Components
 import DropdownList from './DropdownList';
+
+// SVGs
+import { ReactComponent as Search } from '../../img/search.svg';
 
 // Utils
 const orderOptions = (options, query = '') => {
@@ -18,7 +21,7 @@ const orderOptions = (options, query = '') => {
   );
   return [...matched.sort(), ...others.sort()];
 };
-// className builders
+
 const buildDropdownClasses = active =>
   active ? 'dropdown active' : 'dropdown';
 
@@ -63,23 +66,26 @@ export default function Dropdown(props) {
 
   return (
     <div ref={mainDiv} className={buildDropdownClasses(active)}>
-      <input
-        className="dropdown-name"
-        onClick={unwrap}
-        onKeyPress={handleKeyPress}
-        onChange={handleQueryChange}
-        placeholder={name}
-      />
+      <div className="input-container">
+        <input
+          className="dropdown-name"
+          onClick={unwrap}
+          onKeyPress={handleKeyPress}
+          onChange={handleQueryChange}
+          placeholder={name}
+        />
+        <Search className="icon-search" />
+      </div>
       <DropdownList {...{ onOptionSelected, options, selected }} />
     </div>
   );
 }
 
 Dropdown.propTypes = {
-  name: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(string).isRequired,
-  onOptionSelected: PropTypes.func.isRequired,
-  selected: PropTypes.arrayOf(string),
+  name: string.isRequired,
+  options: arrayOf(string).isRequired,
+  onOptionSelected: func.isRequired,
+  selected: arrayOf(string),
 };
 
 Dropdown.defaultProps = {

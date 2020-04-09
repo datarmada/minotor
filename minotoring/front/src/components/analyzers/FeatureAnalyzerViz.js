@@ -1,4 +1,4 @@
-import PropTypes, { string } from 'prop-types';
+import { arrayOf, func, object, objectOf, string } from 'prop-types';
 import React from 'react';
 
 // Components
@@ -9,8 +9,12 @@ export default function FeatureAnalyzerViz(props) {
   const { featureData, onSelectedPoints, selectedFeatures } = props;
   if (selectedFeatures.length === 0) {
     return (
-      <div className="no-feature-selected">
-        <p>Select one or several features to analyze them</p>
+      <div className="no-feature">
+        <div className="card-container">
+          <div className="no-feature-selected card">
+            <p>Click on one or several features to analyze them</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -28,17 +32,21 @@ export default function FeatureAnalyzerViz(props) {
     );
   }
   return (
-    <ProjectionGraph
-      featureNames={selectedFeatures}
-      onSelectedPoints={onSelectedPoints}
-    />
+    <div className="projection-graph-container card no-margin">
+      <div className="clearfix">
+        <ProjectionGraph
+          featureNames={selectedFeatures}
+          onSelectedPoints={onSelectedPoints}
+        />
+      </div>
+    </div>
   );
 }
 
 FeatureAnalyzerViz.propTypes = {
-  featureData: PropTypes.objectOf(Object).isRequired,
-  selectedFeatures: PropTypes.arrayOf(string),
-  onSelectedPoints: PropTypes.func.isRequired,
+  featureData: objectOf(object).isRequired,
+  selectedFeatures: arrayOf(string),
+  onSelectedPoints: func.isRequired,
 };
 
 FeatureAnalyzerViz.defaultProps = {

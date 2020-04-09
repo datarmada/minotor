@@ -1,11 +1,56 @@
 //
 // Color
 //
-$light-grey: lighten(grey, 45%);
+// Grey Shades
+$black: #000000;
+$grey-1100: #0b1727;
+$grey-1000: #232e3c;
+$grey-900: #344050;
+$grey-800: #4d5969;
+$grey-700: #5e6e82;
+$grey-600: #748194;
+$grey-500: #9da9bb;
+$grey-400: #b6c1d2;
+$grey-300: #d8e2ef;
+$grey-200: #edf2f9;
+$grey-100: #f9fafd;
+$white: #ffffff;
+// Themes
+$primary: #4285f4;
+$secondary: $grey-300;
+$success: #4aa866;
+$info: #27bcfd;
+$warning: #e24b46;
+$danger: red;
+$light: #f9fafd;
+$dark: #0b1727;
+// Soft
+$primary-soft: lighten($primary, 35%);
+$secondary-soft: lighten($secondary, 35%);
+$sucess-soft: #e0faef;
+$info-soft: #e5f7ff;
+$warning-soft: #fae1e0;
+$danger-soft: #f4dcde;
+$light-soft: #fefeff;
+$dark-soft: #e2e3e5;
+// Specials
+$primary-darker: #0e3590;
+$primary-light-greyish: #bdc7e0;
+$primary-medium: #6369d1;
+$sage: #b6c991;
+$body-background-color: white;
+// CSS Variables
+:root {
+  --charts-main-bright-color: #{$primary};
+  --charts-highlighting-bright-color: #{$success};
+  --charts-flat-color: #{$primary-light-greyish};
+  --charts-outliers-color: #{$danger};
+}
+
 //
 // Pages
 //
-$default-padding-page: 30px 40px;
+$default-padding-page: 30px 80px 30px 40px;
 // featuresAnalytics
 $feature-analytics: $default-padding-page;
 
@@ -13,14 +58,19 @@ $feature-analytics: $default-padding-page;
 // Components
 //
 // base-elements
+// Card
+$card-space-between: 25px;
 // Dropdown
-$dropdown-border: solid 1px black;
+$dropdown-border: solid 1px $grey-200;
 $dropdown-padding: 10px 15px;
-$dropdown-radius: 3px;
+$dropdown-radius: 5px;
 // Table
 $table-box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
 $table-box-shadow-hover: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
   0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-
 // Navbar
-$nav-width: 120px;
+$logo-height: 40px;
+$logo-width: 40px;
+$nav-width: 280px;
+$nav-width-narrow: 90px; // unused by the Navbar, but used to tweak margin-left of pages
+$nav-transition-duration: 300ms;

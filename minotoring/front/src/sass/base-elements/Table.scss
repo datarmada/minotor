@@ -1,5 +1,4 @@
 table.table {
-  overflow: hidden;
   width: 100%;
   border-spacing: 0;
   padding: 0;
@@ -13,33 +12,105 @@ table.table {
     position: relative;
 
     &.selected {
-      background-color: rgb(121, 199, 227);
+      background-color: $primary-soft;
     }
 
     td,
     th {
       padding: 10px 20px;
       position: relative;
-      &:first-child {
+
+      &:first-child > span {
+        display: flex;
+        align-items: center;
         font-weight: bold;
+        white-space: nowrap;
+
+        svg {
+          margin-left: 5px;
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+
+    th {
+      background-color: $secondary;
+
+      .th-content {
+        display: flex;
+        align-items: center;
+
+        svg {
+          pointer-events: none;
+          margin-left: 5px;
+          width: 25px;
+          height: 25px;
+        }
+
+        .help-container {
+          display: flex;
+          align-items: center;
+          margin-left: 7px;
+
+          svg {
+            width: 20px;
+            height: 20px;
+            margin-left: 0;
+          }
+
+          .help-popup {
+            position: absolute;
+            font-weight: normal;
+            font-size: 13px;
+            color: white;
+            border-radius: 5px;
+            background-color: $grey-700;
+            padding: 10px 15px;
+            z-index: 1;
+            width: 240px;
+            right: 15px;
+            top: 100%;
+            white-space: normal;
+            letter-spacing: 0.8px;
+          }
+        }
       }
     }
   }
 
-  .hovered{
+  .hovered {
     cursor: pointer;
-    box-shadow: $table-box-shadow-hover;
-    background-color: rgba(242, 245, 245, 0.8);
+    background-color: $grey-400;
+    &:not(th) {
+      box-shadow: $table-box-shadow-hover;
+      color: inherit;
+      background-color: $primary-soft;
+    }
   }
 }
 div.table-control {
   display: flex;
-  flex-direction: row-reverse;
-  background-color: $light-grey;
-  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
   box-shadow: $table-box-shadow;
 
-  & > div {
-    margin: 0 15px;
+  .dropdown {
+    width: 100%;
+    .dropdown-name {
+      font-size: 16px;
+      border-radius: 0;
+      width: 100%;
+      border: none;
+      padding: 10px 20px;
+      &::placeholder {
+        font-size: 16px;
+      }
+    }
+    .dropdown-elt-container {
+      border-radius: 0;
+      border: none;
+    }
   }
 }

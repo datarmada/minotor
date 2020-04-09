@@ -1,5 +1,15 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import {
+  arrayOf,
+  bool,
+  func,
+  object,
+  objectOf,
+  oneOfType,
+  number,
+  string,
+} from 'prop-types';
+import React, { useState, useLayoutEffect, useRef } from 'react';
+
 import {
   DiscreteColorLegend,
   FlexibleXYPlot,
@@ -8,26 +18,32 @@ import {
   XAxis,
   YAxis,
 } from 'react-vis';
-import { isEmpty } from 'lodash';
+
+// Hooks
 import useCrosshair from './CrosshairHook';
 import useDraggable from './DraggableHook';
 
+// Utils
+const legendHeight = 60;
+
 const createLayerMaker = (children, props) => (
+  color = '#79C7E3',
   data,
   name,
-  color = '#79C7E3',
+  opacity,
+  style,
   idx
 ) => (
   <children.type
-    key={name}
-    opacity={0.8}
-    data={data}
-    color={color}
     {...props[idx]}
     {...children.props}
+    key={name}
+    opacity={opacity}
+    data={data}
+    color={color}
+    style={{ ...style, ...props[idx].style }}
   />
 );
-
 const buildAdditionalFeatures = (isDraggable, isCrosshair, data, props) => {
   const additionalComponents = [];
   const additionalProps = [];
@@ -65,13 +81,26 @@ const buildAdditionalFeatures = (isDraggable, isCrosshair, data, props) => {
 export default function ReactVisComponent({ children, ...props }) {
   const {
     data,
+    description,
     xTitle,
     yTitle,
     axisStyle,
-    legendStyle,
     isDraggable,
     isCrosshair,
+    title,
   } = props;
+
+  const [titleHeight, setTitleHeight] = useState(0);
+  const [titleMarginBottom, setTitleMarginBottom] = useState('0px');
+  const [titleMarginTop, setTitleMarginTop] = useState('0px');
+
+  const titleRef = useRef();
+  useLayoutEffect(() => {
+    titleRef.current &&
+      (setTitleHeight(titleRef.current.offsetHeight) ||
+        setTitleMarginBottom(getComputedStyle(titleRef.current).marginBottom) ||
+        setTitleMarginTop(getComputedStyle(titleRef.current).marginTop));
+  }, []);
 
   const {
     customProps,
@@ -80,66 +109,74 @@ export default function ReactVisComponent({ children, ...props }) {
   } = buildAdditionalFeatures(isDraggable, isCrosshair, data, props);
 
   const makeLayer = createLayerMaker(children, customProps);
-  const renderedLayers = data.map(({ data: layerData, name, color }, idx) =>
-    makeLayer(layerData, name, color, idx)
+  const renderedLayers = data.map(
+    ({ color, data: layerData, name, opacity, style }, idx) =>
+      makeLayer(color, layerData, name, opacity, style, idx)
   );
   // If no data at all, return null component
   if (!data) {
     return null;
   }
   return (
-    <FlexibleXYPlot {...props} {...XYprops}>
-      <VerticalGridLines />
-      <HorizontalGridLines />
-      <XAxis title={xTitle} style={axisStyle} />
-      <YAxis title={yTitle} style={axisStyle} />
+    <div className="plot-container">
+      <div ref={titleRef} className="plot-title-container">
+        <h3 className="plot-title">{title}</h3>
+        <p>{description}</p>
+      </div>
+      <div
+        className="plot"
+        style={{
+          height: `calc(100% - (${titleHeight}px + ${titleMarginBottom} + ${titleMarginTop} + ${legendHeight}px))`,
+        }}
+      >
+        <FlexibleXYPlot {...props} {...XYprops}>
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          {additionalComponents}
+          {renderedLayers}
+          <XAxis title={xTitle} style={axisStyle} />
+          <YAxis title={yTitle} style={axisStyle} />
+        </FlexibleXYPlot>
+      </div>
       <DiscreteColorLegend
-        items={data
-          .map(({ name, color, data: layerData }) =>
-            !isEmpty(layerData) ? { title: name, color } : null
-          )
-          .filter(val => val !== null)}
-        style={legendStyle}
+        items={data.map(({ name, color }) => ({
+          title: name,
+          color,
+        }))}
+        height={legendHeight}
+        orientation="horizontal"
       />
-      {additionalComponents}
-      {renderedLayers}
-    </FlexibleXYPlot>
+    </div>
   );
 }
 
 ReactVisComponent.propTypes = {
-  children: PropTypes.object.isRequired, // eslint-disable-line
-  data: PropTypes.arrayOf(Object).isRequired,
-  xTitle: PropTypes.string,
-  yTitle: PropTypes.string,
-  width: PropTypes.number, // eslint-disable-line
-  height: PropTypes.number, // eslint-disable-line
-  axisStyle: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number])
-  ),
-  legendStyle: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ),
-  isDraggable: PropTypes.bool,
-  isCrosshair: PropTypes.bool,
-  highlightedIdxCallback: PropTypes.func,
+  children: object.isRequired, // eslint-disable-line
+  data: arrayOf(object).isRequired,
+  description: string,
+  xTitle: string,
+  yTitle: string,
+  width: number, // eslint-disable-line
+  height: number, // eslint-disable-line
+  axisStyle: objectOf(oneOfType([object, string, number])),
+  isDraggable: bool,
+  isCrosshair: bool,
+  highlightedIdxCallback: func,
+  title: string,
 };
 
 ReactVisComponent.defaultProps = {
   xTitle: '',
   yTitle: '',
+  description: '',
   axisStyle: {
     title: {
       fontWeight: 900,
       fontSize: '16px',
     },
   },
-  legendStyle: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-  },
   isDraggable: false,
   isCrosshair: false,
   highlightedIdxCallback: null,
+  title: '',
 };
