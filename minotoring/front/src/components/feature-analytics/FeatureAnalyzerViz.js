@@ -2,7 +2,7 @@ import { arrayOf, func, object, objectOf, string } from 'prop-types';
 import React from 'react';
 
 // Components
-import ProjectionGraph from '../projection-graph/ProjectionGraph';
+import ProjectionGraph from './ProjectionGraph';
 import SingleFeatureAnalyzer from './SingleFeatureAnalyzer';
 
 export default function FeatureAnalyzerViz(props) {

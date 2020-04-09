@@ -33,6 +33,21 @@ export default function SingleFeatureAnalyzer(props) {
     valuesInfos,
     highlightedIds
   );
+  if (singleFeatureData.type === 'other') {
+    return (
+      <div className="other-feature">
+        <div className="card-container">
+          <div className="card other-feature-selected">
+            <p>
+              Coming soon! Minotor does not have any graph for this kind of data
+              for now. If you have any special request, do not hesitate to
+              contact us at contact@datarmada.com
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="single-feature-analyzer">
       <div className="card no-margin area-plot">

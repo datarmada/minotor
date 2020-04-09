@@ -11,13 +11,29 @@ const buildBasicFetcher = (requestOptions, route, callback) => async (
   }
 };
 
-export const buildPostFetcher = (route, callback, body) => {
+export const buildJsonPostFetcher = (route, callback, body) => {
   const abortController = new AbortController();
   return {
     fetchData: buildBasicFetcher(
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body,
+        signal: abortController.signal,
+      },
+      route,
+      callback
+    ),
+    abortController,
+  };
+};
+
+export const buildFilePostFetcher = (route, callback, body) => {
+  const abortController = new AbortController();
+  return {
+    fetchData: buildBasicFetcher(
+      {
+        method: 'POST',
         body,
         signal: abortController.signal,
       },

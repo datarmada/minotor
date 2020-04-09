@@ -26,9 +26,9 @@ class StatisticLibrary:
         return statistic(arr)
 
 
-def _histogram(values: np.ndarray) -> Tuple[List, List]:
+def _histogram(values: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     histogram_w_arrays = np.histogram(values[~np.isnan(values)], bins="auto")
-    return histogram_w_arrays[0].tolist(), histogram_w_arrays[1].tolist()
+    return histogram_w_arrays[0], histogram_w_arrays[1]
 
 
 def _nan_percentage(values: np.ndarray) -> float:
