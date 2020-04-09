@@ -26,7 +26,7 @@ export default function NavBar(props) {
         </li>
       )}
       <li className="logo">
-        <Link to="/">
+        <Link to="/features">
           <Logo className="icon logo" />
           <h2 className="fade">Minotor</h2>
         </Link>

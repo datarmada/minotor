@@ -40,26 +40,6 @@ $card-padding: 20px;
   align-items: center;
   flex-grow: 1;
   min-width: 0;
-
-  .no-feature {
-    width: 100%;
-    height: 100%;
-
-    .card-container {
-      width: 100%;
-      height: 100%;
-
-      .no-feature-selected {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        font-weight: 200;
-        background-color: $grey-100;
-      }
-    }
-  }
 }
 
 .single-feature-analyzer {
@@ -75,29 +55,54 @@ $card-padding: 20px;
   }
 }
 
-.training-data-uploader {
-  margin-bottom: 40px;
-  p {
-    margin-bottom: 20px;
+.no-feature,
+.other-feature {
+  width: 100%;
+  height: 100%;
+
+  .card-container {
+    width: 100%;
+    height: 100%;
   }
-  .input-label {
-    background-color: $grey-700;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+
+  .no-feature-selected,
+  .other-feature-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-weight: 200;
+    background-color: $grey-100;
+    padding: 40px;
+    p {
+      text-align: center;
+    }
   }
-  #input-file {
-    margin-bottom: 20px;
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-  }
-  .error-text {
-    margin-top: 20px;
-    color: red;
+  .training-data-uploader {
+    margin-bottom: 40px;
+    p {
+      margin-bottom: 20px;
+    }
+    .input-label {
+      background-color: $grey-700;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #input-file {
+      margin-bottom: 20px;
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+    .error-text {
+      margin-top: 20px;
+      color: red;
+    }
   }
 }

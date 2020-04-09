@@ -23,7 +23,18 @@ export default function SingleInputAnalyzer(props) {
       </div>
       <div className="graphs-grid">
         {Object.keys(featureData.features).map(singleFeatureName => {
-          return (
+          return featureData.features[singleFeatureName].type === 'other' ? (
+            <div className="other-feature area-plot card no-margin">
+              <div className="other-feature-selected">
+                <p>
+                  Coming soon! Minotor does not have any graph for the kind of
+                  data of <b>{singleFeatureName}</b> for now. If you have any
+                  special request, do not hesitate to contact us at
+                  contact@datarmada.com
+                </p>
+              </div>
+            </div>
+          ) : (
             <div key={singleFeatureName} className="area-plot card no-margin">
               <AreaPlot
                 xTitle={singleFeatureName}

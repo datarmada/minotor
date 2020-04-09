@@ -24,7 +24,6 @@ if __name__ == '__main__':
     # Data
     df = pd.read_csv(
         'https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv')
-    df = df.select_dtypes(include=[np.number])
 
     train(df)
 
