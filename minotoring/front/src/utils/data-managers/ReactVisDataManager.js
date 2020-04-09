@@ -124,7 +124,7 @@ export const buildScatterWithOutliersProps = (
     layers.push({
       color: 'var(--charts-main-bright-color)',
       data: regularPoints,
-      name: 'Prediction features',
+      name: 'Prediction data',
       opacity: 0.8,
     });
   !isEmpty(outliers) &&

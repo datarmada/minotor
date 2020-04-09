@@ -46,6 +46,10 @@ export default function Trs(props) {
               e.currentTarget.classList.add('hovered');
             isRowClickableWrapped(idxCol) &&
               trsRef[idxRow].current.classList.add('hovered');
+            onRowClicked &&
+              !onCellClicked &&
+              !isRowClickableWrapped(idxCol) &&
+              trsRef[idxRow].current.classList.add('hovered');
           }}
           onMouseLeave={e => {
             e.currentTarget.classList.remove('hovered');
