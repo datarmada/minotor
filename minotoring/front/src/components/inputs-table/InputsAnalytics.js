@@ -19,7 +19,6 @@ export default function InputsAnalytics(props) {
   if (isEmpty(featureData) || isEmpty(selectedIds)) {
     return null;
   }
-  
   return (
     <div className="card-container column">
       <div className="card">
