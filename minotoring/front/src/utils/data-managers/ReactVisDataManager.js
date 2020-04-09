@@ -23,8 +23,12 @@ export const getHighlightedValues = (
   highlightedIds = new Set()
 ) => {
   const maxValues = Math.max(
-    ...singleFeatureStatistics.prediction.hist[0],
-    ...singleFeatureStatistics.training.hist[0]
+    ...(singleFeatureStatistics.prediction.hist
+      ? singleFeatureStatistics.prediction.hist[0]
+      : []),
+    ...(singleFeatureStatistics.training.hist
+      ? singleFeatureStatistics.training.hist[0]
+      : [])
   );
   return concat(
     ...[true, false].map(boolean =>

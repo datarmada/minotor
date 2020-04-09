@@ -1,6 +1,9 @@
 from typing import List, Union, Tuple
 
+import numpy as np
 import pandas as pd
+
+from pandas.core.indexes.base import Index
 from sklearn.base import TransformerMixin, BaseEstimator
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
@@ -14,7 +17,7 @@ class Projector:
     def preprocess(df: pd.DataFrame) -> pd.DataFrame:
         return df.select_dtypes('number').dropna()
 
-    def project(self, training_df: pd.DataFrame, prediction_df: pd.DataFrame) -> Tuple[List, List, List, List]:
+    def project(self, training_df: pd.DataFrame, prediction_df: pd.DataFrame) -> Tuple[Index, Index, np.ndarray, np.ndarray]:
         """
         :return: kept_training_ids, kept_prediction_ids, projected training vectors, projected prediction vectores
         """
@@ -24,8 +27,8 @@ class Projector:
         if len(full_df) < 2:
             return [], [], [], []
         projection = self.projector.fit_transform(full_df.to_numpy())
-        return list(training_df.index), list(prediction_df.index), \
-               projection.tolist()[: len(training_df)], projection.tolist()[len(training_df):]
+        return training_df.index, prediction_df.index, \
+            projection[: len(training_df)], projection[len(training_df):]
 
 
 tsne_projector = Projector(TSNE())

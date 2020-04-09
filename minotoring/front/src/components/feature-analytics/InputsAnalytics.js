@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { isEmpty } from 'lodash';
 
 // Components
-import SingleFeatureAnalyzer from '../analyzers/SingleFeatureAnalyzer';
+import SingleFeatureAnalyzer from './SingleFeatureAnalyzer';
 import Table from '../base-elements/Table';
 
 // Data Managers
-import SingleInputAnalyzer from '../analyzers/SingleInputAnalyzer';
+import SingleInputAnalyzer from './SingleInputAnalyzer';
 import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
 
 // Utils

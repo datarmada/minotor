@@ -22,13 +22,10 @@ if __name__ == '__main__':
         os.remove(FILE_PATH)
 
     # Data
-    iris = pd.read_csv(
-        'https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv')
+    df = pd.read_csv(
+        'https://raw.githubusercontent.com/plotly/datasets/master/titanic.csv')
+    df = df.select_dtypes(include=[np.number])
 
-    train(iris)
+    train(df)
 
-    # Randomly tweak numerical data
-    iris['sepal_length'] = iris['sepal_length'].apply(
-        lambda x: x*uniform(0.8, 1))
-
-    predict(iris)
+    predict(df)

@@ -79,4 +79,30 @@ $card-padding: 20px;
       text-align: center;
     }
   }
+  .training-data-uploader {
+    margin-bottom: 40px;
+    p {
+      margin-bottom: 20px;
+    }
+    .input-label {
+      background-color: $grey-700;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #input-file {
+      margin-bottom: 20px;
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+    .error-text {
+      margin-top: 20px;
+      color: red;
+    }
+  }
 }

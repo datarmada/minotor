@@ -12,27 +12,9 @@ import FeaturesAnalytics from './pages/FeaturesAnalytics';
 import PredictionAnalytics from './pages/PredictionsAnalytics';
 // Styles
 import './sass/main.scss';
-import InputsAnalytics from './components/inputs-table/InputsAnalytics';
-import { buildGetFetcher } from './utils/data-managers/DataFetcher';
-
-const dataSetter = async (response, setFeatureData, setSelectedInputs) => {
-  const data = await response.json();
-  setFeatureData(data);
-  setSelectedInputs(new Set(data.valuesInfos.training.ids.slice(0, 5)));
-};
 
 const App = () => {
   const [isNavOpen, setIsNavOpen] = useState(true);
-  const [featureData, setFeatureData] = useState({});
-  const [selectedInputs, setSelectedInputs] = useState({});
-
-  useEffect(() => {
-    const { fetchData, abortController } = buildGetFetcher('data', dataSetter);
-    fetchData(setFeatureData, setSelectedInputs);
-    return () => {
-      abortController.abort();
-    };
-  }, []);
 
   return (
     <div className="App">
