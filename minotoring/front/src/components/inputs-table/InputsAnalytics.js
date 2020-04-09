@@ -11,6 +11,12 @@ import Table from '../base-elements/Table';
 import SingleInputAnalyzer from '../analyzers/SingleInputAnalyzer';
 import { buildInputTableProps } from '../../utils/data-managers/TableDataManagers';
 
+// Utils
+const scrollToGraphsWrapper = func => {
+  func();
+  document.getElementById('sia-graphs').scrollIntoView();
+};
+
 export default function InputsAnalytics(props) {
   const { featureData, selectedInputs: selectedIds } = props;
   const [selectedFeature, setSelectedFeature] = useState();
@@ -24,23 +30,29 @@ export default function InputsAnalytics(props) {
       <div className="card">
         <Table
           {...buildInputTableProps(featureData, selectedIds)}
-          onCellClicked={e => {
-            setHighlightedIds(new Set([e.currentTarget.getAttribute('idrow')]));
-            setSelectedFeature(e.currentTarget.getAttribute('idcol'));
-            setSelectedRowId(null);
-          }}
-          onRowClicked={e => {
-            setSelectedRowId(e.currentTarget.textContent);
-            setSelectedFeature(null);
-            setHighlightedIds(new Set());
-          }}
-          onColClicked={e => {
-            setSelectedFeature(e.currentTarget.textContent);
-            setHighlightedIds(new Set());
-            setSelectedRowId(null);
-          }}
-          isRowFiltrable
-          nbRowDisplayed={5}
+          onCellClicked={e =>
+            scrollToGraphsWrapper(() => {
+              setHighlightedIds(
+                new Set([e.currentTarget.getAttribute('idrow')])
+              );
+              setSelectedFeature(e.currentTarget.getAttribute('idcol'));
+              setSelectedRowId(null);
+            })
+          }
+          onRowClicked={e =>
+            scrollToGraphsWrapper(() => {
+              setSelectedRowId(e.currentTarget.textContent);
+              setSelectedFeature(null);
+              setHighlightedIds(new Set());
+            })
+          }
+          onColClicked={e =>
+            scrollToGraphsWrapper(() => {
+              setSelectedFeature(e.currentTarget.textContent);
+              setHighlightedIds(new Set());
+              setSelectedRowId(null);
+            })
+          }
         />
       </div>
       {selectedFeature ? (
@@ -53,7 +65,7 @@ export default function InputsAnalytics(props) {
           />
         </div>
       ) : null}
-      <div className="card-margin">
+      <div id="sia-graphs" className="card-margin">
         <SingleInputAnalyzer
           featureData={featureData}
           selectedId={selectedRowId}
