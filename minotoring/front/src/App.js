@@ -1,5 +1,10 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 // Components
 import NavBar from './components/navbar/NavBar';
 // Pages
@@ -32,6 +37,7 @@ const App = () => {
   return (
     <div className="App">
       <Router>
+        <Redirect from="/" to="/features" />
         <NavBar isOpen={isNavOpen} onToggleNav={setIsNavOpen} />
         <Suspense fallback={<div>Loading...</div>} />
         <div id="main-switch" className={isNavOpen ? null : 'wide'}>

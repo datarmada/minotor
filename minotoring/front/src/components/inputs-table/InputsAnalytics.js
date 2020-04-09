@@ -39,6 +39,8 @@ export default function InputsAnalytics(props) {
             setHighlightedIds(new Set());
             setSelectedRowId(null);
           }}
+          isRowFiltrable
+          nbRowDisplayed={5}
         />
       </div>
       {selectedFeature ? (
