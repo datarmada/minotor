@@ -14,7 +14,7 @@ import { buildInputTableProps } from '../../utils/data-managers/TableDataManager
 // Utils
 const scrollToGraphsWrapper = func => {
   func();
-  document.getElementById('sia-graphs').scrollIntoView();
+  document.getElementById('sfa').scrollIntoView();
 };
 
 export default function InputsAnalytics(props) {
@@ -55,17 +55,17 @@ export default function InputsAnalytics(props) {
           }
         />
       </div>
-      {selectedFeature ? (
-        <div className="card-margin">
+      <div id="sfa" className="card-margin">
+        {selectedFeature ? (
           <SingleFeatureAnalyzer
             singleFeatureData={featureData.features[selectedFeature]}
             singleFeatureName={selectedFeature}
             highlightedIds={highlightedIds}
             valuesInfos={featureData.valuesInfos}
           />
-        </div>
-      ) : null}
-      <div id="sia-graphs" className="card-margin">
+        ) : null}
+      </div>
+      <div className="card-margin">
         <SingleInputAnalyzer
           featureData={featureData}
           selectedId={selectedRowId}
