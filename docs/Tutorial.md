@@ -26,7 +26,7 @@ def train(data):
 When you haven't imported any data, you will find on the dashboard a button which
 will let you do so.
 
-![Add training data](img/add_training_data.gif)
+<img src="img/add_training_data.gif" width="100%"/>
 
 ## Track your prediction data
 
