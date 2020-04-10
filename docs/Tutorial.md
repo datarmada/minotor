@@ -23,8 +23,13 @@ def train(data):
 
 ### Using the interface
 
-When you haven't imported any data, you will find on the dashboard a button which
+When no data has been imported, you will find on the dashboard a button which
 will let you do so.
+
+**Don't forget that for now, Minotor is only accepting data that are Numpy arrays or Pandas DataFrame, so you must pickle one of those two types.**
+
+If you can't see the button, you probably have some data already imported. To get
+rid of it, use the `minotor clean` command mentionned [here](#Commands).
 
 <img src="img/add_training_data.gif" width="100%"/>
 
@@ -46,3 +51,16 @@ def predict(data):
 ## Inspect your data
 
 FILL WITH TUTORIAL WITH SCREENS OF THE FRONT
+
+## Commands
+
+`$ minotor` :arrow_right: starts the Minotor interface
+
+`$ minotor iris-example` :arrow_right: fills the Minotor interface with sample data
+from the iris dataset
+
+`$ minotor clean` :arrow_right: cleans both training and prediction data
+
+`$ minotor clean-training` :arrow_right: cleans training data
+
+`$ minotor clean-prediction` :arrow_right: cleans prediction data
