@@ -46,11 +46,28 @@ def predict(data):
 
 ```
 
-**In order to compare those data, the training data and the prediction data you are importing in Minotor must have the same preprocessing, if any.**
+**:warning: In order to compare those data, the training data and the prediction data you are importing in Minotor must have the same preprocessing, if any :warning:**
 
 ## Inspect your data
 
-FILL WITH TUTORIAL WITH SCREENS OF THE FRONT
+### Quick feature analysis and projection
+
+#### Layout
+
+In the table at the top, you can select one ore several feature.
+
+- when **one feature is selected**, you can see the distribution graphs of both the
+  training and prediction data, a scatter plot with the value of this feature by order
+  of appearance of the inputs, but also a table with the statistics related to this feature.
+- when **several values are selected**, the graph you see is the projection of all the
+  features selected on two axis, using the [T-SNE algorithm](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding), for both the training and prediction data.
+
+<img src="img/fa-and-projection.gif" width="100%"/>
+
+#### How to interpret this ?
+
+With those visual representations, it is fairly easy! The more the blue dots (or curve)
+are separated from the grey dots (or curve), the more your data is drifted / drifting.
 
 ## Commands
 
