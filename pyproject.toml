@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "minotor"
 version = "0.0.0"
-description = "Easy to use ML and plug and play monitoring tool."
+description = "Easy to use plug and play ML monitoring tool."
 authors = ["Boris Ghidaglia <borisghidaglia@gmail.com>"]
 
 [tool.poetry.dependencies]
