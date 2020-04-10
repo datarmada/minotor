@@ -40,7 +40,7 @@ If you use Docker, you probably want to run the tests inside the running contain
 We are using unittest to test the Python code.
 
 ```bash
-$ sudo docker-compose exec app python -m unittest discover minotoring/tests
+$ sudo docker-compose exec app python -m unittest discover minotor/tests
 ```
 
 We are using jest to run our ReactJS tests.
@@ -87,12 +87,12 @@ the `autopep8` path in the settings if it is not in your system's path.
 We are using unittest to test the Python code. Run the tests at the source of the project:
 
 ```bash
-$ python -m unittest discover minotoring/tests
+$ python -m unittest discover minotor/tests
 ```
 
 ## ReactJS
 
-The frontend project is located at `/minotoring/front`.
+The frontend project is located at `/minotor/front`.
 
 ### Installing
 
@@ -122,7 +122,7 @@ Create a `.vscode/settings.json` file if it doesn't exist and add a field:
 
 ```json
   "eslint.workingDirectories": [
-    "./minotoring/front"
+    "./minotor/front"
   ],
 ```
 
@@ -130,7 +130,7 @@ Create a `.vscode/settings.json` file if it doesn't exist and add a field:
 
 Install [linter](https://atom.io/packages/linter) and [linter-eslint](https://atom.io/packages/linter-eslint)
 and you should be good to go. Don't forget to install node dependencies (dev dependencies included)
-as shown above so that the `node_modules` folder in `/minotoring/front` exists and is not empty.
+as shown above so that the `node_modules` folder in `/minotor/front` exists and is not empty.
 
 ### Running the test
 

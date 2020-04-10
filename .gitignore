@@ -3,7 +3,7 @@ build
 dist
 node_modules
 *.egg-info
-/minotoring/front/build/
+/minotor/front/build/
 __pycache__
 *.pyc
 .vscode/settings.json
