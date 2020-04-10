@@ -1,10 +1,17 @@
+import os
 import sys
 
+from minotor.data_managers.file_manager import FileManager
 from minotor.run import runserver
 from minotor.seeds.iris_seed import run as run_iris
 
+fm = FileManager()
+
 ARG_COMMAND = {
     'iris-example': run_iris,
+    'clean': fm.clean_data,
+    'clean-training': fm.clean_feature_data,
+    'clean-prediction': fm.clean_prediction_data,
 }
 
 

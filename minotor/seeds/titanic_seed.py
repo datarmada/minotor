@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
 from random import uniform
-from minotor.constants import DATA_DIR
+
+from minotor.data_managers.file_manager import FileManager
 from minotor.decorators.feature_monitoring import monitor_training_features, monitor_prediction_features
-import os
+
+fm = FileManager()
 
 
 @monitor_training_features
@@ -17,9 +19,7 @@ def predict(data):
 
 
 def run():
-    FILE_PATH = DATA_DIR / "feature_data.json"
-    if os.path.exists(FILE_PATH):
-        os.remove(FILE_PATH)
+    fm.clean_feature_data()
 
     # Data
     df = pd.read_csv(
