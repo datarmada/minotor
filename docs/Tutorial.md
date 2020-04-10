@@ -23,8 +23,10 @@ def train(data):
 
 ### Using the interface
 
-FILL WITH THE INSTRUCTION TO IMPORT DATA THROUGH THE INTERFACE
+When you haven't imported any data, you will find on the dashboard a button which
+will let you do so.
 
+![Add training data](img/add_training_data.gif)
 
 ## Track your prediction data
 
@@ -38,7 +40,6 @@ def predict(data):
     # Do stuff with your data and predict through your model
 
 ```
-
 
 **In order to compare those data, the training data and the prediction data you are importing in Minotor must have the same preprocessing, if any.**
 
