@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  test:
+    build:
+      context: ../../../..
+      dockerfile: minotor/tests/integration_tests/packaging/Dockerfile
+    command: minotor
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8000:8888"
+

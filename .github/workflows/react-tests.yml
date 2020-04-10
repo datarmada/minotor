@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./minotoring/front
+      working-directory: ./minotor/front
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

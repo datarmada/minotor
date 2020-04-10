@@ -13,7 +13,7 @@ First of all, you need to import your training data to be able to compare it to 
 Use the related decorator on your training pipeline.
 
 ```python
-from minotoring.decorators.feature_monitoring import monitor_training_features
+from minotor.decorators.feature_monitoring import monitor_training_features
 
 @monitor_training_features
 def train(data):
@@ -31,7 +31,7 @@ FILL WITH THE INSTRUCTION TO IMPORT DATA THROUGH THE INTERFACE
 Use the decorator on your inference function to track continuously your inference data and monitor the differences with your training data.
 
 ```python
-from minotoring.decorators.feature_monitoring import monitor_prediction_features
+from minotor.decorators.feature_monitoring import monitor_prediction_features
 
 @monitor_prediction_features
 def predict(data):

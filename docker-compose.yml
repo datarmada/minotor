@@ -4,20 +4,20 @@ services:
   app:
     build:
       context: .
-      dockerfile: minotoring/Dockerfile
-    command: python /code/minotoring/run.py
+      dockerfile: minotor/Dockerfile
+    command: python /code/minotor/run.py
     environment:
       - PYTHONUNBUFFERED=1
     ports:
       - '8888:8888'
     volumes:
-      - ./minotoring/front/build:/code/minotoring/front/build
-      - ./minotoring:/code/minotoring
+      - ./minotor/front/build:/code/minotor/front/build
+      - ./minotor:/code/minotor
 
   npm:
-    build: minotoring/front
+    build: minotor/front
     command: npm start
     ports:
       - '3000:3000'
     volumes:
-      - ./minotoring/front:/code
+      - ./minotor/front:/code

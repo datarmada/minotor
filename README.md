@@ -23,14 +23,14 @@ To monitor your first project, copy the three commands in the cell below and run
 ```
 $ pip install minotor
 $ minotor iris-example
-$ minotor run
+$ minotor
 ```
 
 `pip install minotor` installs Minotor onto your system.
 
 `minotor iris-example` creates a sample project using the famous [iris dataset](https://scikit-learn.org/stable/auto_examples/datasets/plot_iris_dataset.html).
 
-`minotor run` launches the Minotor dashboard, where you can monitor your data and inspect differences between train and prod.
+`minotor` launches the Minotor dashboard, where you can monitor your data and inspect differences between train and prod.
 
 You can now go to http://localhost:8888 in your favorite browser and play with Minotor !
 
