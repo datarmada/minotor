@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   app:
@@ -9,15 +9,15 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     ports:
-      - '8888:8888'
+      - "8888:8888"
     volumes:
       - ./minotor/front/build:/code/minotor/front/build
       - ./minotor:/code/minotor
 
-  npm:
+  front:
     build: minotor/front
     command: npm start
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - ./minotor/front:/code
