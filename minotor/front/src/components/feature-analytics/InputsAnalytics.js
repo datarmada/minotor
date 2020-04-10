@@ -53,6 +53,7 @@ export default function InputsAnalytics(props) {
               setSelectedRowId(null);
             })
           }
+          isColFiltrable
         />
       </div>
       <div id="sfa-sia">

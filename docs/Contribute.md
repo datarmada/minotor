@@ -46,7 +46,7 @@ $ sudo docker-compose exec app python -m unittest discover minotor/tests
 We are using jest to run our ReactJS tests.
 
 ```bash
-$ sudo docker-compose exec npm npm run test
+$ sudo docker-compose exec front npm run test
 ```
 
 _Note: in both cases if you installed docker-compose so that it runs without sudo, of course remove sudo from the commands above._

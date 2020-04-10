@@ -14,7 +14,7 @@ const orderOptions = (options, query = '') => {
   }
   const [matched, others] = options.reduce(
     ([passed, fails], option) =>
-      option.startsWith(query)
+      option.toLowerCase().startsWith(query.toLowerCase())
         ? [[...passed, option], fails]
         : [passed, [...fails, option]],
     [[], []]

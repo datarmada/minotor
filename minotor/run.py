@@ -1,3 +1,5 @@
+import webbrowser
+
 from tornado import ioloop, web
 
 from minotor.api.projection_handler import ProjectionHandler
@@ -28,8 +30,12 @@ def make_app():
 
 
 def runserver():
+    url = 'http://localhost:8888'
+    print('Starting server ...')
     app = make_app()
     app.listen(8888)
+    print(f'Minotor is available at {url} in your browser !')
+    webbrowser.open_new_tab(url)
     ioloop.IOLoop.current().start()
 
 
