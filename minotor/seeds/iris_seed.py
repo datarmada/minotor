@@ -28,7 +28,8 @@ def run():
     train(df)
 
     # Randomly tweak numerical data
-    df['sepal_length'] = df['sepal_length'].apply(
+    df_numerical = df.select_dtypes(include=[np.number])
+    df[df_numerical.columns] = df_numerical.apply(
         lambda x: x*uniform(0.8, 1))
 
     predict(df)
