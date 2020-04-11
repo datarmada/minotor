@@ -4,3 +4,5 @@ RUN mkdir /code
 WORKDIR /code
 
 COPY . .
+
+RUN npm install --quiet
