@@ -4,6 +4,19 @@ This page explains the basics of monitoring your project using Minotor, once [th
 
 **Important: for now, Minotor is only accepting data that are Numpy arrays or Pandas DataFrame.**
 
+## Commands
+
+`$ minotor` :arrow_right: starts the Minotor interface
+
+`$ minotor iris-example` :arrow_right: fills the Minotor interface with sample data
+from the iris dataset
+
+`$ minotor clean` :arrow_right: cleans both training and prediction data
+
+`$ minotor clean-training` :arrow_right: cleans training data
+
+`$ minotor clean-prediction` :arrow_right: cleans prediction data
+
 ## Import your training data
 
 First of all, you need to import your training data to be able to compare it to the prediction data afterwards. It will enable Minotor to compute some relevant statistics.
@@ -23,8 +36,15 @@ def train(data):
 
 ### Using the interface
 
-FILL WITH THE INSTRUCTION TO IMPORT DATA THROUGH THE INTERFACE
+When no data has been imported, you will find on the dashboard a button which
+will let you do so.
 
+**Don't forget that for now, Minotor is only accepting data that are Numpy arrays or Pandas DataFrame, so you must pickle one of those two types.**
+
+If you can't see the button, you probably have some data already imported. To get
+rid of it, use the `minotor clean` command mentionned [here](#Commands).
+
+<img src="img/add-training-data.gif" width="100%"/>
 
 ## Track your prediction data
 
@@ -39,9 +59,55 @@ def predict(data):
 
 ```
 
-
-**In order to compare those data, the training data and the prediction data you are importing in Minotor must have the same preprocessing, if any.**
+**:warning: In order to compare those data, the training data and the prediction data you are importing in Minotor must have the same preprocessing, if any :warning:**
 
 ## Inspect your data
 
-FILL WITH TUTORIAL WITH SCREENS OF THE FRONT
+### Quick feature analysis and projection
+
+#### Layout
+
+In the table at the top, you can select one ore several feature.
+
+- when **one feature is selected**, you can see the distribution graphs of both the
+  training and prediction data, a scatter plot with the value of this feature by order
+  of appearance of the inputs, but also a table with the statistics related to this feature.
+- when **several values are selected**, the graph you see is the projection of all the
+  features selected on two axis, using the [T-SNE algorithm](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding), for both the training and prediction data.
+
+<img src="img/fa-and-projection.gif" width="100%"/>
+
+#### How to interpret this ?
+
+With those visual representations, it is fairly easy! The more the blue dots (or curve)
+are separated from the grey dots (or curve), the more your data is drifted / drifting.
+
+### Input selection
+
+On the projection graph, you can select the dots which seems suspicious to you,
+in order to analyze them more precisely.
+
+<img src="img/select-inputs.gif" width="100%"/>
+
+### Input analysis
+
+Now that you have selected some inputs, they are displayed below in a dataframe.
+
+_**Note:** once again, if you don't see all the columns, do not panic. Just click on
+the searchable dropdown and toggle the columns you want or don't want to see._
+
+Then, you have 3 options:
+
+- click on a **column**, and you will find the feature analysis your familiar with (the
+  same than the one above)
+- click on a **cell** and you will find the feature analysis corresponding to this cell,
+  with the value of the related input highlighted. This way you can see at a glance if this
+  input has a normal value or not.
+- click on a **row** (a.k.a, an **input**) and all the distribution graphs of its features will
+  be displayed, with its value highlighted for each feature.
+
+<img src="img/input-analysis.gif" width="100%"/>
+
+## Questions ?
+
+Something is missing ? Please let us know at **contact@datarmada.com**
