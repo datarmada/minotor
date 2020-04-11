@@ -4,6 +4,19 @@ This page explains the basics of monitoring your project using Minotor, once [th
 
 **Important: for now, Minotor is only accepting data that are Numpy arrays or Pandas DataFrame.**
 
+## Commands
+
+`$ minotor` :arrow_right: starts the Minotor interface
+
+`$ minotor iris-example` :arrow_right: fills the Minotor interface with sample data
+from the iris dataset
+
+`$ minotor clean` :arrow_right: cleans both training and prediction data
+
+`$ minotor clean-training` :arrow_right: cleans training data
+
+`$ minotor clean-prediction` :arrow_right: cleans prediction data
+
 ## Import your training data
 
 First of all, you need to import your training data to be able to compare it to the prediction data afterwards. It will enable Minotor to compute some relevant statistics.
@@ -78,17 +91,23 @@ in order to analyze them more precisely.
 
 ### Input analysis
 
+Now that you have selected some inputs, they are displayed below in a dataframe.
+
+_**Note:** once again, if you don't see all the columns, do not panic. Just click on
+the searchable dropdown and toggle the columns you want or don't want to see._
+
+Then, you have 3 options:
+
+- click on a **column**, and you will find the feature analysis your familiar with (the
+  same than the one above)
+- click on a **cell** and you will find the feature analysis corresponding to this cell,
+  with the value of the related input highlighted. This way you can see at a glance if this
+  input has a normal value or not.
+- click on a **row** (a.k.a, an **input**) and all the distribution graphs of its features will
+  be displayed, with its value highlighted for each feature.
+
 <img src="img/input-analysis.gif" width="100%"/>
 
-## Commands
+## Questions ?
 
-`$ minotor` :arrow_right: starts the Minotor interface
-
-`$ minotor iris-example` :arrow_right: fills the Minotor interface with sample data
-from the iris dataset
-
-`$ minotor clean` :arrow_right: cleans both training and prediction data
-
-`$ minotor clean-training` :arrow_right: cleans training data
-
-`$ minotor clean-prediction` :arrow_right: cleans prediction data
+Something is missing ? Please let us know at **contact@datarmada.com**
