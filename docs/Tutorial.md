@@ -31,7 +31,7 @@ will let you do so.
 If you can't see the button, you probably have some data already imported. To get
 rid of it, use the `minotor clean` command mentionned [here](#Commands).
 
-<img src="img/add_training_data.gif" width="100%"/>
+<img src="img/add-training-data.gif" width="100%"/>
 
 ## Track your prediction data
 
@@ -68,6 +68,17 @@ In the table at the top, you can select one ore several feature.
 
 With those visual representations, it is fairly easy! The more the blue dots (or curve)
 are separated from the grey dots (or curve), the more your data is drifted / drifting.
+
+### Input selection
+
+On the projection graph, you can select the dots which seems suspicious to you,
+in order to analyze them more precisely.
+
+<img src="img/select-inputs.gif" width="100%"/>
+
+### Input analysis
+
+<img src="img/input-analysis.gif" width="100%"/>
 
 ## Commands
 
