@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 from typing import Dict
 
@@ -33,6 +34,18 @@ class FileManager:
     def write_prediction_data(self, project_data: PredictionData):
         with self.prediction_json_path.open('w') as f:
             json.dump(project_data.data, f, cls=ExtendedJSONEncoder)
+
+    def clean_data(self):
+        self.clean_feature_data()
+        self.clean_prediction_data()
+
+    def clean_feature_data(self):
+        if os.path.exists(self.feature_json_path):
+            os.remove(self.feature_json_path)
+
+    def clean_prediction_data(self):
+        if os.path.exists(self.prediction_json_path):
+            os.remove(self.prediction_json_path)
 
 
 def _load_json(path: Path):
