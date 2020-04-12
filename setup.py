@@ -1,7 +1,7 @@
 import setuptools
 setuptools.setup(
     name="minotor",
-    version="0.0.1",
+    version="0.0.2",
     author="Datarmada",
     author_email="contact@datarmada.com",
     description="Easy to use plug and play ML monitoring tool.",
