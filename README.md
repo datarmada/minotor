@@ -53,4 +53,4 @@ Licensed under the Apache License, Version 2.0. [Copy of the license](LICENSE.tx
 
 ## Attributions
 
-Complete list [here](#Attributions.md)
+Complete list [here](docs/Attributions.md)
