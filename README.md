@@ -1,3 +1,6 @@
+![React Tests](https://github.com/datarmada/minotor/workflows/React%20Tests/badge.svg)
+![Python Tests](https://github.com/datarmada/minotor/workflows/Python%20Tests/badge.svg)
+
 # Minotor Open Source
 
 Minotor is an open source software for data and machine learning models monitoring.
@@ -47,3 +50,7 @@ You can now go to http://localhost:8888 in your favorite browser and play with M
 ## License
 
 Licensed under the Apache License, Version 2.0. [Copy of the license](LICENSE.txt)
+
+## Attributions
+
+Complete list [here](#Attributions.md)
