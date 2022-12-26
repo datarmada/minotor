@@ -15,7 +15,7 @@ scipy = "^1.4.1"
 
 [tool.poetry.dev-dependencies]
 setuptools = "^45.2.0"
-wheel = "^0.34.2"
+wheel = "^0.38.1"
 autopep8 = "^1.5.1"
 
 [build-system]
